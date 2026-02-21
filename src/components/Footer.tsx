@@ -1,11 +1,17 @@
 import { Link } from "react-router-dom";
 import { Mail, Phone, MapPin, ArrowUp } from "lucide-react";
+import { motion } from "framer-motion";
 
 const Footer = () => {
   return (
     <>
-      {/* CTA Banner */}
-      <section className="bg-primary py-12">
+      <motion.section
+        className="bg-primary py-12"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      >
         <div className="container text-center">
           <h2 className="text-2xl md:text-3xl font-heading font-bold text-primary-foreground mb-4">
             Are you ready to grow your business?
@@ -25,9 +31,8 @@ const Footer = () => {
             </Link>
           </div>
         </div>
-      </section>
+      </motion.section>
 
-      {/* Footer */}
       <footer className="bg-section-dark py-16">
         <div className="container">
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10">

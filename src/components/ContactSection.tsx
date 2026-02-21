@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
+import { motion } from "framer-motion";
 
 const ContactSection = () => {
   const { toast } = useToast();
@@ -31,7 +32,13 @@ const ContactSection = () => {
   return (
     <section id="contact" className="py-20 lg:py-28 bg-card">
       <div className="container">
-        <div className="text-center mb-16">
+        <motion.div
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.5 }}
+        >
           <p className="text-primary font-heading font-semibold text-sm tracking-wider uppercase mb-2">Get In Touch</p>
           <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground">
             Send Us a Message
@@ -39,29 +46,30 @@ const ContactSection = () => {
           <p className="text-muted-foreground mt-3 max-w-lg mx-auto">
             Contact us to learn more about our high-quality cables and customized solutions.
           </p>
-        </div>
+        </motion.div>
 
         <div className="grid lg:grid-cols-5 gap-12 max-w-5xl mx-auto">
-          {/* Info */}
-          <div className="lg:col-span-2 space-y-6">
-            <div className="flex items-start gap-4">
-              <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                <MapPin className="w-5 h-5 text-primary" />
+          <motion.div
+            className="lg:col-span-2 space-y-6"
+            initial={{ opacity: 0, x: -25 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.5 }}
+          >
+            {[
+              { icon: MapPin, label: "Head Office", value: "Jebel Ali Industrial Area, Dubai, UAE" },
+              { icon: Phone, label: "Phone", value: "+971 4 886 5626" },
+            ].map((item) => (
+              <div key={item.label} className="flex items-start gap-4">
+                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                  <item.icon className="w-5 h-5 text-primary" />
+                </div>
+                <div>
+                  <p className="font-heading font-semibold text-foreground text-sm">{item.label}</p>
+                  <p className="text-muted-foreground text-sm">{item.value}</p>
+                </div>
               </div>
-              <div>
-                <p className="font-heading font-semibold text-foreground text-sm">Head Office</p>
-                <p className="text-muted-foreground text-sm">Jebel Ali Industrial Area, Dubai, UAE</p>
-              </div>
-            </div>
-            <div className="flex items-start gap-4">
-              <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                <Phone className="w-5 h-5 text-primary" />
-              </div>
-              <div>
-                <p className="font-heading font-semibold text-foreground text-sm">Phone</p>
-                <p className="text-muted-foreground text-sm">+971 4 886 5626</p>
-              </div>
-            </div>
+            ))}
             <div className="flex items-start gap-4">
               <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
                 <Mail className="w-5 h-5 text-primary" />
@@ -72,10 +80,16 @@ const ContactSection = () => {
                 <p className="text-muted-foreground text-sm">sales@neelkanthcables.com</p>
               </div>
             </div>
-          </div>
+          </motion.div>
 
-          {/* Form */}
-          <form onSubmit={handleSubmit} className="lg:col-span-3 space-y-4">
+          <motion.form
+            onSubmit={handleSubmit}
+            className="lg:col-span-3 space-y-4"
+            initial={{ opacity: 0, x: 25 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.5, delay: 0.15 }}
+          >
             <div className="grid sm:grid-cols-2 gap-4">
               <Input
                 placeholder="Your Name *"
@@ -111,7 +125,7 @@ const ContactSection = () => {
             >
               {sending ? "Sending..." : "Send Message"} <Send className="ml-2 w-4 h-4" />
             </Button>
-          </form>
+          </motion.form>
         </div>
       </div>
     </section>

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Quote, ChevronLeft, ChevronRight } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const testimonials = [
   {
@@ -31,27 +32,46 @@ const testimonials = [
 
 const TestimonialsSection = () => {
   const [current, setCurrent] = useState(0);
+  const [direction, setDirection] = useState(1);
 
-  const next = () => setCurrent((prev) => (prev + 1) % testimonials.length);
-  const prev = () => setCurrent((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+  const next = () => { setDirection(1); setCurrent((prev) => (prev + 1) % testimonials.length); };
+  const prev = () => { setDirection(-1); setCurrent((prev) => (prev - 1 + testimonials.length) % testimonials.length); };
 
   const t = testimonials[current];
 
   return (
     <section className="py-20 lg:py-28 bg-section-dark">
       <div className="container">
-        <div className="text-center mb-12">
+        <motion.div
+          className="text-center mb-12"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.5 }}
+        >
           <p className="text-primary font-heading font-semibold text-sm tracking-wider uppercase mb-2">Testimonials</p>
           <h2 className="text-3xl md:text-4xl font-heading font-bold text-section-dark-fg">
             What Our Clients Say
           </h2>
-        </div>
+        </motion.div>
 
         <div className="max-w-3xl mx-auto text-center">
           <Quote className="w-10 h-10 text-primary/40 mx-auto mb-6" />
-          <blockquote className="text-section-dark-fg/90 text-lg md:text-xl leading-relaxed italic mb-8 min-h-[120px]">
-            "{t.text}"
-          </blockquote>
+          <div className="min-h-[120px] relative">
+            <AnimatePresence mode="wait" custom={direction}>
+              <motion.blockquote
+                key={current}
+                custom={direction}
+                initial={{ opacity: 0, x: direction * 30 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -direction * 30 }}
+                transition={{ duration: 0.3 }}
+                className="text-section-dark-fg/90 text-lg md:text-xl leading-relaxed italic mb-8"
+              >
+                "{t.text}"
+              </motion.blockquote>
+            </AnimatePresence>
+          </div>
           <p className="font-heading font-bold text-primary text-sm tracking-wide">{t.company}</p>
           <p className="text-section-dark-fg/60 text-sm mt-1">{t.location}</p>
 
@@ -66,7 +86,7 @@ const TestimonialsSection = () => {
               {testimonials.map((_, i) => (
                 <button
                   key={i}
-                  onClick={() => setCurrent(i)}
+                  onClick={() => { setDirection(i > current ? 1 : -1); setCurrent(i); }}
                   className={`w-2.5 h-2.5 rounded-full transition-colors ${
                     i === current ? "bg-primary" : "bg-section-dark-fg/20"
                   }`}
