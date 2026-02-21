@@ -1,105 +1,72 @@
-import { useState } from "react";
-import { Quote, ChevronLeft, ChevronRight } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { Shield, Lightbulb, Users, Heart } from "lucide-react";
+import { motion } from "framer-motion";
 
-const testimonials = [
+const values = [
   {
-    text: "We have procured discrete sizes of LV and MV cables along with solar cables and to date we have recorded no quality issues nor their delivery. We highly recommend them as a supplier of electrical cables.",
-    company: "POWERSPEED ELECTRICAL LIMITED",
-    location: "Zimbabwe",
+    title: "Integrity",
+    icon: Shield,
+    desc: "We conduct our business with the highest level of transparency and honesty, building trust with every client.",
+    color: "bg-primary/10",
   },
   {
-    text: "Neelkanth Cables Limited has performed its duties in an excellent manner meeting both the technical requirement of the conductor and the delivery schedule. The manufacturing and quality control processes are up to date and in line with the best practices in the industry.",
-    company: "SIMBA ELECTRICAL LTD.",
-    location: "Lusaka - Zambia",
+    title: "Quality Excellence",
+    icon: Heart,
+    desc: "We are committed to delivering exceptional workmanship and finishes that set industry benchmarks.",
+    color: "bg-secondary/10",
   },
   {
-    text: "The Quality & Performance of Cables & services supplied by Neelkanth Cables Ltd was found satisfactory and in line with the industry specifications. We would recommend them to any prospective buyer.",
-    company: "ELECTROMATE",
-    location: "Malawi",
+    title: "Innovation",
+    icon: Lightbulb,
+    desc: "We continuously seek modern, efficient, and reliable solutions to improve our construction and maintenance services.",
+    color: "bg-primary/10",
   },
   {
-    text: "Lafarge Zambia Plc has procured discrete sizes of LV & MV Cables from Neelkanth Cables Ltd. The Quality & Performance was found satisfactory and in line with industry specifications.",
-    company: "LAFARGE",
-    location: "Zambia",
-  },
-  {
-    text: "We are satisfied with both the product quality and service of Neelkanth Cables Limited. We do not have any hesitation to recommend Neelkanth Cables Limited to any prospective buyer.",
-    company: "PCTL AUTOMATION LTD",
-    location: "Kenya",
+    title: "Customer Focus",
+    icon: Users,
+    desc: "Our clients' needs are at the heart of everything we do, ensuring total satisfaction in every project.",
+    color: "bg-secondary/10",
   },
 ];
 
 const TestimonialsSection = () => {
-  const [current, setCurrent] = useState(0);
-  const [direction, setDirection] = useState(1);
-
-  const next = () => { setDirection(1); setCurrent((prev) => (prev + 1) % testimonials.length); };
-  const prev = () => { setDirection(-1); setCurrent((prev) => (prev - 1 + testimonials.length) % testimonials.length); };
-
-  const t = testimonials[current];
-
   return (
-    <section className="py-20 lg:py-28 bg-section-dark">
+    <section id="values" className="py-20 lg:py-28 bg-section-dark">
       <div className="container">
         <motion.div
-          className="text-center mb-12"
+          className="text-center mb-16"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.5 }}
         >
-          <p className="text-primary font-heading font-semibold text-sm tracking-wider uppercase mb-2">Testimonials</p>
+          <p className="text-primary font-heading font-semibold text-sm tracking-wider uppercase mb-2">Our Foundation</p>
           <h2 className="text-3xl md:text-4xl font-heading font-bold text-section-dark-fg">
-            What Our Clients Say
+            Our Core Values
           </h2>
+          <p className="text-section-dark-fg/60 mt-4 max-w-2xl mx-auto">
+            At Sure Safety Limited, our core values define our culture and drive our success in delivering exceptional construction and maintenance projects.
+          </p>
         </motion.div>
 
-        <div className="max-w-3xl mx-auto text-center">
-          <Quote className="w-10 h-10 text-primary/40 mx-auto mb-6" />
-          <div className="min-h-[120px] relative">
-            <AnimatePresence mode="wait" custom={direction}>
-              <motion.blockquote
-                key={current}
-                custom={direction}
-                initial={{ opacity: 0, x: direction * 30 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -direction * 30 }}
-                transition={{ duration: 0.3 }}
-                className="text-section-dark-fg/90 text-lg md:text-xl leading-relaxed italic mb-8"
-              >
-                "{t.text}"
-              </motion.blockquote>
-            </AnimatePresence>
-          </div>
-          <p className="font-heading font-bold text-primary text-sm tracking-wide">{t.company}</p>
-          <p className="text-section-dark-fg/60 text-sm mt-1">{t.location}</p>
-
-          <div className="flex items-center justify-center gap-4 mt-8">
-            <button
-              onClick={prev}
-              className="w-10 h-10 rounded-full border border-section-dark-fg/20 flex items-center justify-center text-section-dark-fg/60 hover:text-primary hover:border-primary transition-colors"
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {values.map((v, i) => (
+            <motion.div
+              key={v.title}
+              className="bg-card/5 backdrop-blur-sm border border-section-dark-fg/10 rounded-2xl p-8 hover:bg-card/10 hover:border-primary/30 transition-all duration-300 group"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1, duration: 0.5 }}
             >
-              <ChevronLeft className="w-5 h-5" />
-            </button>
-            <div className="flex gap-2">
-              {testimonials.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => { setDirection(i > current ? 1 : -1); setCurrent(i); }}
-                  className={`w-2.5 h-2.5 rounded-full transition-colors ${
-                    i === current ? "bg-primary" : "bg-section-dark-fg/20"
-                  }`}
-                />
-              ))}
-            </div>
-            <button
-              onClick={next}
-              className="w-10 h-10 rounded-full border border-section-dark-fg/20 flex items-center justify-center text-section-dark-fg/60 hover:text-primary hover:border-primary transition-colors"
-            >
-              <ChevronRight className="w-5 h-5" />
-            </button>
-          </div>
+              <div className={`w-14 h-14 ${v.color} rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
+                <v.icon className="w-7 h-7 text-primary" />
+              </div>
+              <h3 className="text-xl font-heading font-bold text-section-dark-fg mb-4">{v.title}</h3>
+              <p className="text-section-dark-fg/60 text-sm leading-relaxed">
+                {v.desc}
+              </p>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>

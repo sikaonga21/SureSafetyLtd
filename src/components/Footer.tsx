@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Mail, Phone, MapPin, ArrowUp } from "lucide-react";
+import { Mail, Phone, MapPin, ArrowUp, Instagram, Facebook, Linkedin } from "lucide-react";
 import { motion } from "framer-motion";
 
 const Footer = () => {
@@ -13,65 +13,81 @@ const Footer = () => {
         transition={{ duration: 0.5 }}
       >
         <div className="container text-center">
-          <h2 className="text-2xl md:text-3xl font-heading font-bold text-primary-foreground mb-4">
-            Are you ready to grow your business?
+          <h2 className="text-2xl md:text-3xl font-heading font-bold text-primary-foreground mb-2">
+            Ready to start your next project?
           </h2>
+          <p className="text-primary-foreground/80 mb-6 text-sm">Consult with our experts for building and maintenance solutions.</p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
-              href="mailto:sales@neelkanth-middleeast.com"
-              className="text-primary-foreground/90 hover:text-primary-foreground transition-colors"
+              href="mailto:info@suresafety.co.zm"
+              className="text-primary-foreground/90 hover:text-primary-foreground transition-colors font-medium flex items-center gap-2"
             >
-              sales@neelkanth-middleeast.com
+              <Mail className="w-4 h-4" /> info@suresafety.co.zm
             </a>
             <Link
-              to="/contact"
-              className="bg-primary-foreground text-primary px-6 py-2.5 rounded-md font-heading font-semibold hover:bg-primary-foreground/90 transition-colors text-sm"
+              to="/quote"
+              className="bg-primary-foreground text-primary px-8 py-3 rounded-xl font-heading font-bold hover:shadow-xl hover:shadow-black/10 transition-all text-sm uppercase tracking-wider"
             >
-              Request Quote
+              Get a Free Quote
             </Link>
           </div>
         </div>
       </motion.section>
 
-      <footer className="bg-section-dark py-16">
+      <footer className="bg-slate-900 pt-20 pb-10 text-slate-300">
         <div className="container">
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-12">
             {/* Brand */}
-            <div>
-              <div className="mb-4">
-                <span className="font-heading font-bold text-xl text-primary">NEELKANTH</span>
-                <span className="font-heading text-[10px] tracking-[0.3em] font-semibold text-section-dark-fg/60 block">CABLES</span>
+            <div className="space-y-6">
+              <div>
+                <span className="font-heading font-bold text-2xl text-white">SURE SAFETY</span>
+                <span className="font-heading text-[10px] tracking-[0.4em] font-semibold text-primary block mt-1">LIMITED</span>
               </div>
-              <p className="text-section-dark-fg/70 text-sm leading-relaxed">
-                A pioneering force in cable manufacturing with a commitment to innovation and quality excellence.
+              <p className="text-slate-400 text-sm leading-relaxed max-w-xs">
+                A leading construction and maintenance firm dedicated to excellence, innovation, and client satisfaction in every project.
               </p>
+              <div className="flex gap-4">
+                {[Facebook, Instagram, Linkedin].map((Icon, idx) => (
+                  <a key={idx} href="#" className="w-9 h-9 rounded-full bg-slate-800 flex items-center justify-center hover:bg-primary hover:text-white transition-all">
+                    <Icon className="w-4 h-4" />
+                  </a>
+                ))}
+              </div>
             </div>
 
             {/* Quick Links */}
             <div>
-              <h4 className="font-heading font-semibold text-section-dark-fg mb-4 text-sm">Quick Links</h4>
-              <nav className="flex flex-col gap-2">
+              <h4 className="font-heading font-bold text-white mb-6 text-sm uppercase tracking-widest">Navigation</h4>
+              <nav className="flex flex-col gap-3">
                 {[
                   { label: "Home", path: "/" },
                   { label: "About Us", path: "/about" },
-                  { label: "Products", path: "/products" },
-                  { label: "Quality", path: "/quality" },
-                  { label: "Contact", path: "/contact" },
+                  { label: "Our Services", path: "/services" },
+                  { label: "Our Projects", path: "/projects" },
+                  { label: "Careers", path: "/careers" },
+                  { label: "Contact Us", path: "/contact" },
                 ].map((l) => (
-                  <Link key={l.path} to={l.path} className="text-section-dark-fg/60 hover:text-primary transition-colors text-sm">
+                  <Link key={l.path} to={l.path} className="text-slate-400 hover:text-primary transition-colors text-sm font-medium">
                     {l.label}
                   </Link>
                 ))}
               </nav>
             </div>
 
-            {/* Products */}
+            {/* Services */}
             <div>
-              <h4 className="font-heading font-semibold text-section-dark-fg mb-4 text-sm">Products</h4>
-              <nav className="flex flex-col gap-2">
-                {["Low Voltage Cables", "Medium Voltage Cables", "Instrumentation Cables", "Solar Cables", "Conductors"].map((p) => (
-                  <Link key={p} to="/products" className="text-section-dark-fg/60 hover:text-primary transition-colors text-sm">
-                    {p}
+              <h4 className="font-heading font-bold text-white mb-6 text-sm uppercase tracking-widest">Our Services</h4>
+              <nav className="flex flex-col gap-3">
+                {[
+                  "General Building",
+                  "Electrical Installation",
+                  "Plumbing & HVAC",
+                  "Road & Paving",
+                  "Facility Maintenance",
+                  "Interior Finishing",
+                ].map((s) => (
+                  <Link key={s} to="/services" className="text-slate-400 hover:text-primary transition-colors text-sm font-medium">
+                    {s}
                   </Link>
                 ))}
               </nav>
@@ -79,31 +95,31 @@ const Footer = () => {
 
             {/* Contact */}
             <div>
-              <h4 className="font-heading font-semibold text-section-dark-fg mb-4 text-sm">Contact</h4>
-              <div className="space-y-3">
-                <div className="flex items-start gap-2">
-                  <MapPin className="w-4 h-4 text-primary shrink-0 mt-0.5" />
-                  <span className="text-section-dark-fg/60 text-sm">Jebel Ali Industrial Area, Dubai, UAE</span>
+              <h4 className="font-heading font-bold text-white mb-6 text-sm uppercase tracking-widest">Get In Touch</h4>
+              <div className="space-y-4">
+                <div className="flex items-start gap-3">
+                  <MapPin className="w-5 h-5 text-primary shrink-0" />
+                  <span className="text-slate-400 text-sm">Lusaka, Zambia</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <Phone className="w-4 h-4 text-primary shrink-0" />
-                  <span className="text-section-dark-fg/60 text-sm">+971 4 886 5626</span>
+                <div className="flex items-center gap-3">
+                  <Phone className="w-5 h-5 text-primary shrink-0" />
+                  <span className="text-slate-400 text-sm">+260 211 123 456</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <Mail className="w-4 h-4 text-primary shrink-0" />
-                  <span className="text-section-dark-fg/60 text-sm">sales@neelkanth-middleeast.com</span>
+                <div className="flex items-center gap-3">
+                  <Mail className="w-5 h-5 text-primary shrink-0" />
+                  <span className="text-slate-400 text-sm">info@suresafety.co.zm</span>
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="border-t border-section-dark-fg/10 mt-12 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <p className="text-section-dark-fg/40 text-sm">
-              © {new Date().getFullYear()} Neelkanth Cables. All rights reserved.
+          <div className="border-t border-slate-800 mt-16 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p className="text-slate-500 text-xs font-medium">
+              © {new Date().getFullYear()} Sure Safety Limited. All rights reserved.
             </p>
             <button
               onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-              className="w-10 h-10 rounded-full border border-section-dark-fg/20 flex items-center justify-center text-section-dark-fg/40 hover:text-primary hover:border-primary transition-colors"
+              className="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center text-slate-400 hover:bg-primary hover:text-white transition-all shadow-lg"
             >
               <ArrowUp className="w-4 h-4" />
             </button>

@@ -1,14 +1,14 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, Shield, Zap, Award, Users } from "lucide-react";
+import { ArrowRight, Target, Eye, Star, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import aboutBg from "@/assets/about-bg.jpg";
 
-const strengths = [
-  { icon: Shield, title: "Quality Assured", desc: "ISO certified manufacturing processes" },
-  { icon: Zap, title: "Innovation Driven", desc: "Cutting-edge cable technology" },
-  { icon: Award, title: "Industry Leader", desc: "Trusted across Africa & Middle East" },
-  { icon: Users, title: "Expert Team", desc: "Dedicated engineering professionals" },
+const highlights = [
+  { icon: Target, title: "Our Vision", desc: "To be a leading force in safety and maintenance services, recognized for excellence and innovation." },
+  { icon: Eye, title: "Our Mission", desc: "Providing exceptional services through quality, transparency, and innovation." },
+  { icon: Star, title: "Quality First", desc: "Setting industry benchmarks in every project we undertake." },
+  { icon: ShieldCheck, title: "Safety Rating", desc: "Maintaining a 100% safety record across all our site operations." },
 ];
 
 const AboutSection = () => {
@@ -25,7 +25,7 @@ const AboutSection = () => {
           >
             <img
               src={aboutBg}
-              alt="Cable manufacturing facility"
+              alt="Sure Safety Team"
               className="rounded-lg shadow-2xl w-full aspect-[4/3] object-cover"
               loading="lazy"
             />
@@ -48,41 +48,49 @@ const AboutSection = () => {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <p className="text-primary font-heading font-semibold text-sm tracking-wider uppercase">Who We Are</p>
+            <p className="text-primary font-heading font-semibold text-sm tracking-wider uppercase">About Us</p>
             <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground leading-tight">
-              Neelkanth Cables
+              Sure Safety Limited
             </h2>
             <p className="text-muted-foreground leading-relaxed">
-              At Neelkanth Cables, we pride ourselves on being a pioneering force in the cable manufacturing industry. With a dedicated team of experts and a commitment to innovation, we have established ourselves as a reliable and trusted partner in the electrical and communication sectors.
-            </p>
-            <p className="text-muted-foreground leading-relaxed">
-              Our core values are integrity, quality, and customer satisfaction. We strive to push the boundaries of technology and set new standards in product excellence and service.
+              Sure Safety Limited is a premier construction and maintenance firm dedicated to delivering world-class solutions. We specialize in building, mechanical, and electrical services, ensuring every project meets the highest standards of safety and quality.
             </p>
 
-            <div className="grid grid-cols-2 gap-4 pt-4">
-              {strengths.map((s, i) => (
+            <div className="grid sm:grid-cols-2 gap-6 pt-4">
+              {highlights.map((h, i) => (
                 <motion.div
-                  key={s.title}
-                  className="flex items-start gap-3"
+                  key={h.title}
+                  className="space-y-2"
                   initial={{ opacity: 0, y: 15 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.3 + i * 0.1, duration: 0.4 }}
                 >
-                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                    <s.icon className="w-5 h-5 text-primary" />
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                      <h.icon className="w-4 h-4 text-primary" />
+                    </div>
+                    <p className="font-heading font-bold text-foreground">{h.title}</p>
                   </div>
-                  <div>
-                    <p className="font-heading font-semibold text-sm text-foreground">{s.title}</p>
-                    <p className="text-xs text-muted-foreground">{s.desc}</p>
-                  </div>
+                  <p className="text-xs text-muted-foreground leading-relaxed pl-11">{h.desc}</p>
                 </motion.div>
               ))}
             </div>
 
+            <div className="flex flex-wrap gap-8 pt-6">
+              <div>
+                <p className="text-2xl font-bold text-primary">500+</p>
+                <p className="text-xs text-muted-foreground uppercase tracking-wider font-semibold">Projects Completed</p>
+              </div>
+              <div>
+                <p className="text-2xl font-bold text-primary">200+</p>
+                <p className="text-xs text-muted-foreground uppercase tracking-wider font-semibold">Happy Clients</p>
+              </div>
+            </div>
+
             <Link to="/contact">
               <Button className="bg-primary text-primary-foreground hover:bg-primary/90 font-heading font-semibold mt-4">
-                Request Quote <ArrowRight className="ml-2 w-4 h-4" />
+                Work With Us <ArrowRight className="ml-2 w-4 h-4" />
               </Button>
             </Link>
           </motion.div>

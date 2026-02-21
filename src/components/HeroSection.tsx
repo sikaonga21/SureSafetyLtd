@@ -1,24 +1,24 @@
-import { ArrowDown, ArrowRight } from "lucide-react";
+import { ArrowDown, ArrowRight, CheckCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import heroBg from "@/assets/hero-bg.jpg";
 
-const productCards = [
+const serviceCards = [
   {
-    title: "Low Voltage Cables",
-    desc: "Suitable for a range of applications, our low voltage cables deliver consistent performance in power distribution for homes, offices, and factories.",
-    link: "/products",
+    title: "General Building",
+    desc: "Quality construction services for residential, commercial, and industrial projects with strong finishes and dependable solutions.",
+    link: "/services",
   },
   {
-    title: "Medium Voltage Cables",
-    desc: "Engineered for robustness, ideal for the transmission and distribution of electricity in medium voltage networks.",
-    link: "/products",
+    title: "Electrical Installation",
+    desc: "Professional electrical installation and maintenance services ensuring safety, compliance, and reliable power distribution.",
+    link: "/services",
   },
   {
-    title: "Instrumentation Cables",
-    desc: "Precision-manufactured cables ensure accurate signal transmission in control and instrumentation systems.",
-    link: "/products",
+    title: "Plumbing & HVAC",
+    desc: "Comprehensive plumbing and HVAC solutions for new builds and existing properties, designed for efficiency and comfort.",
+    link: "/services",
   },
 ];
 
@@ -26,7 +26,7 @@ const HeroSection = () => {
   return (
     <section className="relative min-h-[85vh] flex items-center overflow-hidden">
       <div className="absolute inset-0">
-        <img src={heroBg} alt="Cable manufacturing" className="w-full h-full object-cover" />
+        <img src={heroBg} alt="Construction professionals at work" className="w-full h-full object-cover" />
         <div className="absolute inset-0 bg-hero-overlay" />
       </div>
 
@@ -39,8 +39,8 @@ const HeroSection = () => {
             transition={{ duration: 0.7, ease: "easeOut" }}
           >
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold text-hero-fg leading-tight">
-              Setting the Standard for{" "}
-              <span className="text-gradient-copper">Excellence</span> in Cable Manufacturing
+              Building, Maintenance &{" "}
+              <span className="text-gradient-secondary">Installation Services</span>
             </h1>
             <motion.p
               className="font-heading text-sm font-semibold tracking-[0.2em] text-primary uppercase"
@@ -48,7 +48,7 @@ const HeroSection = () => {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3, duration: 0.5 }}
             >
-              Neelkanth Cables
+              Sure Safety Limited
             </motion.p>
             <motion.p
               className="text-hero-muted text-lg max-w-lg leading-relaxed"
@@ -56,8 +56,21 @@ const HeroSection = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.5 }}
             >
-              Leading the industry with innovative solutions and high-quality products. Your trusted partner in electrical and communication cable solutions.
+              We deliver quality workmanship, strong finishes, and dependable solutions for residential, commercial, and industrial projects.
             </motion.p>
+            <motion.div
+              className="flex flex-wrap gap-4 pt-2"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5, duration: 0.5 }}
+            >
+              {["Quality Assured", "Innovation Driven", "Client Focused"].map((badge) => (
+                <div key={badge} className="flex items-center space-x-2 text-hero-fg/90">
+                  <CheckCircle className="w-5 h-5 text-secondary" />
+                  <span className="font-medium text-sm">{badge}</span>
+                </div>
+              ))}
+            </motion.div>
             <motion.div
               className="flex flex-wrap gap-4 pt-2"
               initial={{ opacity: 0, y: 10 }}
@@ -66,12 +79,12 @@ const HeroSection = () => {
             >
               <Link to="/contact">
                 <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 font-heading font-semibold px-8">
-                  Contact Us <ArrowRight className="ml-2 w-4 h-4" />
+                  Get Started <ArrowRight className="ml-2 w-4 h-4" />
                 </Button>
               </Link>
-              <Link to="/products">
+              <Link to="/services">
                 <Button size="lg" variant="outline" className="border-hero-muted/30 text-hero-fg hover:bg-hero-fg/10 font-heading font-semibold px-8">
-                  View Products
+                  Our Services
                 </Button>
               </Link>
             </motion.div>
@@ -84,7 +97,7 @@ const HeroSection = () => {
           </motion.div>
 
           <div className="hidden lg:flex gap-4">
-            {productCards.map((card, i) => (
+            {serviceCards.map((card, i) => (
               <motion.div
                 key={card.title}
                 initial={{ opacity: 0, y: 30 }}
@@ -102,7 +115,7 @@ const HeroSection = () => {
                   <h3 className="font-heading font-semibold text-card-foreground mb-2">{card.title}</h3>
                   <p className="text-muted-foreground text-sm leading-relaxed mb-4">{card.desc}</p>
                   <span className="text-primary text-sm font-medium flex items-center gap-1 group-hover:gap-2 transition-all mt-auto">
-                    View More <ArrowRight className="w-4 h-4" />
+                    Learn More <ArrowRight className="w-4 h-4" />
                   </span>
                 </Link>
               </motion.div>

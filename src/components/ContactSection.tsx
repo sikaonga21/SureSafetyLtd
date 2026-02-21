@@ -41,87 +41,105 @@ const ContactSection = () => {
         >
           <p className="text-primary font-heading font-semibold text-sm tracking-wider uppercase mb-2">Get In Touch</p>
           <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground">
-            Send Us a Message
+            Request a Consultation
           </h2>
           <p className="text-muted-foreground mt-3 max-w-lg mx-auto">
-            Contact us to learn more about our high-quality cables and customized solutions.
+            Contact us to learn more about our construction services and customized maintenance solutions.
           </p>
         </motion.div>
 
         <div className="grid lg:grid-cols-5 gap-12 max-w-5xl mx-auto">
           <motion.div
-            className="lg:col-span-2 space-y-6"
+            className="lg:col-span-2 space-y-8"
             initial={{ opacity: 0, x: -25 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.5 }}
           >
-            {[
-              { icon: MapPin, label: "Head Office", value: "Jebel Ali Industrial Area, Dubai, UAE" },
-              { icon: Phone, label: "Phone", value: "+971 4 886 5626" },
-            ].map((item) => (
-              <div key={item.label} className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                  <item.icon className="w-5 h-5 text-primary" />
+            <div className="space-y-6">
+              {[
+                { icon: MapPin, label: "Our Office", value: "Lusaka, Zambia" },
+                { icon: Phone, label: "Phone", value: "+260 211 123 456" },
+                { icon: Mail, label: "Email", value: "info@suresafety.co.zm" },
+              ].map((item) => (
+                <div key={item.label} className="flex items-start gap-4 group">
+                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary/20 transition-colors">
+                    <item.icon className="w-5 h-5 text-primary" />
+                  </div>
+                  <div>
+                    <p className="font-heading font-bold text-foreground text-sm uppercase tracking-wider">{item.label}</p>
+                    <p className="text-muted-foreground text-sm">{item.value}</p>
+                  </div>
                 </div>
-                <div>
-                  <p className="font-heading font-semibold text-foreground text-sm">{item.label}</p>
-                  <p className="text-muted-foreground text-sm">{item.value}</p>
-                </div>
-              </div>
-            ))}
-            <div className="flex items-start gap-4">
-              <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                <Mail className="w-5 h-5 text-primary" />
-              </div>
-              <div>
-                <p className="font-heading font-semibold text-foreground text-sm">Email</p>
-                <p className="text-muted-foreground text-sm">sales@neelkanth-middleeast.com</p>
-                <p className="text-muted-foreground text-sm">sales@neelkanthcables.com</p>
+              ))}
+            </div>
+
+            <div className="p-6 bg-section-alt rounded-2xl border border-border">
+              <p className="font-heading font-bold text-foreground mb-2">Business Hours</p>
+              <div className="space-y-1 text-sm text-muted-foreground">
+                <div className="flex justify-between"><span>Mon - Fri:</span> <span>08:00 - 17:00</span></div>
+                <div className="flex justify-between"><span>Saturday:</span> <span>09:00 - 13:00</span></div>
+                <div className="flex justify-between"><span>Sunday:</span> <span className="text-primary font-semibold text-xs">Closed</span></div>
               </div>
             </div>
           </motion.div>
 
           <motion.form
             onSubmit={handleSubmit}
-            className="lg:col-span-3 space-y-4"
+            className="lg:col-span-3 space-y-4 p-8 bg-card rounded-2xl border border-border shadow-sm"
             initial={{ opacity: 0, x: 25 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.5, delay: 0.15 }}
           >
             <div className="grid sm:grid-cols-2 gap-4">
+              <div className="space-y-1">
+                <p className="text-xs font-semibold text-muted-foreground ml-1">Full Name *</p>
+                <Input
+                  className="bg-section-alt border-none focus-visible:ring-primary/30 h-12"
+                  placeholder="John Doe"
+                  value={form.name}
+                  onChange={(e) => setForm({ ...form, name: e.target.value })}
+                  maxLength={100}
+                />
+              </div>
+              <div className="space-y-1">
+                <p className="text-xs font-semibold text-muted-foreground ml-1">Email Address *</p>
+                <Input
+                  type="email"
+                  className="bg-section-alt border-none focus-visible:ring-primary/30 h-12"
+                  placeholder="john@example.com"
+                  value={form.email}
+                  onChange={(e) => setForm({ ...form, email: e.target.value })}
+                  maxLength={255}
+                />
+              </div>
+            </div>
+            <div className="space-y-1">
+              <p className="text-xs font-semibold text-muted-foreground ml-1">Phone Number</p>
               <Input
-                placeholder="Your Name *"
-                value={form.name}
-                onChange={(e) => setForm({ ...form, name: e.target.value })}
-                maxLength={100}
-              />
-              <Input
-                type="email"
-                placeholder="Email Address *"
-                value={form.email}
-                onChange={(e) => setForm({ ...form, email: e.target.value })}
-                maxLength={255}
+                className="bg-section-alt border-none focus-visible:ring-primary/30 h-12"
+                placeholder="+260 9xx xxx xxx"
+                value={form.phone}
+                onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                maxLength={20}
               />
             </div>
-            <Input
-              placeholder="Phone Number"
-              value={form.phone}
-              onChange={(e) => setForm({ ...form, phone: e.target.value })}
-              maxLength={20}
-            />
-            <Textarea
-              placeholder="Your Message *"
-              rows={5}
-              value={form.message}
-              onChange={(e) => setForm({ ...form, message: e.target.value })}
-              maxLength={1000}
-            />
+            <div className="space-y-1">
+              <p className="text-xs font-semibold text-muted-foreground ml-1">How can we help? *</p>
+              <Textarea
+                className="bg-section-alt border-none focus-visible:ring-primary/30 resize-none"
+                placeholder="Tell us about your project..."
+                rows={5}
+                value={form.message}
+                onChange={(e) => setForm({ ...form, message: e.target.value })}
+                maxLength={1000}
+              />
+            </div>
             <Button
               type="submit"
               disabled={sending}
-              className="bg-primary text-primary-foreground hover:bg-primary/90 font-heading font-semibold px-8"
+              className="w-full bg-primary text-primary-foreground hover:bg-primary/90 font-heading font-bold h-12 shadow-lg shadow-primary/20 transition-all active:scale-[0.98]"
             >
               {sending ? "Sending..." : "Send Message"} <Send className="ml-2 w-4 h-4" />
             </Button>

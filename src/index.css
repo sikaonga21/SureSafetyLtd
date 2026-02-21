@@ -15,16 +15,16 @@
     --popover: 0 0% 100%;
     --popover-foreground: 210 11% 15%;
 
-    --primary: 1 78% 51%;
+    --primary: 177 70% 41%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 11% 20%;
+    --secondary: 33 100% 50%;
     --secondary-foreground: 0 0% 100%;
 
     --muted: 210 10% 92%;
     --muted-foreground: 210 10% 45%;
 
-    --accent: 30 80% 55%;
+    --accent: 33 100% 50%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
@@ -32,7 +32,7 @@
 
     --border: 210 10% 85%;
     --input: 210 10% 85%;
-    --ring: 1 78% 51%;
+    --ring: 177 70% 41%;
 
     --radius: 0.5rem;
 
@@ -43,8 +43,8 @@
     --section-dark: 210 11% 12%;
     --section-dark-fg: 0 0% 95%;
     --section-alt: 210 10% 96%;
-    --copper: 25 70% 55%;
-    --copper-light: 30 65% 70%;
+    --secondary-light: 33 80% 60%;
+    --secondary-dark: 33 100% 40%;
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -66,15 +66,20 @@
     @apply bg-background text-foreground font-body antialiased;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply font-heading;
   }
 }
 
 @layer utilities {
-  .text-gradient-copper {
+  .text-gradient-secondary {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, hsl(var(--copper)), hsl(var(--copper-light)));
+    background-image: linear-gradient(135deg, hsl(var(--secondary)), hsl(var(--secondary-light)));
   }
 
   .bg-hero-overlay {
@@ -94,14 +99,20 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
 }
 
 @keyframes scroll-left {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
 .animate-scroll-left {

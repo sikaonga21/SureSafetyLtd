@@ -5,11 +5,11 @@ import { Button } from "@/components/ui/button";
 
 const navLinks = [
   { label: "Home", path: "/" },
-  { label: "About Us", path: "/about" },
-  { label: "Products", path: "/products" },
-  { label: "Infrastructure", path: "/infrastructure" },
-  { label: "Quality & Certifications", path: "/quality" },
-  { label: "Contact Us", path: "/contact" },
+  { label: "About", path: "/about" },
+  { label: "Services", path: "/services" },
+  { label: "Projects", path: "/projects" },
+  { label: "Careers", path: "/careers" },
+  { label: "Contact", path: "/contact" },
 ];
 
 const Header = () => {
@@ -30,29 +30,28 @@ const Header = () => {
       {/* Top bar */}
       <div className="hidden lg:block bg-section-dark text-section-dark-fg text-sm">
         <div className="container flex justify-end items-center gap-6 py-2">
-          <a href="tel:+97148aborrecidos" className="flex items-center gap-1.5 hover:text-primary transition-colors">
-            <Phone className="w-3.5 h-3.5" /> +971 4 886 5626
+          <a href="tel:+260211123456" className="flex items-center gap-1.5 hover:text-primary transition-colors">
+            <Phone className="w-3.5 h-3.5" /> +260 211 123 456
           </a>
-          <a href="mailto:sales@neelkanth-middleeast.com" className="flex items-center gap-1.5 hover:text-primary transition-colors">
-            <Mail className="w-3.5 h-3.5" /> sales@neelkanth-middleeast.com
+          <a href="mailto:info@suresafety.co.zm" className="flex items-center gap-1.5 hover:text-primary transition-colors">
+            <Mail className="w-3.5 h-3.5" /> info@suresafety.co.zm
           </a>
         </div>
       </div>
 
       {/* Main nav */}
       <header
-        className={`sticky top-0 z-50 transition-all duration-300 ${
-          isScrolled
+        className={`sticky top-0 z-50 transition-all duration-300 ${isScrolled
             ? "bg-card/95 backdrop-blur-md shadow-lg"
             : "bg-card"
-        }`}
+          }`}
       >
         <div className="container flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 shrink-0">
             <div className="flex flex-col leading-tight">
-              <span className="font-heading font-bold text-lg tracking-tight text-primary">NEELKANTH</span>
-              <span className="font-heading text-[10px] tracking-[0.3em] font-semibold text-muted-foreground">CABLES</span>
+              <span className="font-heading font-bold text-lg tracking-tight text-primary">SURE SAFETY</span>
+              <span className="font-heading text-[10px] tracking-[0.3em] font-semibold text-muted-foreground">LIMITED</span>
             </div>
           </Link>
 
@@ -62,11 +61,10 @@ const Header = () => {
               <Link
                 key={link.path}
                 to={link.path}
-                className={`px-3 py-2 text-sm font-medium rounded-md transition-colors ${
-                  location.pathname === link.path
+                className={`px-3 py-2 text-sm font-medium rounded-md transition-colors ${location.pathname === link.path
                     ? "text-primary"
                     : "text-foreground/80 hover:text-primary"
-                }`}
+                  }`}
               >
                 {link.label}
               </Link>
@@ -75,9 +73,9 @@ const Header = () => {
 
           {/* CTA + mobile toggle */}
           <div className="flex items-center gap-3">
-            <Link to="/contact" className="hidden sm:block">
+            <Link to="/quote" className="hidden sm:block">
               <Button size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90 font-heading font-semibold text-xs px-5">
-                Request Quote
+                Get Quote
               </Button>
             </Link>
             <button
@@ -98,18 +96,17 @@ const Header = () => {
                 <Link
                   key={link.path}
                   to={link.path}
-                  className={`px-4 py-3 rounded-md text-sm font-medium transition-colors ${
-                    location.pathname === link.path
+                  className={`px-4 py-3 rounded-md text-sm font-medium transition-colors ${location.pathname === link.path
                       ? "bg-primary/10 text-primary"
                       : "text-foreground/80 hover:bg-muted"
-                  }`}
+                    }`}
                 >
                   {link.label}
                 </Link>
               ))}
-              <Link to="/contact" className="mt-2">
+              <Link to="/quote" className="mt-2">
                 <Button className="w-full bg-primary text-primary-foreground font-heading font-semibold">
-                  Request Quote
+                  Get Quote
                 </Button>
               </Link>
             </nav>

@@ -1,40 +1,30 @@
 import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Building2, Zap, Droplets, Paintbrush, Truck, Settings } from "lucide-react";
 import { motion } from "framer-motion";
 import productsBanner from "@/assets/products-banner.jpg";
 
-const products = [
+const services = [
   {
-    category: "LOW VOLTAGE CABLES",
+    category: "CIVIL & CONSTRUCTION",
     items: [
-      { name: "Single Core Flexible Cables", desc: "Versatile wires with a single conductor, ideal for industrial and domestic wiring." },
-      { name: "Multicore Flexible Cables", desc: "Multiple conductors within a single sheath for complex wiring applications." },
-      { name: "Twin Flat ECC Cables", desc: "Perfect for domestic electrical setups, ensuring safe power distribution." },
-      { name: "Control Cables", desc: "Specialized cables for control signal transmission in various applications." },
-      { name: "LSZH Copper Cables", desc: "Low smoke zero halogen cables, safer for indoor use in enclosed spaces." },
-      { name: "Submersible Cables", desc: "Designed to operate underwater for submersible pumps and equipment." },
+      { name: "General Building", icon: Building2, desc: "New construction, renovations, and extensions for residential and commercial properties." },
+      { name: "Painting & Finishing", icon: Paintbrush, desc: "Professional painting, tiling, and interior finishes that stand the test of time." },
+      { name: "Road & Paving", icon: Truck, desc: "High-quality road construction and interlocking paving solutions for any infrastructure." },
     ],
   },
   {
-    category: "MEDIUM VOLTAGE CABLES",
+    category: "MECHANICAL & ELECTRICAL",
     items: [
-      { name: "MV Armoured Cables", desc: "Safe power transmission between 1kV and 36kV with mechanical protection." },
-      { name: "MV Unarmoured Cables", desc: "Flexible design for protected environments at medium voltage ranges." },
-    ],
-  },
-  {
-    category: "SPECIAL APPLICATION",
-    items: [
-      { name: "Solar Cables", desc: "Designed for photovoltaic system interconnection in harsh conditions." },
-      { name: "Fire Alarm Cables", desc: "BS 7629-1 compliant cables for fire & smoke alarm systems." },
-      { name: "Instrumentation Cables", desc: "Accurate signal transmission in control and instrumentation systems." },
+      { name: "Electrical Installation", icon: Zap, desc: "Complete wiring, lighting, and power system installations with a focus on safety." },
+      { name: "Plumbing & HVAC", icon: Droplets, desc: "Advanced plumbing and air conditioning solutions for comfort and efficiency." },
+      { name: "Facility Maintenance", icon: Settings, desc: "Ongoing maintenance services to keep your property in peak condition." },
     ],
   },
 ];
 
 const ProductsSection = () => {
   return (
-    <section className="py-20 lg:py-28 bg-section-alt">
+    <section id="services" className="py-20 lg:py-28 bg-section-alt">
       <div className="container">
         <motion.div
           className="text-center mb-16"
@@ -43,9 +33,9 @@ const ProductsSection = () => {
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.5 }}
         >
-          <p className="text-primary font-heading font-semibold text-sm tracking-wider uppercase mb-2">Solutions</p>
+          <p className="text-primary font-heading font-semibold text-sm tracking-wider uppercase mb-2">Our Capabilities</p>
           <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground">
-            Explore Our Products
+            Our Core Services
           </h2>
         </motion.div>
 
@@ -58,14 +48,14 @@ const ProductsSection = () => {
         >
           <img
             src={productsBanner}
-            alt="Cable products lineup"
+            alt="Sure Safety construction site"
             className="w-full h-48 md:h-64 object-cover"
             loading="lazy"
           />
         </motion.div>
 
         <div className="space-y-12">
-          {products.map((cat, catIdx) => (
+          {services.map((cat, catIdx) => (
             <div key={cat.category}>
               <motion.h3
                 className="font-heading font-bold text-lg text-foreground mb-6 pb-2 border-b-2 border-primary/20"
@@ -76,23 +66,26 @@ const ProductsSection = () => {
               >
                 {cat.category}
               </motion.h3>
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                {cat.items.map((item, i) => (
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {cat.items.map((service, i) => (
                   <motion.div
-                    key={item.name}
+                    key={service.name}
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: i * 0.07, duration: 0.4 }}
                   >
                     <Link
-                      to="/products"
-                      className="group block bg-card rounded-lg p-5 border border-border hover:border-primary/30 hover:shadow-md transition-all duration-300"
+                      to="/services"
+                      className="group block bg-card h-full rounded-lg p-6 border border-border hover:border-primary/30 hover:shadow-lg transition-all duration-300"
                     >
-                      <h4 className="font-heading font-semibold text-foreground mb-2">{item.name}</h4>
-                      <p className="text-muted-foreground text-sm leading-relaxed mb-3">{item.desc}</p>
+                      <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
+                        <service.icon className="w-6 h-6 text-primary" />
+                      </div>
+                      <h4 className="font-heading font-semibold text-foreground mb-2">{service.name}</h4>
+                      <p className="text-muted-foreground text-sm leading-relaxed mb-4">{service.desc}</p>
                       <span className="text-primary text-sm font-medium flex items-center gap-1 group-hover:gap-2 transition-all">
-                        Read More <ArrowRight className="w-3.5 h-3.5" />
+                        View Details <ArrowRight className="w-3.5 h-3.5" />
                       </span>
                     </Link>
                   </motion.div>
@@ -109,9 +102,9 @@ const ProductsSection = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.4 }}
         >
-          <Link to="/products">
-            <button className="bg-primary text-primary-foreground px-8 py-3 rounded-md font-heading font-semibold hover:bg-primary/90 transition-colors">
-              View All Products <ArrowRight className="inline ml-2 w-4 h-4" />
+          <Link to="/services">
+            <button className="bg-primary text-primary-foreground px-8 py-3 rounded-md font-heading font-semibold hover:bg-primary/90 transition-colors shadow-lg shadow-primary/20">
+              View All Services <ArrowRight className="inline ml-2 w-4 h-4" />
             </button>
           </Link>
         </motion.div>

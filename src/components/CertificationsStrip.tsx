@@ -1,34 +1,37 @@
-const certLogos = [
-  { name: "DEWA", url: "https://neelkanthcables.com/images/dewa-logo.jpg" },
-  { name: "Abu Dhabi Water", url: "https://neelkanthcables.com/images/abudhabi-water-authority.jpg" },
-  { name: "Etihad Water", url: "https://neelkanthcables.com/images/ethihad-water-authority.png" },
-  { name: "Etihad Rail", url: "https://neelkanthcables.com/images/Etihad_Rail_Logo.png" },
-  { name: "ISO 9001", url: "https://neelkanthcables.com/images/iso9001.png" },
-  { name: "ISO 14001", url: "https://neelkanthcables.com/images/iso14001.png" },
-  { name: "ISO 45001", url: "https://neelkanthcables.com/images/iso45001.png" },
-  { name: "SEWA", url: "https://neelkanthcables.com/images/sewa.png" },
-  { name: "Emirates Quality Mark", url: "https://neelkanthcables.com/images/emirates-quality-mark.png" },
-  { name: "BASEC", url: "https://neelkanthcables.com/images/basec.png" },
-  { name: "CE", url: "https://neelkanthcables.com/images/ce.png" },
-  { name: "RoHS", url: "https://neelkanthcables.com/images/rohs.png" },
+import { Shield, Zap, Award, Users } from "lucide-react";
+import { motion } from "framer-motion";
+
+const stats = [
+  { icon: Shield, title: "Quality Assured", desc: "Top-tier workmanship" },
+  { icon: Zap, title: "Innovation Driven", desc: "Modern solutions" },
+  { icon: Award, title: "Client Focused", desc: "Dedicated service" },
+  { icon: Users, title: "Safety First", desc: "100% compliance" },
 ];
 
 const CertificationsStrip = () => {
-  const doubled = [...certLogos, ...certLogos];
-
   return (
-    <section className="py-8 bg-card border-y border-border overflow-hidden">
-      <div className="flex animate-scroll-left" style={{ width: "max-content" }}>
-        {doubled.map((logo, i) => (
-          <div key={i} className="flex items-center justify-center px-8 shrink-0">
-            <img
-              src={logo.url}
-              alt={logo.name}
-              className="h-12 md:h-16 w-auto object-contain opacity-70 hover:opacity-100 transition-opacity grayscale hover:grayscale-0"
-              loading="lazy"
-            />
-          </div>
-        ))}
+    <section className="py-12 bg-card border-y border-border">
+      <div className="container">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          {stats.map((s, i) => (
+            <motion.div
+              key={s.title}
+              className="flex flex-col items-center text-center space-y-3"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1, duration: 0.5 }}
+            >
+              <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
+                <s.icon className="w-6 h-6 text-primary" />
+              </div>
+              <div>
+                <p className="font-heading font-bold text-foreground text-sm uppercase tracking-wider">{s.title}</p>
+                <p className="text-muted-foreground text-xs">{s.desc}</p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
       </div>
     </section>
   );
