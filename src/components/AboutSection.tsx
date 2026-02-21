@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, Shield, Zap, Award, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
 import aboutBg from "@/assets/about-bg.jpg";
 
 const strengths = [
@@ -15,22 +16,38 @@ const AboutSection = () => {
     <section id="about" className="py-20 lg:py-28 bg-card">
       <div className="container">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
-          {/* Image */}
-          <div className="relative">
+          <motion.div
+            className="relative"
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.6 }}
+          >
             <img
               src={aboutBg}
               alt="Cable manufacturing facility"
               className="rounded-lg shadow-2xl w-full aspect-[4/3] object-cover"
               loading="lazy"
             />
-            <div className="absolute -bottom-6 -right-6 bg-primary text-primary-foreground px-8 py-4 rounded-lg shadow-lg hidden md:block">
+            <motion.div
+              className="absolute -bottom-6 -right-6 bg-primary text-primary-foreground px-8 py-4 rounded-lg shadow-lg hidden md:block"
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.4, duration: 0.4 }}
+            >
               <p className="font-heading font-bold text-2xl">15+</p>
               <p className="text-sm opacity-90">Years of Excellence</p>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
-          {/* Content */}
-          <div className="space-y-6">
+          <motion.div
+            className="space-y-6"
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
             <p className="text-primary font-heading font-semibold text-sm tracking-wider uppercase">Who We Are</p>
             <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground leading-tight">
               Neelkanth Cables
@@ -43,8 +60,15 @@ const AboutSection = () => {
             </p>
 
             <div className="grid grid-cols-2 gap-4 pt-4">
-              {strengths.map((s) => (
-                <div key={s.title} className="flex items-start gap-3">
+              {strengths.map((s, i) => (
+                <motion.div
+                  key={s.title}
+                  className="flex items-start gap-3"
+                  initial={{ opacity: 0, y: 15 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.3 + i * 0.1, duration: 0.4 }}
+                >
                   <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
                     <s.icon className="w-5 h-5 text-primary" />
                   </div>
@@ -52,7 +76,7 @@ const AboutSection = () => {
                     <p className="font-heading font-semibold text-sm text-foreground">{s.title}</p>
                     <p className="text-xs text-muted-foreground">{s.desc}</p>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
 
@@ -61,7 +85,7 @@ const AboutSection = () => {
                 Request Quote <ArrowRight className="ml-2 w-4 h-4" />
               </Button>
             </Link>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
