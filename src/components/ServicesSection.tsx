@@ -62,7 +62,7 @@ const ProductsSection = () => {
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.5 }}
         >
-          <p className="text-primary font-heading font-semibold text-sm tracking-wider uppercase mb-2">Our Capabilities</p>
+          <p className="text-primary font-heading font-semibold text-sm tracking-wider uppercase mb-2">Our Expertise</p>
           <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground">
             Our Core Services
           </h2>
