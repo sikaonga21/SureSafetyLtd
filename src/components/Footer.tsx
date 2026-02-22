@@ -7,7 +7,7 @@ const Footer = () => {
   return (
     <>
       <motion.section
-        className="bg-brand-blue py-12"
+        className="bg-primary py-12"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
@@ -48,7 +48,7 @@ const Footer = () => {
               </p>
               <div className="flex gap-4">
                 {[Facebook, Instagram, Linkedin].map((Icon, idx) => (
-                  <a key={idx} href="#" className="w-9 h-9 rounded-full bg-slate-800 flex items-center justify-center hover:bg-brand-green hover:text-white transition-all">
+                  <a key={idx} href="#" className="w-9 h-9 rounded-full bg-slate-800 flex items-center justify-center hover:bg-primary hover:text-white transition-all">
                     <Icon className="w-4 h-4" />
                   </a>
                 ))}
@@ -68,7 +68,7 @@ const Footer = () => {
                   { label: "Capabilities", path: "/capabilities" },
                   { label: "Contact Us", path: "/contact" },
                 ].map((l) => (
-                  <Link key={l.path} to={l.path} className="text-slate-400 hover:text-brand-green transition-colors text-sm font-medium">
+                  <Link key={l.path} to={l.path} className="text-slate-400 hover:text-primary transition-colors text-sm font-medium">
                     {l.label}
                   </Link>
                 ))}
@@ -87,7 +87,7 @@ const Footer = () => {
                   "Facility Maintenance",
                   "Interior Finishing",
                 ].map((s) => (
-                  <Link key={s} to="/services" className="text-slate-400 hover:text-brand-green transition-colors text-sm font-medium">
+                  <Link key={s} to="/services" className="text-slate-400 hover:text-primary transition-colors text-sm font-medium">
                     {s}
                   </Link>
                 ))}
@@ -120,7 +120,7 @@ const Footer = () => {
             </p>
             <button
               onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-              className="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center text-slate-400 hover:bg-brand-green hover:text-white transition-all shadow-lg"
+              className="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center text-slate-400 hover:bg-primary hover:text-white transition-all shadow-lg"
             >
               <ArrowUp className="w-4 h-4" />
             </button>

@@ -35,7 +35,7 @@ const Careers = () => {
 
             <main>
                 {/* Hero Section */}
-                <section className="relative py-20 bg-brand-blue text-white overflow-hidden">
+                <section className="relative py-20 bg-section-dark text-white overflow-hidden">
                     <div className="container relative z-10">
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
@@ -44,13 +44,13 @@ const Careers = () => {
                             className="max-w-2xl"
                         >
                             <h1 className="text-4xl md:text-5xl font-heading font-bold mb-6">
-                                Join Our Team at <span className="text-brand-green">Sure Safety</span>
+                                Join Our Team at <span className="text-secondary">Sure Safety</span>
                             </h1>
                             <p className="text-lg text-white/80 mb-8 leading-relaxed">
                                 We are always looking for talented and passionate individuals to help us deliver excellence in construction and maintenance.
                             </p>
                             <div className="flex flex-wrap gap-4">
-                                <Button className="bg-brand-green hover:bg-brand-green/90 text-white font-bold px-8 py-6 rounded-xl text-lg">
+                                <Button className="bg-primary hover:bg-primary/90 text-white font-bold px-8 py-6 rounded-xl text-lg">
                                     View Openings
                                 </Button>
                             </div>
@@ -58,7 +58,7 @@ const Careers = () => {
                     </div>
 
                     {/* Decorative Background Elements */}
-                    <div className="absolute top-0 right-0 w-1/3 h-full bg-brand-green/10 -skew-x-12 transform translate-x-1/2" />
+                    <div className="absolute top-0 right-0 w-1/3 h-full bg-primary/5 -skew-x-12 transform translate-x-1/2" />
                 </section>
 
                 {/* Why Join Us */}
@@ -132,7 +132,7 @@ const Careers = () => {
                                                 {job.description}
                                             </p>
                                         </div>
-                                        <Button className="bg-brand-blue hover:bg-brand-blue/90 text-white font-bold px-6 shrink-0">
+                                        <Button className="bg-primary hover:bg-primary/90 text-white font-bold px-6 shrink-0">
                                             Apply Now <ArrowRight className="ml-2 w-4 h-4" />
                                         </Button>
                                     </div>

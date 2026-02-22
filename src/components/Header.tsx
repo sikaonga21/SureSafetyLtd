@@ -31,7 +31,7 @@ const Header = () => {
   return (
     <>
       {/* Top bar */}
-      <div className="hidden lg:block bg-brand-blue text-section-dark-fg text-sm">
+      <div className="hidden lg:block bg-section-dark text-section-dark-fg text-sm">
         <div className="container flex justify-end items-center gap-6 py-2">
           <a href="tel:+260211123456" className="flex items-center gap-1.5 hover:text-primary transition-colors">
             <Phone className="w-3.5 h-3.5" /> +260 211 123 456
@@ -74,7 +74,7 @@ const Header = () => {
           {/* CTA + mobile toggle */}
           <div className="flex items-center gap-3">
             <Link to="/quote" className="hidden sm:block">
-              <Button size="sm" className="bg-primary text-primary-foreground hover:bg-brand-green font-heading font-semibold text-xs px-5">
+              <Button size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90 font-heading font-semibold text-xs px-5">
                 Get Quote
               </Button>
             </Link>
