@@ -2,12 +2,15 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X, Phone, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import logo from "@/assets/logo.png";
 
 const navLinks = [
   { label: "Home", path: "/" },
   { label: "About", path: "/about" },
   { label: "Services", path: "/services" },
   { label: "Projects", path: "/projects" },
+  { label: "Capabilities", path: "/capabilities" },
+  { label: "Safety", path: "/safety" },
   { label: "Careers", path: "/careers" },
   { label: "Contact", path: "/contact" },
 ];
@@ -28,7 +31,7 @@ const Header = () => {
   return (
     <>
       {/* Top bar */}
-      <div className="hidden lg:block bg-section-dark text-section-dark-fg text-sm">
+      <div className="hidden lg:block bg-brand-blue text-section-dark-fg text-sm">
         <div className="container flex justify-end items-center gap-6 py-2">
           <a href="tel:+260211123456" className="flex items-center gap-1.5 hover:text-primary transition-colors">
             <Phone className="w-3.5 h-3.5" /> +260 211 123 456
@@ -42,17 +45,14 @@ const Header = () => {
       {/* Main nav */}
       <header
         className={`sticky top-0 z-50 transition-all duration-300 ${isScrolled
-            ? "bg-card/95 backdrop-blur-md shadow-lg"
-            : "bg-card"
+          ? "bg-card/95 backdrop-blur-md shadow-lg"
+          : "bg-card"
           }`}
       >
         <div className="container flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 shrink-0">
-            <div className="flex flex-col leading-tight">
-              <span className="font-heading font-bold text-lg tracking-tight text-primary">SURE SAFETY</span>
-              <span className="font-heading text-[10px] tracking-[0.3em] font-semibold text-muted-foreground">LIMITED</span>
-            </div>
+            <img src={logo} alt="Sure Safety Limited Logo" className="h-24 w-auto object-contain" />
           </Link>
 
           {/* Desktop nav */}
@@ -62,8 +62,8 @@ const Header = () => {
                 key={link.path}
                 to={link.path}
                 className={`px-3 py-2 text-sm font-medium rounded-md transition-colors ${location.pathname === link.path
-                    ? "text-primary"
-                    : "text-foreground/80 hover:text-primary"
+                  ? "text-primary"
+                  : "text-foreground/80 hover:text-primary"
                   }`}
               >
                 {link.label}
@@ -74,7 +74,7 @@ const Header = () => {
           {/* CTA + mobile toggle */}
           <div className="flex items-center gap-3">
             <Link to="/quote" className="hidden sm:block">
-              <Button size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90 font-heading font-semibold text-xs px-5">
+              <Button size="sm" className="bg-primary text-primary-foreground hover:bg-brand-green font-heading font-semibold text-xs px-5">
                 Get Quote
               </Button>
             </Link>
@@ -97,8 +97,8 @@ const Header = () => {
                   key={link.path}
                   to={link.path}
                   className={`px-4 py-3 rounded-md text-sm font-medium transition-colors ${location.pathname === link.path
-                      ? "bg-primary/10 text-primary"
-                      : "text-foreground/80 hover:bg-muted"
+                    ? "bg-primary/10 text-primary"
+                    : "text-foreground/80 hover:bg-muted"
                     }`}
                 >
                   {link.label}

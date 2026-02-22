@@ -58,6 +58,8 @@ export default {
         "hero-muted": "hsl(var(--hero-muted))",
         "section-dark": "hsl(var(--section-dark))",
         "section-dark-fg": "hsl(var(--section-dark-fg))",
+        "brand-green": "hsl(var(--brand-green))",
+        "brand-blue": "hsl(var(--brand-blue))",
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",

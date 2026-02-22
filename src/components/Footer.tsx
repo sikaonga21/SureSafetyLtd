@@ -1,12 +1,13 @@
 import { Link } from "react-router-dom";
 import { Mail, Phone, MapPin, ArrowUp, Instagram, Facebook, Linkedin } from "lucide-react";
 import { motion } from "framer-motion";
+import logo from "@/assets/logo.png";
 
 const Footer = () => {
   return (
     <>
       <motion.section
-        className="bg-primary py-12"
+        className="bg-brand-blue py-12"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
@@ -39,16 +40,15 @@ const Footer = () => {
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-12">
             {/* Brand */}
             <div className="space-y-6">
-              <div>
-                <span className="font-heading font-bold text-2xl text-white">SURE SAFETY</span>
-                <span className="font-heading text-[10px] tracking-[0.4em] font-semibold text-primary block mt-1">LIMITED</span>
-              </div>
+              <Link to="/">
+                <img src={logo} alt="Sure Safety Limited Logo" className="h-40 w-auto object-contain bg-white p-2 rounded-lg" />
+              </Link>
               <p className="text-slate-400 text-sm leading-relaxed max-w-xs">
                 A leading construction and maintenance firm dedicated to excellence, innovation, and client satisfaction in every project.
               </p>
               <div className="flex gap-4">
                 {[Facebook, Instagram, Linkedin].map((Icon, idx) => (
-                  <a key={idx} href="#" className="w-9 h-9 rounded-full bg-slate-800 flex items-center justify-center hover:bg-primary hover:text-white transition-all">
+                  <a key={idx} href="#" className="w-9 h-9 rounded-full bg-slate-800 flex items-center justify-center hover:bg-brand-green hover:text-white transition-all">
                     <Icon className="w-4 h-4" />
                   </a>
                 ))}
@@ -65,9 +65,10 @@ const Footer = () => {
                   { label: "Our Services", path: "/services" },
                   { label: "Our Projects", path: "/projects" },
                   { label: "Careers", path: "/careers" },
+                  { label: "Capabilities", path: "/capabilities" },
                   { label: "Contact Us", path: "/contact" },
                 ].map((l) => (
-                  <Link key={l.path} to={l.path} className="text-slate-400 hover:text-primary transition-colors text-sm font-medium">
+                  <Link key={l.path} to={l.path} className="text-slate-400 hover:text-brand-green transition-colors text-sm font-medium">
                     {l.label}
                   </Link>
                 ))}
@@ -86,7 +87,7 @@ const Footer = () => {
                   "Facility Maintenance",
                   "Interior Finishing",
                 ].map((s) => (
-                  <Link key={s} to="/services" className="text-slate-400 hover:text-primary transition-colors text-sm font-medium">
+                  <Link key={s} to="/services" className="text-slate-400 hover:text-brand-green transition-colors text-sm font-medium">
                     {s}
                   </Link>
                 ))}
@@ -119,10 +120,18 @@ const Footer = () => {
             </p>
             <button
               onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-              className="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center text-slate-400 hover:bg-primary hover:text-white transition-all shadow-lg"
+              className="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center text-slate-400 hover:bg-brand-green hover:text-white transition-all shadow-lg"
             >
               <ArrowUp className="w-4 h-4" />
             </button>
+          </div>
+          <div>
+            <p className="text-sm text-white/90 font-medium">
+              Created by{" "}
+              <a href="https://sikaonga.vercel.app" target="_blank" rel="noopener noreferrer" className="text-white hover:text-secondary underline underline-offset-2 transition-colors">Sikaonga</a>
+
+
+            </p>
           </div>
         </div>
       </footer>

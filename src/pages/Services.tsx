@@ -1,6 +1,6 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import ProductsSection from "@/components/ProductsSection";
+import ServicesSection from "@/components/ServicesSection";
 
 const ProductsPage = () => {
   return (
@@ -13,7 +13,7 @@ const ProductsPage = () => {
             <h1 className="text-4xl md:text-5xl font-heading font-bold text-section-dark-fg">Products Catalog</h1>
           </div>
         </section>
-        <ProductsSection />
+        <ServicesSection />
       </main>
       <Footer />
     </div>

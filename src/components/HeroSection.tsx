@@ -66,7 +66,7 @@ const HeroSection = () => {
             >
               {["Quality Assured", "Innovation Driven", "Client Focused"].map((badge) => (
                 <div key={badge} className="flex items-center space-x-2 text-hero-fg/90">
-                  <CheckCircle className="w-5 h-5 text-secondary" />
+                  <CheckCircle className="w-5 h-5 text-brand-green" />
                   <span className="font-medium text-sm">{badge}</span>
                 </div>
               ))}
@@ -114,7 +114,7 @@ const HeroSection = () => {
                   </div>
                   <h3 className="font-heading font-semibold text-card-foreground mb-2">{card.title}</h3>
                   <p className="text-muted-foreground text-sm leading-relaxed mb-4">{card.desc}</p>
-                  <span className="text-primary text-sm font-medium flex items-center gap-1 group-hover:gap-2 transition-all mt-auto">
+                  <span className="text-brand-green text-sm font-medium flex items-center gap-1 group-hover:gap-2 transition-all mt-auto">
                     Learn More <ArrowRight className="w-4 h-4" />
                   </span>
                 </Link>
