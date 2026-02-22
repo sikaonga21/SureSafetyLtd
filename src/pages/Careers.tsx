@@ -85,10 +85,10 @@ const Careers = () => {
                                     transition={{ delay: i * 0.1, duration: 0.5 }}
                                     className="p-8 rounded-2xl bg-slate-50 border border-slate-100 hover:shadow-lg transition-all"
                                 >
-                                    <div className="w-12 h-12 rounded-xl bg-brand-green/10 flex items-center justify-center mb-6">
-                                        <CheckCircle className="w-6 h-6 text-brand-green" />
-                                    </div>
-                                    <h3 className="text-xl font-heading font-bold mb-3">{benefit.title}</h3>
+                                    <h3 className="text-xl font-heading font-bold mb-3">
+                                        <span className="text-secondary mr-2">•</span>
+                                        {benefit.title}
+                                    </h3>
                                     <p className="text-muted-foreground leading-relaxed">{benefit.desc}</p>
                                 </motion.div>
                             ))}
@@ -114,8 +114,7 @@ const Careers = () => {
                                     <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
                                         <div className="space-y-2">
                                             <div className="flex items-center gap-3">
-                                                <Briefcase className="w-5 h-5 text-brand-blue" />
-                                                <h3 className="text-xl font-heading font-bold group-hover:text-brand-blue transition-colors">{job.title}</h3>
+                                                <h3 className="text-xl font-heading font-bold group-hover:text-primary transition-colors">{job.title}</h3>
                                                 <span className="px-3 py-1 bg-slate-100 text-[10px] font-bold uppercase tracking-wider rounded-full text-slate-600">
                                                     {job.type}
                                                 </span>

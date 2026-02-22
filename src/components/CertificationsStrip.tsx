@@ -16,18 +16,15 @@ const CertificationsStrip = () => {
           {stats.map((s, i) => (
             <motion.div
               key={s.title}
-              className="flex flex-col items-center text-center space-y-3"
+              className="flex flex-col items-center text-center space-y-2"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1, duration: 0.5 }}
             >
-              <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                <s.icon className="w-6 h-6 text-primary" />
-              </div>
               <div>
-                <p className="font-heading font-bold text-foreground text-sm uppercase tracking-wider">{s.title}</p>
-                <p className="text-muted-foreground text-xs">{s.desc}</p>
+                <p className="font-heading font-bold text-foreground text-[10px] sm:text-xs uppercase tracking-[0.2em] mb-1">{s.title}</p>
+                <p className="text-muted-foreground text-[10px]">{s.desc}</p>
               </div>
             </motion.div>
           ))}

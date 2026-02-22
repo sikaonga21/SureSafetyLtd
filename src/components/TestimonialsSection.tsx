@@ -58,10 +58,10 @@ const TestimonialsSection = () => {
               viewport={{ once: true }}
               transition={{ delay: i * 0.1, duration: 0.5 }}
             >
-              <div className={`w-14 h-14 ${v.color} rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
-                <v.icon className="w-7 h-7 text-primary" />
-              </div>
-              <h3 className="text-xl font-heading font-bold text-section-dark-fg mb-4">{v.title}</h3>
+              <h3 className="text-xl font-heading font-bold text-section-dark-fg mb-4">
+                <span className="text-primary mr-2">/</span>
+                {v.title}
+              </h3>
               <p className="text-section-dark-fg/60 text-sm leading-relaxed">
                 {v.desc}
               </p>

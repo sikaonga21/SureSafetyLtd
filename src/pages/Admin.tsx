@@ -34,13 +34,13 @@ const Admin = () => {
 
                 <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
                     <TabsList className="bg-white border p-1 rounded-xl shadow-sm">
-                        <TabsTrigger value="jobs" className="rounded-lg data-[state=active]:bg-brand-blue data-[state=active]:text-white px-6">
+                        <TabsTrigger value="jobs" className="rounded-lg data-[state=active]:bg-primary data-[state=active]:text-white px-6">
                             <Briefcase className="mr-2 w-4 h-4" /> Manage Jobs
                         </TabsTrigger>
-                        <TabsTrigger value="applications" className="rounded-lg data-[state=active]:bg-brand-blue data-[state=active]:text-white px-6">
+                        <TabsTrigger value="applications" className="rounded-lg data-[state=active]:bg-primary data-[state=active]:text-white px-6">
                             <Users className="mr-2 w-4 h-4" /> Applications
                         </TabsTrigger>
-                        <TabsTrigger value="settings" className="rounded-lg data-[state=active]:bg-brand-blue data-[state=active]:text-white px-6">
+                        <TabsTrigger value="settings" className="rounded-lg data-[state=active]:bg-primary data-[state=active]:text-white px-6">
                             <Settings className="mr-2 w-4 h-4" /> Settings
                         </TabsTrigger>
                     </TabsList>
@@ -51,7 +51,7 @@ const Admin = () => {
                                 <div>
                                     <CardTitle className="text-xl">Job Listings</CardTitle>
                                 </div>
-                                <Button size="sm" className="bg-brand-green hover:bg-brand-green/90 font-bold">
+                                <Button size="sm" className="bg-primary hover:bg-primary/90 font-bold">
                                     <Plus className="mr-2 w-4 h-4" /> New Job Posting
                                 </Button>
                             </CardHeader>
@@ -64,7 +64,7 @@ const Admin = () => {
                                                 <p className="text-xs text-slate-500">Posted on Feb {10 + i}, 2026 • Lusaka, Zambia</p>
                                             </div>
                                             <div className="flex gap-2">
-                                                <Button variant="ghost" size="sm" className="text-slate-600 hover:text-brand-blue">Edit</Button>
+                                                <Button variant="ghost" size="sm" className="text-slate-600 hover:text-primary">Edit</Button>
                                                 <Button variant="ghost" size="sm" className="text-red-400 hover:text-red-600">Delete</Button>
                                             </div>
                                         </div>

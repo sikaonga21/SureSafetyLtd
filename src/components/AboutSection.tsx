@@ -67,10 +67,10 @@ const AboutSection = () => {
                   transition={{ delay: 0.3 + i * 0.1, duration: 0.4 }}
                 >
                   <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                      <h.icon className="w-4 h-4 text-primary" />
-                    </div>
-                    <p className="font-heading font-bold text-foreground">{h.title}</p>
+                    <p className="font-heading font-bold text-foreground">
+                      <span className="text-primary mr-2">#</span>
+                      {h.title}
+                    </p>
                   </div>
                   <p className="text-xs text-muted-foreground leading-relaxed pl-11">{h.desc}</p>
                 </motion.div>

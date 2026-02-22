@@ -66,7 +66,7 @@ const HeroSection = () => {
             >
               {["Quality Assured", "Innovation Driven", "Client Focused"].map((badge) => (
                 <div key={badge} className="flex items-center space-x-2 text-hero-fg/90">
-                  <CheckCircle className="w-5 h-5 text-secondary" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-secondary" />
                   <span className="font-medium text-sm">{badge}</span>
                 </div>
               ))}
@@ -88,12 +88,7 @@ const HeroSection = () => {
                 </Button>
               </Link>
             </motion.div>
-            <button
-              onClick={() => document.getElementById("about")?.scrollIntoView({ behavior: "smooth" })}
-              className="flex items-center gap-2 text-hero-muted hover:text-primary transition-colors pt-4 text-sm"
-            >
-              <ArrowDown className="w-4 h-4 animate-bounce" /> Scroll Down
-            </button>
+
           </motion.div>
 
           <div className="hidden lg:flex gap-4">

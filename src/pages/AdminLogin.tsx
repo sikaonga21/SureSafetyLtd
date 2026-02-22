@@ -73,7 +73,7 @@ const AdminLogin = () => {
                             </div>
                         </CardContent>
                         <CardFooter>
-                            <Button type="submit" className="w-full bg-brand-blue hover:bg-brand-blue/90 font-bold" disabled={loading}>
+                            <Button type="submit" className="w-full bg-primary hover:bg-primary/90 font-bold" disabled={loading}>
                                 {loading ? "Logging in..." : "Login to Dashboard"}
                             </Button>
                         </CardFooter>
