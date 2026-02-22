@@ -14,7 +14,7 @@ export default {
     },
     extend: {
       fontFamily: {
-        heading: ["Poppins", "sans-serif"],
+        heading: ["'Good Times'", "Poppins", "sans-serif"],
         body: ["Inter", "sans-serif"],
       },
       colors: {
