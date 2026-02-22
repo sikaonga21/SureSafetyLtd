@@ -65,6 +65,7 @@ const Footer = () => {
                   { label: "Our Services", path: "/services" },
                   { label: "Our Projects", path: "/projects" },
                   { label: "Careers", path: "/careers" },
+                  { label: "News", path: "/news" },
                   { label: "Contact Us", path: "/contact" },
                 ].map((l) => (
                   <Link key={l.path} to={l.path} className="text-slate-400 hover:text-primary transition-colors text-sm font-medium">
