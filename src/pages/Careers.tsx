@@ -1,8 +1,24 @@
 import { motion } from "framer-motion";
-import { Briefcase, MapPin, Clock, ArrowRight, CheckCircle } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { useInView } from "framer-motion";
+import { useRef } from "react";
+import {
+    Briefcase,
+    MapPin,
+    Clock,
+    ArrowRight,
+    RocketLaunch,
+    ShieldCheck,
+    Lightbulb,
+    Handshake,
+    Medal,
+    TrendUp,
+} from "@phosphor-icons/react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { Link } from "react-router-dom";
+
+// Local assets
+import careerHero from "@/assets/images/career-hero.jpg";
 
 const jobs = [
     {
@@ -10,134 +26,230 @@ const jobs = [
         title: "Project Manager",
         location: "Lusaka, Zambia",
         type: "Full-Time",
-        description: "Lead and oversee construction projects from inception to completion, ensuring quality and safety standards.",
+        description:
+            "Lead and oversee construction projects from inception to completion, ensuring quality and safety standards.",
     },
     {
         id: 2,
         title: "Electrical Engineer",
         location: "Kitwe, Zambia",
         type: "Full-Time",
-        description: "Design, develop, and maintain electrical systems for various industrial and commercial projects.",
+        description:
+            "Design, develop, and maintain electrical systems for various industrial and commercial projects.",
     },
     {
         id: 3,
         title: "Site Supervisor",
         location: "Lusaka, Zambia",
         type: "Contract",
-        description: "Manage daily on-site activities and coordinate with subcontractors to ensure project timelines are met.",
+        description:
+            "Manage daily on-site activities and coordinate with subcontractors to ensure project timelines are met.",
     },
 ];
 
+const benefits = [
+    {
+        icon: TrendUp,
+        title: "Career Growth",
+        desc: "Clear paths for advancement with continuous learning and mentorship programmes.",
+    },
+    {
+        icon: ShieldCheck,
+        title: "Safety Culture",
+        desc: "Your wellbeing is paramount — we maintain a 100% safety compliance record.",
+    },
+    {
+        icon: Lightbulb,
+        title: "Innovation",
+        desc: "Work with cutting-edge construction technology and modern building techniques.",
+    },
+    {
+        icon: Handshake,
+        title: "Team Spirit",
+        desc: "A collaborative culture where every voice matters and achievements are celebrated.",
+    },
+    {
+        icon: Medal,
+        title: "Competitive Pay",
+        desc: "Industry-leading compensation with performance bonuses and benefits.",
+    },
+    {
+        icon: RocketLaunch,
+        title: "Impact",
+        desc: "Build infrastructure that shapes communities and improves lives across Zambia.",
+    },
+];
+
+const SectionObserver = ({
+    children,
+    className = "",
+    delay = 0,
+}: {
+    children: React.ReactNode;
+    className?: string;
+    delay?: number;
+}) => {
+    const ref = useRef(null);
+    const isInView = useInView(ref, { once: true, margin: "-60px" });
+    return (
+        <motion.div
+            ref={ref}
+            initial={{ opacity: 0, y: 28 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay }}
+            className={className}
+        >
+            {children}
+        </motion.div>
+    );
+};
+
 const Careers = () => {
     return (
-        <div className="min-h-screen bg-background">
+        <div className="min-h-screen flex flex-col overflow-x-hidden">
             <Header />
 
-            <main>
-                {/* Hero Section */}
-                <section className="relative py-20 bg-section-dark text-white overflow-hidden">
-                    <div className="container relative z-10">
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.6 }}
-                            className="max-w-2xl"
-                        >
-                            <h1 className="text-4xl md:text-5xl font-heading font-bold mb-6">
-                                Join Our Team at <span className="text-secondary">Sure Safety</span>
-                            </h1>
-                            <p className="text-lg text-white/80 mb-8 leading-relaxed">
-                                We are always looking for talented and passionate individuals to help us deliver excellence in construction and maintenance.
-                            </p>
-                            <div className="flex flex-wrap gap-4">
-                                <Button className="bg-primary hover:bg-primary/90 text-white font-bold px-8 py-6 rounded-xl text-lg">
-                                    View Openings
-                                </Button>
-                            </div>
-                        </motion.div>
-                    </div>
-
-                    {/* Decorative Background Elements */}
-                    <div className="absolute top-0 right-0 w-1/3 h-full bg-primary/5 -skew-x-12 transform translate-x-1/2" />
-                </section>
-
-                {/* Why Join Us */}
-                <section className="py-20 bg-white">
-                    <div className="container">
-                        <div className="text-center max-w-3xl mx-auto mb-16">
-                            <h2 className="text-3xl font-heading font-bold mb-4">Why Work With Us?</h2>
-                            <p className="text-muted-foreground leading-relaxed">
-                                At Sure Safety Limited, we value innovation, integrity, and our people. We provide a dynamic work environment where you can grow your career.
-                            </p>
-                        </div>
-
-                        <div className="grid md:grid-cols-3 gap-8">
-                            {[
-                                { title: "Career Growth", desc: "We invest in our employees' professional development and provide clear paths for advancement." },
-                                { title: "Safety First", desc: "Our commitment to safety is unwavering, ensuring a secure environment for all our team members." },
-                                { title: "Innovation", desc: "Work with the latest technology and innovative solutions in the construction industry." },
-                            ].map((benefit, i) => (
-                                <motion.div
-                                    key={benefit.title}
-                                    initial={{ opacity: 0, y: 20 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: true }}
-                                    transition={{ delay: i * 0.1, duration: 0.5 }}
-                                    className="p-8 rounded-2xl bg-slate-50 border border-slate-100 hover:shadow-lg transition-all"
+            <main className="flex-1">
+                {/* 60vh Image Hero - Reduced Font Size */}
+                <section className="relative h-[60vh] min-h-[400px] bg-black overflow-hidden">
+                    <img
+                        src={careerHero}
+                        alt="Careers at Sure Safety"
+                        className="w-full h-full object-cover opacity-40 grayscale-[20%]"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent" />
+                    <div className="absolute inset-0 flex items-center pt-24">
+                        <div className="container">
+                            <motion.div
+                                initial={{ opacity: 0, y: 30 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.8 }}
+                            >
+                                <p className="text-primary font-heading font-semibold text-xs uppercase tracking-[0.35em] mb-4">
+                                    Opportunities
+                                </p>
+                                <h1
+                                    className="text-4xl sm:text-5xl md:text-6xl font-heading font-bold text-white uppercase tracking-tight leading-none mb-4"
                                 >
-                                    <h3 className="text-xl font-heading font-bold mb-3">
-                                        <span className="text-secondary mr-2">•</span>
-                                        {benefit.title}
-                                    </h3>
-                                    <p className="text-muted-foreground leading-relaxed">{benefit.desc}</p>
-                                </motion.div>
-                            ))}
+                                    Careers
+                                </h1>
+                                <div className="w-16 h-0.5 bg-primary mt-6 mb-8" />
+                                <p className="text-white/70 text-sm md:text-base font-body max-w-xl leading-relaxed">
+                                    Join a community of experts dedicated to building Zambia's future through safety and technical excellence.
+                                </p>
+                            </motion.div>
                         </div>
                     </div>
                 </section>
 
-                {/* Job Listings */}
-                <section id="openings" className="py-20 bg-slate-50">
+                {/* Why Work With Us */}
+                <section className="py-24 bg-card">
                     <div className="container">
-                        <h2 className="text-3xl font-heading font-bold mb-12 text-center">Open Positions</h2>
+                        <SectionObserver className="mb-20">
+                            <p className="text-primary font-heading font-semibold text-xs uppercase tracking-[0.3em] mb-4">
+                                Culture
+                            </p>
+                            <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground uppercase leading-tight mb-4 tracking-tight">
+                                Build Your Future With Us
+                            </h2>
+                            <div className="w-12 h-0.5 bg-primary mb-8" />
+                            <p className="text-muted-foreground text-sm font-body max-w-xl leading-relaxed">
+                                We value innovation, integrity, and our people. We provide a
+                                dynamic work environment where you can grow your career and make
+                                a real impact.
+                            </p>
+                        </SectionObserver>
 
-                        <div className="space-y-6 max-w-4xl mx-auto">
-                            {jobs.map((job, i) => (
-                                <motion.div
-                                    key={job.id}
-                                    initial={{ opacity: 0, x: -20 }}
-                                    whileInView={{ opacity: 1, x: 0 }}
-                                    viewport={{ once: true }}
-                                    transition={{ delay: i * 0.1, duration: 0.5 }}
-                                    className="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-slate-100 group hover:border-brand-green transition-all"
-                                >
-                                    <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-                                        <div className="space-y-2">
-                                            <div className="flex items-center gap-3">
-                                                <h3 className="text-xl font-heading font-bold group-hover:text-primary transition-colors">{job.title}</h3>
-                                                <span className="px-3 py-1 bg-slate-100 text-[10px] font-bold uppercase tracking-wider rounded-full text-slate-600">
-                                                    {job.type}
-                                                </span>
-                                            </div>
-                                            <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
-                                                <div className="flex items-center gap-1.5">
-                                                    <MapPin className="w-4 h-4" /> {job.location}
-                                                </div>
-                                                <div className="flex items-center gap-1.5">
-                                                    <Clock className="w-4 h-4" /> Posted 2 days ago
-                                                </div>
-                                            </div>
-                                            <p className="text-muted-foreground text-sm max-w-2xl pt-2">
-                                                {job.description}
-                                            </p>
-                                        </div>
-                                        <Button className="bg-primary hover:bg-primary/90 text-white font-bold px-6 shrink-0">
-                                            Apply Now <ArrowRight className="ml-2 w-4 h-4" />
-                                        </Button>
+                        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-px bg-border">
+                            {benefits.map((b, i) => (
+                                <SectionObserver key={b.title} delay={i * 0.05}>
+                                    <div className="bg-card p-12 h-full group hover:bg-section-alt transition-colors duration-500">
+                                        <b.icon
+                                            className="w-10 h-10 text-primary mb-8 group-hover:scale-110 transition-transform"
+                                            weight="duotone"
+                                        />
+                                        <h3 className="font-heading font-bold text-foreground text-xs uppercase tracking-widest mb-4">
+                                            {b.title}
+                                        </h3>
+                                        <p className="text-muted-foreground text-xs leading-relaxed font-body">
+                                            {b.desc}
+                                        </p>
                                     </div>
-                                </motion.div>
+                                </SectionObserver>
                             ))}
                         </div>
+                    </div>
+                </section>
+
+                {/* Open Positions */}
+                <section id="openings" className="py-24 bg-section-alt">
+                    <div className="container">
+                        <SectionObserver className="mb-16">
+                            <p className="text-primary font-heading font-semibold text-xs uppercase tracking-[0.3em] mb-4">
+                                Vacancies
+                            </p>
+                            <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground uppercase tracking-tight">
+                                Open Positions
+                            </h2>
+                            <div className="w-12 h-0.5 bg-primary mt-6" />
+                        </SectionObserver>
+
+                        <div className="space-y-4 max-w-5xl">
+                            {jobs.map((job, i) => (
+                                <SectionObserver key={job.id} delay={i * 0.08}>
+                                    <div className="bg-card p-8 md:p-12 hover:shadow-2xl transition-all duration-500 group border border-transparent hover:border-primary/10">
+                                        <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
+                                            <div className="space-y-4">
+                                                <div className="flex flex-wrap items-center gap-4">
+                                                    <h3 className="text-xl font-heading font-bold text-foreground uppercase group-hover:text-primary transition-colors tracking-tight">
+                                                        {job.title}
+                                                    </h3>
+                                                    <span className="px-3 py-1 bg-primary/10 text-primary text-[10px] font-heading font-bold uppercase tracking-widest">
+                                                        {job.type}
+                                                    </span>
+                                                </div>
+                                                <div className="flex flex-wrap gap-6 text-[10px] text-muted-foreground font-heading font-bold uppercase tracking-widest">
+                                                    <span className="flex items-center gap-2">
+                                                        <MapPin className="w-4 h-4 text-primary" weight="fill" />{" "}
+                                                        {job.location}
+                                                    </span>
+                                                    <span className="flex items-center gap-2">
+                                                        <Clock className="w-4 h-4 text-primary" /> Posted recently
+                                                    </span>
+                                                </div>
+                                                <p className="text-muted-foreground text-sm max-w-xl font-body leading-relaxed">
+                                                    {job.description}
+                                                </p>
+                                            </div>
+                                            <button className="bg-primary text-black font-heading font-bold text-xs uppercase tracking-[0.2em] px-10 py-4 hover:bg-black hover:text-primary transition-all flex items-center gap-2 shrink-0 self-start md:self-center shadow-lg">
+                                                Apply Now <ArrowRight className="w-4 h-4" weight="bold" />
+                                            </button>
+                                        </div>
+                                    </div>
+                                </SectionObserver>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+
+                {/* CTA */}
+                <section className="py-32 bg-primary">
+                    <div className="container">
+                        <SectionObserver className="max-w-2xl px-6">
+                            <h2 className="text-4xl md:text-6xl font-heading font-bold text-black uppercase leading-tight mb-8 tracking-tight">
+                                DON'T SEE YOUR ROLE?
+                            </h2>
+                            <p className="text-black/70 text-lg font-body mb-12 leading-relaxed">
+                                We're always interested in hearing from talented people. Send
+                                us your CV and we'll keep you in mind for future opportunities.
+                            </p>
+                            <Link
+                                to="/contact"
+                                className="inline-block bg-black text-primary text-xs font-heading font-bold uppercase tracking-[0.2em] px-12 py-5 hover:bg-white hover:text-black transition-all duration-300 shadow-2xl"
+                            >
+                                Get in Touch <ArrowRight className="w-4 h-4 inline-block ml-2" weight="bold" />
+                            </Link>
+                        </SectionObserver>
                     </div>
                 </section>
             </main>

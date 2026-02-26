@@ -1,122 +1,150 @@
-import { ArrowDown, ArrowRight, CheckCircle } from "lucide-react";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
-import heroBg from "@/assets/hero-bg.jpg";
 
-const serviceCards = [
+// Local assets
+import hero1 from "@/assets/hero-bg.jpg";
+import hero2 from "@/assets/images/electrician1.jpeg";
+import hero3 from "@/assets/images/maintenace.jpg";
+
+const heroSlides = [
   {
-    title: "General Building",
-    desc: "Quality construction services for residential, commercial, and industrial projects with strong finishes and dependable solutions.",
-    link: "/services",
+    label: "Civil & Construction",
+    heading: "BUILD",
+    headingLine2: "WITH CONFIDENCE",
+    image: hero1,
   },
   {
-    title: "Electrical Installation",
-    desc: "Professional electrical installation and maintenance services ensuring safety, compliance, and reliable power distribution.",
-    link: "/services",
+    label: "Electrical & Mechanical",
+    heading: "PRECISE",
+    headingLine2: "BY DESIGN",
+    image: hero2,
   },
   {
-    title: "Plumbing & HVAC",
-    desc: "Comprehensive plumbing and HVAC solutions for new builds and existing properties, designed for efficiency and comfort.",
-    link: "/services",
+    label: "Facility Maintenance",
+    heading: "RELIABLE",
+    headingLine2: "EVERY TIME",
+    image: hero3,
   },
 ];
 
 const HeroSection = () => {
+  const [current, setCurrent] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % heroSlides.length);
+    }, 6000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
-    <section className="relative min-h-[85vh] flex items-center overflow-hidden">
-      <div className="absolute inset-0">
-        <img src={heroBg} alt="Construction professionals at work" className="w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-hero-overlay" />
+    <section className="relative h-screen w-full overflow-hidden bg-black">
+      {/* Background Slides */}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={current}
+          initial={{ opacity: 0, scale: 1.03 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 1.2 }}
+          className="absolute inset-0 z-0"
+        >
+          <img
+            src={heroSlides[current].image}
+            alt={heroSlides[current].heading}
+            className="w-full h-full object-cover grayscale-[20%]"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-black/20" />
+        </motion.div>
+      </AnimatePresence>
+
+      {/* Content — vertically centered with header offset */}
+      <div className="relative z-10 h-full flex flex-col items-start justify-center px-6 md:px-12 lg:px-20 pt-20">
+
+        {/* Text block: fixed height so button never shifts */}
+        <div style={{ minHeight: "clamp(140px, 22vw, 220px)" }} className="flex flex-col justify-end">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={current}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.7, delay: 0.1 }}
+            >
+              {/* Category label */}
+              <motion.p
+                className="text-primary font-heading font-semibold text-xs uppercase tracking-[0.35em] mb-5"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.25, duration: 0.5 }}
+              >
+                {heroSlides[current].label}
+              </motion.p>
+
+              {/* Main heading */}
+              <h1
+                className="font-heading font-bold text-white leading-none tracking-tight uppercase"
+                style={{ fontSize: "clamp(3rem, 8vw, 6.5rem)", lineHeight: 0.9 }}
+              >
+                <motion.span
+                  className="block"
+                  initial={{ opacity: 0, x: -30 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.35, duration: 0.6 }}
+                >
+                  {heroSlides[current].heading}
+                </motion.span>
+                <motion.span
+                  className="block text-white/90"
+                  initial={{ opacity: 0, x: -30 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.5, duration: 0.6 }}
+                >
+                  {heroSlides[current].headingLine2}
+                </motion.span>
+              </h1>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+        {/* Accent line — static, never moves */}
+        <div className="w-16 h-0.5 bg-primary my-7 flex-shrink-0" />
+
+        {/* CTA — static, never moves */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1, duration: 0.5 }}
+          className="flex-shrink-0"
+        >
+          <Link
+            to="/quote"
+            className="inline-block border border-white text-white text-xs font-heading font-bold uppercase tracking-[0.25em] px-8 py-3 hover:bg-primary hover:border-primary hover:text-black transition-all duration-300"
+          >
+            Request a Quote
+          </Link>
+        </motion.div>
       </div>
 
-      <div className="container relative z-10 py-20 lg:py-28">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          <motion.div
-            className="space-y-6"
-            initial={{ opacity: 0, x: -40 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.7, ease: "easeOut" }}
-          >
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold text-hero-fg leading-tight">
-              Building, Maintenance &{" "}
-              <span className="text-gradient-secondary">Installation Services</span>
-            </h1>
-            <motion.p
-              className="font-heading text-sm font-semibold tracking-[0.2em] text-primary uppercase"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.3, duration: 0.5 }}
-            >
-              Sure Safety Limited
-            </motion.p>
-            <motion.p
-              className="text-hero-muted text-lg max-w-lg leading-relaxed"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4, duration: 0.5 }}
-            >
-              We deliver quality workmanship, strong finishes, and dependable solutions for residential, commercial, and industrial projects.
-            </motion.p>
-            <motion.div
-              className="flex flex-wrap gap-4 pt-2"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5, duration: 0.5 }}
-            >
-              {["Quality Assured", "Innovation Driven", "Client Focused"].map((badge) => (
-                <div key={badge} className="flex items-center space-x-2 text-hero-fg/90">
-                  <span className="w-1.5 h-1.5 rounded-full bg-secondary" />
-                  <span className="font-medium text-sm">{badge}</span>
-                </div>
-              ))}
-            </motion.div>
-            <motion.div
-              className="flex flex-wrap gap-4 pt-2"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6, duration: 0.5 }}
-            >
-              <Link to="/quote">
-                <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 font-heading font-semibold px-8">
-                  Get Started <ArrowRight className="ml-2 w-4 h-4" />
-                </Button>
-              </Link>
-              <Link to="/services">
-                <Button size="lg" variant="outline" className="border-hero-muted/30 text-hero-fg hover:bg-hero-fg/10 font-heading font-semibold px-8">
-                  Our Services
-                </Button>
-              </Link>
-            </motion.div>
+      {/* Slide Indicators — bottom left */}
+      <div className="absolute bottom-8 left-6 md:left-12 lg:left-20 z-20 flex gap-3">
+        {heroSlides.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => setCurrent(index)}
+            aria-label={`Slide ${index + 1}`}
+            className={`h-0.5 transition-all duration-500 ${index === current
+              ? "bg-primary w-14"
+              : "bg-white/30 w-7 hover:bg-white/60"
+              }`}
+          />
+        ))}
+      </div>
 
-          </motion.div>
-
-          <div className="hidden lg:flex gap-4">
-            {serviceCards.map((card, i) => (
-              <motion.div
-                key={card.title}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 + i * 0.15, duration: 0.5, ease: "easeOut" }}
-                className="flex-1"
-              >
-                <Link
-                  to={card.link}
-                  className="group flex flex-col h-full bg-card/95 backdrop-blur-sm rounded-lg p-6 hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
-                >
-                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
-                    <div className="w-5 h-5 rounded-full bg-primary" />
-                  </div>
-                  <h3 className="font-heading font-semibold text-card-foreground mb-2">{card.title}</h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed mb-4">{card.desc}</p>
-                  <span className="text-primary text-sm font-medium flex items-center gap-1 group-hover:gap-2 transition-all mt-auto">
-                    Learn More <ArrowRight className="w-4 h-4" />
-                  </span>
-                </Link>
-              </motion.div>
-            ))}
-          </div>
-        </div>
+      {/* Counter — bottom right */}
+      <div className="absolute bottom-8 right-6 md:right-12 lg:right-20 z-20 font-heading text-white/40 text-xs tracking-widest">
+        0{current + 1} <span className="text-primary">/</span> 0{heroSlides.length}
       </div>
     </section>
   );

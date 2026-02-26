@@ -1,6 +1,11 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Building2, MapPin, ExternalLink, Calendar } from "lucide-react";
+import { Buildings, MapPin, ArrowUpRight, Calendar } from "@phosphor-icons/react";
+
+// Use local assets where possible, fallback to Unsplash if missing specific project images
+import project1 from "@/assets/images/construction-1.jpg";
+import project2 from "@/assets/images/maintenace.jpg";
+import project3 from "@/assets/images/genreral-construction.jpg";
 
 const projects = [
     {
@@ -8,7 +13,7 @@ const projects = [
         category: "General Building",
         location: "Lusaka, Zambia",
         date: "Completed 2023",
-        image: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&q=80&w=800",
+        image: project1,
         description: "A high-end multi-unit residential project featuring modern amenities and sustainable building practices."
     },
     {
@@ -16,7 +21,7 @@ const projects = [
         category: "Interior Finishing",
         location: "Kitwe, Zambia",
         date: "Completed 2024",
-        image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=800",
+        image: project2,
         description: "Complete interior fit-out and finishing for a 5-story corporate building, including HVAC and advanced electrical systems."
     },
     {
@@ -24,7 +29,7 @@ const projects = [
         category: "Civil Construction",
         location: "Ndola, Zambia",
         date: "In Progress",
-        image: "https://images.unsplash.com/photo-1586528116311-ad861f676b0f?auto=format&fit=crop&q=80&w=800",
+        image: project3,
         description: "Large-scale industrial warehouse construction with specialized flooring and reinforced structural elements."
     },
     {
@@ -39,7 +44,7 @@ const projects = [
 
 const ProjectsSection = () => {
     return (
-        <section id="projects" className="py-20 lg:py-28 bg-white">
+        <section id="projects" className="py-20 lg:py-28 bg-card">
             <div className="container">
                 <motion.div
                     className="text-center mb-16"
@@ -48,55 +53,56 @@ const ProjectsSection = () => {
                     viewport={{ once: true, margin: "-80px" }}
                     transition={{ duration: 0.5 }}
                 >
-                    <p className="text-primary font-heading font-semibold text-sm tracking-wider uppercase mb-2">Our Portfolio</p>
-                    <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground">
+                    <p className="text-primary font-heading font-semibold text-xs uppercase tracking-wider mb-2">Our Portfolio</p>
+                    <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground uppercase tracking-tight">
                         Showcase of Excellence
                     </h2>
-                    <p className="text-muted-foreground mt-4 max-w-2xl mx-auto">
+                    <div className="w-12 h-0.5 bg-primary mx-auto mt-4" />
+                    <p className="text-muted-foreground mt-6 max-w-2xl mx-auto font-body text-sm">
                         Discover some of our recently completed and ongoing projects that highlight our commitment to quality and safety.
                     </p>
                 </motion.div>
 
-                <div className="grid md:grid-cols-2 gap-10">
+                <div className="grid md:grid-cols-2 gap-px bg-border">
                     {projects.map((project, i) => (
                         <motion.div
                             key={project.title}
-                            className="group bg-section-alt rounded-3xl overflow-hidden border border-border hover:border-primary/20 transition-all duration-500 hover:shadow-2xl"
+                            className="group bg-card overflow-hidden transition-all duration-500 hover:z-10"
                             initial={{ opacity: 0, y: 30 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: i * 0.1, duration: 0.6 }}
                         >
-                            <div className="grid lg:grid-cols-2 h-full">
-                                <div className="relative h-64 lg:h-full overflow-hidden">
+                            <div className="flex flex-col h-full border border-transparent hover:border-primary/20 transition-all">
+                                <div className="relative h-72 overflow-hidden">
                                     <img
                                         src={project.image}
                                         alt={project.title}
-                                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                                        className="w-full h-full object-cover grayscale-[50%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
                                     />
-                                    <div className="absolute top-4 left-4">
-                                        <span className="px-4 py-1.5 bg-primary text-white text-[10px] font-bold uppercase tracking-widest rounded-full shadow-lg">
+                                    <div className="absolute top-0 left-0 p-6">
+                                        <span className="px-4 py-2 bg-primary text-black text-[10px] font-heading font-bold uppercase tracking-widest shadow-xl">
                                             {project.category}
                                         </span>
                                     </div>
                                 </div>
-                                <div className="p-8 flex flex-col justify-center">
+                                <div className="p-10 flex flex-col justify-center flex-grow">
                                     <div className="flex items-center gap-2 text-primary mb-4">
                                         <Calendar className="w-4 h-4" />
-                                        <span className="text-xs font-bold uppercase tracking-wider">{project.date}</span>
+                                        <span className="text-[10px] font-heading font-bold uppercase tracking-widest">{project.date}</span>
                                     </div>
-                                    <h3 className="text-2xl font-heading font-bold text-foreground mb-4 group-hover:text-primary transition-colors leading-tight">
+                                    <h3 className="text-xl font-heading font-bold text-foreground mb-4 group-hover:text-primary transition-colors leading-tight uppercase">
                                         {project.title}
                                     </h3>
-                                    <div className="flex items-center gap-2 text-muted-foreground text-sm mb-6">
+                                    <div className="flex items-center gap-2 text-muted-foreground text-[10px] mb-6 uppercase tracking-wider">
                                         <MapPin className="w-4 h-4" />
                                         <span>{project.location}</span>
                                     </div>
-                                    <p className="text-muted-foreground text-sm leading-relaxed mb-8">
+                                    <p className="text-muted-foreground text-xs leading-relaxed mb-8 font-body">
                                         {project.description}
                                     </p>
-                                    <button className="flex items-center gap-2 text-primary text-sm font-bold uppercase tracking-widest hover:gap-3 transition-all mt-auto group/btn">
-                                        View Project <ExternalLink className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                                    <button className="flex items-center gap-2 text-primary text-[10px] font-heading font-bold uppercase tracking-widest hover:gap-3 transition-all mt-auto group/btn">
+                                        View Project <ArrowUpRight className="w-4 h-4 group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-transform" />
                                     </button>
                                 </div>
                             </div>
@@ -105,25 +111,25 @@ const ProjectsSection = () => {
                 </div>
 
                 <motion.div
-                    className="mt-20 p-10 bg-section-dark rounded-3xl text-center relative overflow-hidden"
-                    initial={{ opacity: 0, scale: 0.95 }}
+                    className="mt-20 p-12 bg-section-dark text-center relative overflow-hidden"
+                    initial={{ opacity: 0, scale: 0.98 }}
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
                 >
                     <div className="relative z-10">
-                        <h3 className="text-2xl font-heading font-bold text-white mb-4">Have a similar project in mind?</h3>
-                        <p className="text-section-dark-fg/60 mb-8 max-w-xl mx-auto">
+                        <h3 className="text-2xl font-heading font-bold text-white mb-4 uppercase tracking-tight">Have a similar project in mind?</h3>
+                        <p className="text-white/60 mb-8 max-w-xl mx-auto font-body text-sm">
                             Our team of experts is ready to help you bring your vision to life with safe and efficient construction solutions.
                         </p>
                         <Link
                             to="/contact"
-                            className="inline-block bg-primary text-primary-foreground px-8 py-3 rounded-xl font-heading font-bold shadow-lg shadow-primary/30 hover:shadow-primary/50 transition-all hover:-translate-y-1"
+                            className="inline-block bg-primary text-black px-10 py-4 font-heading font-bold text-xs uppercase tracking-widest hover:bg-white transition-all shadow-xl"
                         >
                             Start Your Project Today
                         </Link>
                     </div>
                     <div className="absolute top-0 right-0 p-10 opacity-5">
-                        <Building2 size={240} className="text-white" />
+                        <Buildings size={240} className="text-white" weight="duotone" />
                     </div>
                 </motion.div>
             </div>

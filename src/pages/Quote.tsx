@@ -10,23 +10,23 @@ import {
     FileText,
     User,
     Phone,
-    Mail,
+    Envelope,
     MapPin,
     ArrowRight,
-    CheckCircle2,
-    Building2,
-    Zap,
-    Droplets,
-    Paintbrush,
-    Truck
-} from "lucide-react";
+    CheckCircle,
+    Buildings,
+    Lightning,
+    Drop,
+    PaintBrush,
+    Truck,
+} from "@phosphor-icons/react";
 import { toast } from "sonner";
 
 const serviceOptions = [
-    { id: "building", name: "General Building", icon: Building2 },
-    { id: "electrical", name: "Electrical Installation", icon: Zap },
-    { id: "plumbing", name: "Plumbing & HVAC", icon: Droplets },
-    { id: "finishing", name: "Painting & Finishing", icon: Paintbrush },
+    { id: "building", name: "General Building", icon: Buildings },
+    { id: "electrical", name: "Electrical Installation", icon: Lightning },
+    { id: "plumbing", name: "Plumbing & HVAC", icon: Drop },
+    { id: "finishing", name: "Painting & Finishing", icon: PaintBrush },
     { id: "infrastructure", name: "Road & Paving", icon: Truck },
 ];
 
@@ -65,7 +65,7 @@ const QuotePage = () => {
                     </motion.div>
 
                     <motion.div
-                        className="bg-white rounded-[2rem] shadow-2xl shadow-slate-200/50 border border-slate-100 overflow-hidden"
+                        className="bg-white shadow-2xl shadow-slate-200/50 border border-slate-100 overflow-hidden"
                         initial={{ opacity: 0, scale: 0.98 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ delay: 0.1 }}
@@ -74,12 +74,12 @@ const QuotePage = () => {
                             <form onSubmit={handleSubmit} className="p-8 lg:p-12">
                                 {/* Form Progress */}
                                 <div className="flex items-center justify-between mb-12 max-w-md mx-auto relative">
-                                    <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold z-10 transition-colors ${step >= 1 ? 'bg-primary text-white' : 'bg-slate-100 text-slate-400'}`}>1</div>
                                     <div className={`absolute left-0 top-1/2 -translate-y-1/2 h-1 bg-slate-100 w-full -z-10`}>
                                         <div className={`h-full bg-primary transition-all duration-500`} style={{ width: `${(step - 1) * 50}%` }} />
                                     </div>
-                                    <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold z-10 transition-colors ${step >= 2 ? 'bg-primary text-white' : 'bg-slate-100 text-slate-400'}`}>2</div>
-                                    <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold z-10 transition-colors ${step >= 3 ? 'bg-primary text-white' : 'bg-slate-100 text-slate-400'}`}>3</div>
+                                    <div className={`w-10 h-10 flex items-center justify-center font-bold z-10 transition-colors ${step >= 1 ? 'bg-primary text-primary-foreground' : 'bg-slate-100 text-slate-400'}`}>1</div>
+                                    <div className={`w-10 h-10 flex items-center justify-center font-bold z-10 transition-colors ${step >= 2 ? 'bg-primary text-primary-foreground' : 'bg-slate-100 text-slate-400'}`}>2</div>
+                                    <div className={`w-10 h-10 flex items-center justify-center font-bold z-10 transition-colors ${step >= 3 ? 'bg-primary text-primary-foreground' : 'bg-slate-100 text-slate-400'}`}>3</div>
                                 </div>
 
                                 {step === 1 && (
@@ -99,7 +99,7 @@ const QuotePage = () => {
                                                     key={service.id}
                                                     type="button"
                                                     onClick={() => setSelectedService(service.id)}
-                                                    className={`p-6 rounded-2xl border-2 text-left transition-all group hover:shadow-lg ${selectedService === service.id ? 'border-primary bg-primary/5 shadow-primary/10' : 'border-slate-100 hover:border-primary/30'}`}
+                                                    className={`p-6 border-2 text-left transition-all group hover:shadow-lg ${selectedService === service.id ? 'border-primary bg-primary/5 shadow-primary/10' : 'border-slate-100 hover:border-primary/30'}`}
                                                 >
                                                     <service.icon className={`w-8 h-8 mb-4 transition-colors ${selectedService === service.id ? 'text-primary' : 'text-slate-400 group-hover:text-primary/70'}`} />
                                                     <span className={`font-bold block ${selectedService === service.id ? 'text-primary' : 'text-slate-900'}`}>{service.name}</span>
@@ -111,7 +111,7 @@ const QuotePage = () => {
                                                 type="button"
                                                 onClick={nextStep}
                                                 disabled={!selectedService}
-                                                className="bg-primary text-white px-10 py-6 rounded-xl font-bold text-lg hover:scale-105 transition-all shadow-xl shadow-primary/20"
+                                                className="bg-primary text-primary-foreground px-10 py-6 font-bold text-lg hover:scale-105 transition-all shadow-xl shadow-primary/20"
                                             >
                                                 Next Details <ArrowRight className="ml-2 w-5 h-5" />
                                             </Button>
@@ -135,19 +135,19 @@ const QuotePage = () => {
                                                 <label className="text-sm font-bold text-slate-700 uppercase tracking-widest pl-1">Project Location</label>
                                                 <div className="relative">
                                                     <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
-                                                    <Input className="pl-12 h-14 bg-slate-50 border-slate-200 rounded-xl focus:bg-white" placeholder="e.g. Lusaka, Kitwe..." required />
+                                                    <Input className="pl-12 h-14 bg-slate-50 border-slate-200 focus:bg-white" placeholder="e.g. Lusaka, Kitwe..." required />
                                                 </div>
                                             </div>
                                             <div className="space-y-2">
                                                 <label className="text-sm font-bold text-slate-700 uppercase tracking-widest pl-1">Estimated Budget (ZMW)</label>
                                                 <div className="relative">
                                                     <Calculator className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
-                                                    <Input className="pl-12 h-14 bg-slate-50 border-slate-200 rounded-xl focus:bg-white" placeholder="e.g. 50,000" />
+                                                    <Input className="pl-12 h-14 bg-slate-50 border-slate-200 focus:bg-white" placeholder="e.g. 50,000" />
                                                 </div>
                                             </div>
                                             <div className="space-y-2">
                                                 <label className="text-sm font-bold text-slate-700 uppercase tracking-widest pl-1">Project Timeline</label>
-                                                <select className="flex h-14 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 appearance-none cursor-pointer">
+                                                <select className="flex h-14 w-full border border-slate-200 bg-slate-50 px-4 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 appearance-none cursor-pointer">
                                                     <option value="emergency">Emergency / Immediately</option>
                                                     <option value="1month">Within 1 Month</option>
                                                     <option value="3months">Within 3 Months</option>
@@ -161,7 +161,7 @@ const QuotePage = () => {
                                                         <button
                                                             key={level}
                                                             type="button"
-                                                            className="flex-1 py-3 border-2 border-slate-100 rounded-xl font-bold text-slate-500 hover:border-primary/30 transition-all active:scale-95"
+                                                            className="flex-1 py-3 border-2 border-slate-100 font-bold text-slate-500 hover:border-primary/30 transition-all active:scale-95"
                                                             onClick={(e) => {
                                                                 const targets = e.currentTarget.parentElement?.querySelectorAll('button');
                                                                 targets?.forEach(t => {
@@ -180,7 +180,7 @@ const QuotePage = () => {
                                             <div className="md:col-span-2 space-y-2">
                                                 <label className="text-sm font-bold text-slate-700 uppercase tracking-widest pl-1">Project Description</label>
                                                 <Textarea
-                                                    className="min-h-[150px] bg-slate-50 border-slate-200 rounded-xl focus:bg-white p-6"
+                                                    className="min-h-[150px] bg-slate-50 border-slate-200 focus:bg-white p-6"
                                                     placeholder="Describe the project requirements, dimensions, or any specific needs..."
                                                     required
                                                 />
@@ -188,7 +188,7 @@ const QuotePage = () => {
                                         </div>
                                         <div className="flex items-center justify-between pt-6">
                                             <Button type="button" variant="ghost" onClick={prevStep} className="font-bold text-slate-500">Back</Button>
-                                            <Button type="button" onClick={nextStep} className="bg-primary text-white px-10 py-6 rounded-xl font-bold text-lg hover:scale-105 transition-all shadow-xl shadow-primary/20">
+                                            <Button type="button" onClick={nextStep} className="bg-primary text-primary-foreground px-10 py-6 font-bold text-lg hover:scale-105 transition-all shadow-xl shadow-primary/20">
                                                 Final Step <ArrowRight className="ml-2 w-5 h-5" />
                                             </Button>
                                         </div>
@@ -211,27 +211,27 @@ const QuotePage = () => {
                                                 <label className="text-sm font-bold text-slate-700 uppercase tracking-widest pl-1">Full Name</label>
                                                 <div className="relative">
                                                     <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
-                                                    <Input className="pl-12 h-14 bg-slate-50 border-slate-200 rounded-xl" placeholder="John Doe" required />
+                                                    <Input className="pl-12 h-14 bg-slate-50 border-slate-200" placeholder="John Doe" required />
                                                 </div>
                                             </div>
                                             <div className="space-y-2">
                                                 <label className="text-sm font-bold text-slate-700 uppercase tracking-widest pl-1">Email Address</label>
                                                 <div className="relative">
-                                                    <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
-                                                    <Input type="email" className="pl-12 h-14 bg-slate-50 border-slate-200 rounded-xl" placeholder="john@example.com" required />
+                                                    <Envelope className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+                                                    <Input type="email" className="pl-12 h-14 bg-slate-50 border-slate-200" placeholder="john@example.com" required />
                                                 </div>
                                             </div>
                                             <div className="md:col-span-2 space-y-2">
                                                 <label className="text-sm font-bold text-slate-700 uppercase tracking-widest pl-1">Phone Number</label>
                                                 <div className="relative">
                                                     <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
-                                                    <Input className="pl-12 h-14 bg-slate-50 border-slate-200 rounded-xl" placeholder="+260 9xx xxx xxx" required />
+                                                    <Input className="pl-12 h-14 bg-slate-50 border-slate-200" placeholder="+260 9xx xxx xxx" required />
                                                 </div>
                                             </div>
                                         </div>
                                         <div className="flex items-center justify-between pt-6">
                                             <Button type="button" variant="ghost" onClick={prevStep} className="font-bold text-slate-500">Back</Button>
-                                            <Button type="submit" className="bg-primary text-white px-12 py-6 rounded-xl font-bold text-lg hover:scale-105 transition-all shadow-xl shadow-primary/20">
+                                            <Button type="submit" className="bg-primary text-primary-foreground px-12 py-6 font-bold text-lg hover:scale-105 transition-all shadow-xl shadow-primary/20">
                                                 Get My Quote <Calculator className="ml-2 w-5 h-5" />
                                             </Button>
                                         </div>
@@ -244,8 +244,8 @@ const QuotePage = () => {
                                 initial={{ opacity: 0, scale: 0.9 }}
                                 animate={{ opacity: 1, scale: 1 }}
                             >
-                                <div className="w-24 h-24 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
-                                    <CheckCircle2 className="w-12 h-12 text-primary animate-bounce-short" />
+                                <div className="w-24 h-24 bg-primary/10 flex items-center justify-center mx-auto mb-6">
+                                    <CheckCircle className="w-12 h-12 text-primary animate-bounce-short" />
                                 </div>
                                 <h2 className="text-3xl font-heading font-bold text-slate-900">Request Received!</h2>
                                 <p className="text-slate-500 text-lg max-w-md mx-auto leading-relaxed">
@@ -253,7 +253,7 @@ const QuotePage = () => {
                                 </p>
                                 <Button
                                     onClick={() => window.location.href = '/'}
-                                    className="bg-primary text-white px-10 py-6 rounded-xl font-bold"
+                                    className="bg-primary text-primary-foreground px-10 py-6 font-bold"
                                 >
                                     Back to Home
                                 </Button>

@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Phone, Mail } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { motion, AnimatePresence } from "framer-motion";
 import logo from "@/assets/logo.png";
 
 const navLinks = [
@@ -13,13 +12,60 @@ const navLinks = [
   { label: "Contact", path: "/contact" },
 ];
 
+// Custom "grid-dots" burger — 6 dots (2×3) that morph to an X
+const GridMenuIcon = ({ open }: { open: boolean }) => (
+  <motion.div
+    className="relative w-7 h-7 flex items-center justify-center"
+    aria-hidden="true"
+  >
+    <AnimatePresence mode="wait">
+      {open ? (
+        <motion.svg
+          key="close"
+          width="22"
+          height="22"
+          viewBox="0 0 22 22"
+          fill="none"
+          initial={{ opacity: 0, rotate: -45, scale: 0.7 }}
+          animate={{ opacity: 1, rotate: 0, scale: 1 }}
+          exit={{ opacity: 0, rotate: 45, scale: 0.7 }}
+          transition={{ duration: 0.25 }}
+        >
+          <line x1="3" y1="3" x2="19" y2="19" stroke="currentColor" strokeWidth="2" strokeLinecap="square" />
+          <line x1="19" y1="3" x2="3" y2="19" stroke="currentColor" strokeWidth="2" strokeLinecap="square" />
+        </motion.svg>
+      ) : (
+        <motion.svg
+          key="open"
+          width="22"
+          height="18"
+          viewBox="0 0 22 18"
+          fill="none"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.8 }}
+          transition={{ duration: 0.2 }}
+        >
+          {/* 6 dots arranged 2 × 3 */}
+          <circle cx="3" cy="3" r="2" fill="currentColor" />
+          <circle cx="11" cy="3" r="2" fill="currentColor" />
+          <circle cx="19" cy="3" r="2" fill="currentColor" />
+          <circle cx="3" cy="15" r="2" fill="currentColor" />
+          <circle cx="11" cy="15" r="2" fill="currentColor" />
+          <circle cx="19" cy="15" r="2" fill="currentColor" />
+        </motion.svg>
+      )}
+    </AnimatePresence>
+  </motion.div>
+);
+
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
-    const onScroll = () => setIsScrolled(window.scrollY > 20);
+    const onScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -27,91 +73,106 @@ const Header = () => {
   useEffect(() => setMobileOpen(false), [location]);
 
   return (
-    <>
-      {/* Top bar */}
-      <div className="hidden lg:block bg-section-dark text-section-dark-fg text-sm">
-        <div className="container flex justify-end items-center gap-6 py-2">
-          <a href="tel:+260211123456" className="flex items-center gap-1.5 hover:text-primary transition-colors">
-            <Phone className="w-3.5 h-3.5" /> +260 211 123 456
-          </a>
-          <a href="mailto:info@suresafety.co.zm" className="flex items-center gap-1.5 hover:text-primary transition-colors">
-            <Mail className="w-3.5 h-3.5" /> info@suresafety.co.zm
-          </a>
-        </div>
-      </div>
-
-      {/* Main nav */}
-      <header
-        className={`sticky top-0 z-50 transition-all duration-300 ${isScrolled
-          ? "bg-card/95 backdrop-blur-md shadow-lg"
-          : "bg-card"
-          }`}
-      >
-        <div className="container flex items-center justify-between h-16 lg:h-20">
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled ? "bg-black shadow-lg" : "bg-transparent"
+        }`}
+    >
+      <div className="container mx-auto px-4 sm:px-6">
+        <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 shrink-0">
-            <img src={logo} alt="Sure Safety Limited Logo" className="h-24 w-auto object-contain" />
+          <Link to="/" className="flex items-center shrink-0">
+            <img
+              src={logo}
+              alt="Sure Safety Limited"
+              className={`h-16 md:h-20 w-auto object-contain transition-all duration-500 ${isScrolled ? "brightness-0 invert" : ""
+                }`}
+            />
           </Link>
 
           {/* Desktop nav */}
-          <nav className="hidden lg:flex items-center gap-1">
+          <nav className="hidden lg:flex items-center gap-7">
             {navLinks.map((link) => (
-              <Link
-                key={link.path}
-                to={link.path}
-                className={`px-3 py-2 text-sm font-medium rounded-md transition-colors ${location.pathname === link.path
-                  ? "text-primary"
-                  : "text-foreground/80 hover:text-primary"
-                  }`}
-              >
-                {link.label}
-              </Link>
-            ))}
-          </nav>
-
-          {/* CTA + mobile toggle */}
-          <div className="flex items-center gap-3">
-            <Link to="/quote" className="hidden sm:block">
-              <Button size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90 font-heading font-semibold text-xs px-5">
-                Get Quote
-              </Button>
-            </Link>
-            <button
-              onClick={() => setMobileOpen(!mobileOpen)}
-              className="lg:hidden p-2 text-foreground"
-              aria-label="Toggle menu"
-            >
-              {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
-          </div>
-        </div>
-
-        {/* Mobile menu */}
-        {mobileOpen && (
-          <div className="lg:hidden bg-card border-t border-border animate-in slide-in-from-top-2 duration-200">
-            <nav className="container flex flex-col py-4 gap-1">
-              {navLinks.map((link) => (
+              <div key={link.label} className="relative group">
                 <Link
-                  key={link.path}
                   to={link.path}
-                  className={`px-4 py-3 rounded-md text-sm font-medium transition-colors ${location.pathname === link.path
-                    ? "bg-primary/10 text-primary"
-                    : "text-foreground/80 hover:bg-muted"
+                  className={`text-xs font-heading font-semibold uppercase tracking-wider transition-colors ${location.pathname === link.path
+                      ? "text-primary"
+                      : "text-white hover:text-primary"
                     }`}
                 >
                   {link.label}
                 </Link>
+                <span className="absolute -bottom-1 left-0 w-0 h-px bg-primary transition-all duration-300 group-hover:w-full" />
+              </div>
+            ))}
+            <Link
+              to="/quote"
+              className="border border-white text-white text-xs font-heading font-bold uppercase tracking-wider px-5 py-2 hover:bg-primary hover:border-primary hover:text-black transition-all duration-300"
+            >
+              Get Quote
+            </Link>
+          </nav>
+
+          {/* Custom grid-dots mobile toggle */}
+          <button
+            className="lg:hidden p-2 text-white"
+            onClick={() => setMobileOpen(!mobileOpen)}
+            aria-label={mobileOpen ? "Close menu" : "Open menu"}
+          >
+            <GridMenuIcon open={mobileOpen} />
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile drawer */}
+      <AnimatePresence>
+        {mobileOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="lg:hidden bg-black/95 backdrop-blur-sm overflow-hidden border-t border-white/10"
+          >
+            <nav className="container mx-auto px-6 py-6 flex flex-col gap-1">
+              {navLinks.map((link, i) => (
+                <motion.div
+                  key={link.label}
+                  initial={{ opacity: 0, x: -16 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.06, duration: 0.25 }}
+                >
+                  <Link
+                    to={link.path}
+                    className={`block py-3 text-sm font-heading font-medium uppercase tracking-wider border-b border-white/8 last:border-0 transition-colors ${location.pathname === link.path
+                        ? "text-primary"
+                        : "text-white/80 hover:text-primary"
+                      }`}
+                    onClick={() => setMobileOpen(false)}
+                  >
+                    {link.label}
+                  </Link>
+                </motion.div>
               ))}
-              <Link to="/quote" className="mt-2">
-                <Button className="w-full bg-primary text-primary-foreground font-heading font-semibold">
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.42, duration: 0.25 }}
+                className="mt-4"
+              >
+                <Link
+                  to="/quote"
+                  className="block text-center border border-primary text-primary text-xs font-heading font-bold uppercase tracking-wider px-6 py-3 hover:bg-primary hover:text-black transition-all duration-300"
+                  onClick={() => setMobileOpen(false)}
+                >
                   Get Quote
-                </Button>
-              </Link>
+                </Link>
+              </motion.div>
             </nav>
-          </div>
+          </motion.div>
         )}
-      </header>
-    </>
+      </AnimatePresence>
+    </header>
   );
 };
 

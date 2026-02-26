@@ -1,166 +1,206 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { motion } from "framer-motion";
-import { Calendar, User, ArrowRight, Tag } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Calendar, ArrowRight, Tag } from "@phosphor-icons/react";
+import { useInView } from "framer-motion";
+import { useRef } from "react";
+
+// Local assets
+import newsHero from "@/assets/products-banner.jpg";
 
 const posts = [
   {
     id: 1,
     title: "Revolutionizing Sustainable Construction in Zambia",
-    excerpt: "Exploring new eco-friendly materials and building techniques that are setting new standards for the local industry.",
+    excerpt:
+      "Exploring new eco-friendly materials and building techniques that are setting new standards for the local industry.",
     date: "May 15, 2024",
     author: "Eng. Chileshe Banda",
     category: "Innovation",
-    image: "https://images.unsplash.com/photo-1541888946425-d81bb19480c5?auto=format&fit=crop&q=80&w=800"
+    image:
+      "https://images.unsplash.com/photo-1541888946425-d81bb19480c5?auto=format&fit=crop&q=80&w=800",
   },
   {
     id: 2,
-    title: "Sure Safety Limited Expands Operations to the Copperbelt",
-    excerpt: "We are proud to announce the opening of our new regional office in Kitwe to better serve our industrial clients.",
+    title: "Sure Safety Expands Operations to the Copperbelt",
+    excerpt:
+      "We are proud to announce the opening of our new regional office in Kitwe to better serve our industrial clients.",
     date: "April 28, 2024",
     author: "Admin",
     category: "Company News",
-    image: "https://images.unsplash.com/photo-1517646285325-a86206d1598a?auto=format&fit=crop&q=80&w=800"
+    image:
+      "https://images.unsplash.com/photo-1517646285325-a86206d1598a?auto=format&fit=crop&q=80&w=800",
   },
   {
     id: 3,
     title: "The Importance of Regular Facility Maintenance",
-    excerpt: "Why preventative maintenance is the key to longevity and safety for commercial and residential properties.",
+    excerpt:
+      "Why preventative maintenance is the key to longevity and safety for commercial and residential properties.",
     date: "April 10, 2024",
     author: "Maintenance Team",
     category: "Technical Tips",
-    image: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&q=80&w=800"
+    image:
+      "https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&q=80&w=800",
   },
   {
     id: 4,
     title: "Advanced Electrical Safety for Industrial Sites",
-    excerpt: "A deep dive into the latest safety protocols for large-scale electrical installations and high-voltage systems.",
+    excerpt:
+      "A deep dive into the latest safety protocols for large-scale electrical installations and high-voltage systems.",
     date: "March 22, 2024",
     author: "Technical Dept",
     category: "Safety",
-    image: "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&q=80&w=800"
-  }
+    image:
+      "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&q=80&w=800",
+  },
 ];
+
+const SectionObserver = ({
+  children,
+  className = "",
+  delay = 0,
+}: {
+  children: React.ReactNode;
+  className?: string;
+  delay?: number;
+}) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-60px" });
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 28 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.6, delay }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+};
 
 const NewsPage = () => {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen flex flex-col overflow-x-hidden">
       <Header />
-      <main>
-        {/* Hero Section */}
-        <section className="bg-section-dark py-24 relative overflow-hidden">
-          <div className="absolute inset-0 opacity-10">
-            <div className="absolute top-0 right-0 w-96 h-96 bg-primary rounded-full blur-[120px]" />
-          </div>
-          <div className="container relative z-10 text-center">
-            <motion.p
-              className="text-primary font-heading font-bold text-sm tracking-[0.3em] uppercase mb-4"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-            >
-              Latest Updates
-            </motion.p>
-            <motion.h1
-              className="text-4xl md:text-6xl font-heading font-bold text-white mb-6"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-            >
-              News & Insights
-            </motion.h1>
-            <motion.p
-              className="text-section-dark-fg/60 max-w-2xl mx-auto text-lg"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.2 }}
-            >
-              Stay informed about our latest projects, industry innovations, and company announcements.
-            </motion.p>
+      <main className="flex-1">
+        {/* 60vh Image Hero - Reduced Font Size */}
+        <section className="relative h-[60vh] min-h-[400px] bg-black overflow-hidden">
+          <img
+            src={newsHero}
+            alt="News & Insights"
+            className="w-full h-full object-cover opacity-50 grayscale-[20%]"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent" />
+          <div className="absolute inset-0 flex items-center pt-24">
+            <div className="container">
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+              >
+                <p className="text-primary font-heading font-semibold text-xs uppercase tracking-[0.35em] mb-4">
+                  Insights
+                </p>
+                <h1
+                  className="text-4xl sm:text-5xl md:text-6xl font-heading font-bold text-white uppercase tracking-tight leading-none mb-4"
+                >
+                  News
+                </h1>
+                <div className="w-16 h-0.5 bg-primary mt-6 mb-8" />
+                <p className="text-white/70 text-sm md:text-base font-body max-w-xl leading-relaxed">
+                  Stay updated with the latest in Zambian construction, electrical safety, and industrial innovation.
+                </p>
+              </motion.div>
+            </div>
           </div>
         </section>
 
         {/* Featured Post */}
-        <section className="py-20">
+        <section className="py-24 bg-card">
           <div className="container">
-            <motion.div
-              className="group relative bg-section-alt rounded-3xl overflow-hidden border border-border hover:shadow-2xl transition-all duration-500 overflow-hidden"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-            >
-              <div className="grid lg:grid-cols-2">
-                <div className="relative h-64 lg:h-[450px] overflow-hidden">
-                  <img src={posts[0].image} alt={posts[0].title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-                  <div className="absolute top-6 left-6">
-                    <span className="px-4 py-2 bg-primary text-white text-[10px] font-bold uppercase tracking-widest rounded-full shadow-lg">Featured</span>
+            <SectionObserver>
+              <div className="group border border-border overflow-hidden bg-section-alt transition-all duration-500">
+                <div className="grid lg:grid-cols-2">
+                  <div className="relative h-64 lg:h-[450px] overflow-hidden">
+                    <img
+                      src={posts[0].image}
+                      alt={posts[0].title}
+                      className="w-full h-full object-cover grayscale-[40%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
+                    />
+                    <span className="absolute top-6 left-6 bg-primary text-black text-[10px] font-heading font-bold uppercase tracking-[0.2em] px-5 py-2">
+                      Featured
+                    </span>
                   </div>
-                </div>
-                <div className="p-8 lg:p-12 flex flex-col justify-center">
-                  <div className="flex items-center gap-4 text-xs font-bold text-primary uppercase tracking-widest mb-6">
-                    <span className="flex items-center gap-1.5"><Calendar className="w-4 h-4" /> {posts[0].date}</span>
-                    <span className="w-1 h-1 bg-border rounded-full" />
-                    <span className="flex items-center gap-1.5 uppercase leading-none"><Tag className="w-4 h-4" /> {posts[0].category}</span>
-                  </div>
-                  <h2 className="text-3xl lg:text-4xl font-heading font-bold text-foreground mb-6 leading-tight group-hover:text-primary transition-colors">
-                    {posts[0].title}
-                  </h2>
-                  <p className="text-muted-foreground text-lg leading-relaxed mb-8">
-                    {posts[0].excerpt}
-                  </p>
-                  <div className="flex items-center justify-between mt-auto">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center font-bold text-primary">
-                        {posts[0].author[0]}
-                      </div>
-                      <span className="text-sm font-semibold text-foreground/80">{posts[0].author}</span>
+                  <div className="p-10 lg:p-16 flex flex-col justify-center">
+                    <div className="flex items-center gap-4 text-[10px] font-heading font-bold text-primary uppercase tracking-[0.2em] mb-8">
+                      <span className="flex items-center gap-2">
+                        <Calendar className="w-4 h-4" /> {posts[0].date}
+                      </span>
+                      <span className="w-px h-3 bg-border" />
+                      <span className="flex items-center gap-2">
+                        <Tag className="w-4 h-4" /> {posts[0].category}
+                      </span>
                     </div>
-                    <button className="flex items-center gap-2 text-primary font-bold text-sm uppercase tracking-widest hover:gap-3 transition-all">
-                      Read Full Story <ArrowRight className="w-4 h-4" />
-                    </button>
+                    <h2 className="text-2xl lg:text-3xl font-heading font-bold text-foreground mb-6 leading-tight group-hover:text-primary transition-colors uppercase tracking-tight">
+                      {posts[0].title}
+                    </h2>
+                    <p className="text-muted-foreground text-sm leading-relaxed mb-10 font-body">
+                      {posts[0].excerpt}
+                    </p>
+                    <div className="flex items-center justify-between mt-auto">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 bg-primary/10 flex items-center justify-center text-primary font-heading font-bold text-xs">
+                          {posts[0].author[0]}
+                        </div>
+                        <span className="text-[10px] font-heading font-bold uppercase tracking-widest text-foreground opacity-60">
+                          {posts[0].author}
+                        </span>
+                      </div>
+                      <button className="flex items-center gap-2 text-primary font-heading font-bold text-[10px] uppercase tracking-[0.2em] group-hover:gap-3 transition-all">
+                        Read Story <ArrowRight className="w-4 h-4" weight="bold" />
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </SectionObserver>
           </div>
         </section>
 
         {/* Post Grid */}
-        <section className="pb-32">
+        <section className="pb-32 bg-card">
           <div className="container">
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-px bg-border">
               {posts.slice(1).map((post, i) => (
-                <motion.div
-                  key={post.id}
-                  className="group bg-white rounded-2xl border border-border shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col h-full"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1 }}
-                >
-                  <div className="relative h-56 overflow-hidden rounded-t-2xl">
-                    <img src={post.image} alt={post.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
-                    <div className="absolute bottom-4 left-4">
-                      <span className="px-3 py-1 bg-white/90 backdrop-blur-sm text-primary text-[9px] font-bold uppercase tracking-wider rounded-md">
+                <SectionObserver key={post.id} delay={i * 0.08}>
+                  <div className="group bg-card h-full flex flex-col p-8 hover:bg-section-alt transition-all duration-500">
+                    <div className="relative h-56 overflow-hidden mb-8">
+                      <img
+                        src={post.image}
+                        alt={post.title}
+                        className="w-full h-full object-cover grayscale-[40%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
+                      />
+                      <span className="absolute bottom-4 left-4 bg-primary text-black text-[9px] font-heading font-bold uppercase tracking-[0.2em] px-3 py-1">
                         {post.category}
                       </span>
                     </div>
-                  </div>
-                  <div className="p-6 flex flex-col flex-grow">
-                    <div className="flex items-center gap-3 text-[10px] font-bold text-muted-foreground uppercase tracking-widest mb-4">
-                      <span className="flex items-center gap-1"><Calendar className="w-3 h-3" /> {post.date}</span>
+                    <div className="flex flex-col flex-grow">
+                      <div className="flex items-center gap-3 text-[10px] font-heading font-bold text-muted-foreground uppercase tracking-[0.2em] mb-4">
+                        <Calendar className="w-3.5 h-3.5" /> {post.date}
+                      </div>
+                      <h3 className="text-base font-heading font-bold text-foreground mb-4 leading-snug group-hover:text-primary transition-colors uppercase">
+                        {post.title}
+                      </h3>
+                      <p className="text-muted-foreground text-xs leading-relaxed mb-8 line-clamp-3 font-body">
+                        {post.excerpt}
+                      </p>
+                      <button className="flex items-center gap-2 text-primary font-heading font-bold text-[10px] uppercase tracking-[0.2em] mt-auto group-hover:gap-3 transition-all">
+                        Read Story <ArrowRight className="w-3.5 h-3.5" weight="bold" />
+                      </button>
                     </div>
-                    <h3 className="text-xl font-heading font-bold text-foreground mb-4 leading-snug group-hover:text-primary transition-colors">
-                      {post.title}
-                    </h3>
-                    <p className="text-muted-foreground text-sm leading-relaxed mb-8 line-clamp-3">
-                      {post.excerpt}
-                    </p>
-                    <button className="flex items-center gap-2 text-primary font-bold text-[10px] uppercase tracking-widest mt-auto group-hover:gap-3 transition-all">
-                      Read Story <ArrowRight className="w-4 h-4" />
-                    </button>
                   </div>
-                </motion.div>
+                </SectionObserver>
               ))}
             </div>
           </div>
