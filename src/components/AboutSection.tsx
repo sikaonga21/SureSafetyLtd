@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight, Target, Eye, ShieldCheck, Star } from "@phosphor-icons/react";
 import { useCountUp } from "@/hooks/use-count-up";
+import aboutImg from "@/assets/images/home-section-about.jpg";
 
 const pillars = [
   { icon: Target, title: "Our Vision", desc: "To be a leading force, recognized for excellence and innovation across Zambia." },
@@ -59,7 +60,7 @@ const AboutSection = () => {
             >
               <div className="relative overflow-hidden shadow-2xl">
                 <img
-                  src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&q=80&w=2070"
+                  src="/assets/images/home-section-about.jpg"
                   alt="Sure Safety Team"
                   className="w-full aspect-[4/3] object-cover"
                   loading="lazy"
