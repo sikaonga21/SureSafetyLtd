@@ -77,14 +77,14 @@ const Header = () => {
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled ? "bg-black shadow-lg" : "bg-transparent"
         }`}
     >
-      <div className="container mx-auto px-4 sm:px-6">
-        <div className="flex items-center justify-between h-20">
+      <div className="w-full max-w-none pl-0 pr-4 sm:container sm:mx-auto sm:px-6">
+        <div className="flex items-center justify-between h-36">
           {/* Logo */}
-          <Link to="/" className="flex items-center shrink-0">
+          <Link to="/" className="flex items-center shrink-0 -ml-12 sm:ml-0">
             <img
               src={logo}
               alt="Sure Safety Limited"
-              className={`h-16 md:h-20 w-auto object-contain transition-all duration-500 ${isScrolled ? "brightness-0 invert" : ""
+              className={`h-36 md:h-32 w-auto object-contain transition-all duration-500 ${isScrolled ? "brightness-0 invert" : ""
                 }`}
             />
           </Link>
