@@ -37,11 +37,12 @@
     --radius: 0.45rem;
 
     /* Custom tokens */
-    --hero-bg: 210 11% 10%;
+    --hero-bg: 210 15% 14%;
     --hero-fg: 0 0% 100%;
-    --hero-muted: 210 10% 65%;
-    --section-dark: 210 11% 12%;
+    --hero-muted: 210 10% 70%;
+    --section-dark: 210 14% 16%;
     --section-dark-fg: 0 0% 95%;
+    --section-charcoal: 210 12% 18%;
     --section-alt: 210 10% 96%;
     --secondary-light: 33 80% 60%;
     --secondary-dark: 33 100% 40%;

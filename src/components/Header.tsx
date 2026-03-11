@@ -74,7 +74,7 @@ const Header = () => {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled ? "bg-black shadow-lg" : "bg-transparent"
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled ? "bg-primary shadow-lg" : "bg-transparent"
         }`}
     >
       <div className="w-full max-w-none pl-0 pr-4 sm:container sm:mx-auto sm:px-6">
@@ -96,18 +96,18 @@ const Header = () => {
                 <Link
                   to={link.path}
                   className={`text-xs font-heading font-semibold uppercase tracking-wider transition-colors ${location.pathname === link.path
-                      ? "text-primary"
-                      : "text-white hover:text-primary"
+                      ? "text-white"
+                      : "text-white hover:text-black"
                     }`}
                 >
                   {link.label}
                 </Link>
-                <span className="absolute -bottom-1 left-0 w-0 h-px bg-primary transition-all duration-300 group-hover:w-full" />
+                <span className={`absolute -bottom-1 left-0 h-px transition-all duration-300 ${location.pathname === link.path ? "w-full bg-white" : "w-0 bg-black group-hover:w-full"}`} />
               </div>
             ))}
             <Link
               to="/quote"
-              className="border border-white text-white text-xs font-heading font-bold uppercase tracking-wider px-5 py-2 hover:bg-primary hover:border-primary hover:text-black transition-all duration-300"
+              className="border border-white text-white text-xs font-heading font-bold uppercase tracking-wider px-5 py-2 hover:bg-white hover:border-white hover:text-primary transition-all duration-300"
             >
               Get Quote
             </Link>
@@ -132,7 +132,7 @@ const Header = () => {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="lg:hidden bg-black/95 backdrop-blur-sm overflow-hidden border-t border-white/10"
+            className="lg:hidden bg-primary/95 backdrop-blur-sm overflow-hidden border-t border-white/10"
           >
             <nav className="container mx-auto px-6 py-6 flex flex-col gap-1">
               {navLinks.map((link, i) => (
@@ -145,8 +145,8 @@ const Header = () => {
                   <Link
                     to={link.path}
                     className={`block py-3 text-sm font-heading font-medium uppercase tracking-wider border-b border-white/8 last:border-0 transition-colors ${location.pathname === link.path
-                        ? "text-primary"
-                        : "text-white/80 hover:text-primary"
+                        ? "text-white"
+                        : "text-white/80 hover:text-white"
                       }`}
                     onClick={() => setMobileOpen(false)}
                   >
@@ -162,7 +162,7 @@ const Header = () => {
               >
                 <Link
                   to="/quote"
-                  className="block text-center border border-primary text-primary text-xs font-heading font-bold uppercase tracking-wider px-6 py-3 hover:bg-primary hover:text-black transition-all duration-300"
+                  className="block text-center border border-white text-white text-xs font-heading font-bold uppercase tracking-wider px-6 py-3 hover:bg-white hover:text-primary transition-all duration-300"
                   onClick={() => setMobileOpen(false)}
                 >
                   Get Quote

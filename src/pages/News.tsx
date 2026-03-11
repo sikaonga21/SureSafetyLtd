@@ -85,7 +85,7 @@ const NewsPage = () => {
       <Header />
       <main className="flex-1">
         {/* 60vh Image Hero - Reduced Font Size */}
-        <section className="relative h-[60vh] min-h-[400px] bg-black overflow-hidden">
+        <section className="relative h-[60vh] min-h-[400px] bg-section-charcoal overflow-hidden">
           <img
             src={newsHero}
             alt="News & Insights"

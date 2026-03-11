@@ -71,7 +71,7 @@ const ProjectsPage = () => {
             <Header />
             <main className="flex-1">
                 {/* 60vh Image Hero - Reduced Font Size */}
-                <section className="relative h-[60vh] min-h-[400px] bg-black overflow-hidden">
+                <section className="relative h-[60vh] min-h-[400px] bg-section-charcoal overflow-hidden">
                     <img
                         src={projectHero}
                         alt="Our Projects"
@@ -146,18 +146,18 @@ const ProjectsPage = () => {
                 ))}
 
                 {/* CTA */}
-                <section className="py-24 bg-primary px-6">
+                <section className="py-24 bg-section-dark px-6">
                     <div className="container">
                         <SectionObserver>
-                            <h2 className="text-4xl md:text-6xl font-heading font-bold text-black uppercase leading-tight mb-8 tracking-tight">
+                            <h2 className="text-4xl md:text-6xl font-heading font-bold text-white uppercase leading-tight mb-8 tracking-tight">
                                 HAVE A PROJECT IN MIND?
                             </h2>
-                            <p className="text-black/70 text-lg font-body mb-12 max-w-2xl leading-relaxed">
+                            <p className="text-white/70 text-lg font-body mb-12 max-w-2xl leading-relaxed">
                                 Partner with Sure Safety and experience reliable project delivery backed by over a decade of proven results.
                             </p>
                             <Link
                                 to="/contact"
-                                className="inline-block bg-black text-primary text-xs font-heading font-bold uppercase tracking-[0.2em] px-12 py-5 hover:bg-white hover:text-black transition-all duration-300 shadow-2xl"
+                                className="inline-block bg-white text-primary text-xs font-heading font-bold uppercase tracking-[0.2em] px-12 py-5 hover:bg-primary hover:text-white transition-all duration-300 shadow-2xl"
                             >
                                 Start a Conversation <ArrowRight className="w-4 h-4 inline-block ml-2" weight="bold" />
                             </Link>

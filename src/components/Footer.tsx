@@ -12,7 +12,23 @@ import logo from "@/assets/logo.png";
 
 const Footer = () => {
   return (
-    <footer className="bg-black text-white pt-20 pb-10 border-t border-white/10">
+    <>
+      {/* CTA strip — primary for color variety */}
+      <section className="bg-secondary py-10">
+        <div className="container flex flex-col sm:flex-row items-center justify-between gap-6">
+          <h2 className="text-xl md:text-2xl font-heading font-bold text-black text-center sm:text-left">
+            Ready to start your next project?
+          </h2>
+          <Link
+            to="/quote"
+            className="bg-black text-white px-8 py-3 font-heading font-bold text-xs uppercase tracking-[0.2em] hover:bg-black/90 transition-colors shrink-0"
+          >
+            Get a Free Quote
+          </Link>
+        </div>
+      </section>
+
+      <footer className="bg-section-dark text-white pt-20 pb-10 border-t border-white/10">
       <div className="container">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 mb-16">
           {/* Brand */}
@@ -136,6 +152,7 @@ const Footer = () => {
         </div>
       </div>
     </footer>
+    </>
   );
 };
 

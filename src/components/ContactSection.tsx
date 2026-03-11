@@ -31,7 +31,7 @@ const ContactSection = () => {
   return (
     <section id="contact">
       {/* Black CTA header block */}
-      <div className="py-20 bg-black">
+      <div className="py-20 bg-secondary">
         <div className="container">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -40,18 +40,18 @@ const ContactSection = () => {
             transition={{ duration: 0.6 }}
             className="max-w-3xl"
           >
-            <p className="text-white/50 font-heading text-xs uppercase tracking-[0.3em] mb-5">
+            <p className="text-black/60 font-heading text-xs uppercase tracking-[0.3em] mb-5">
               Get In Touch
             </p>
-            <h2 className="text-white font-heading font-bold text-4xl md:text-6xl uppercase leading-tight mb-6">
+            <h2 className="text-black font-heading font-bold text-4xl md:text-6xl uppercase leading-tight mb-6">
               NEED A CONSULTATION?
             </h2>
-            <p className="text-white/70 text-base font-body mb-10 max-w-xl">
+            <p className="text-black/70 text-base font-body mb-10 max-w-xl">
               Drop us a line. We are here to answer your questions and provide the solutions your business needs.
             </p>
             <a
               href="mailto:info@suresafety.co.zm"
-              className="inline-block border border-white text-white text-xs font-heading font-bold uppercase tracking-[0.2em] px-8 py-3.5 hover:bg-primary hover:border-primary hover:text-black transition-all duration-300"
+              className="inline-block border border-black text-black text-xs font-heading font-bold uppercase tracking-[0.2em] px-8 py-3.5 hover:bg-primary hover:border-primary hover:text-white transition-all duration-300"
             >
               info@suresafety.co.zm
             </a>

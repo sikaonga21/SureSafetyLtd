@@ -61,7 +61,7 @@ const VerticalsSection = () => {
   return (
     <>
       {/* ── Stats Breaker ── */}
-      <section className="bg-black">
+      <section className="bg-section-dark">
         <div className="container">
           <div className="grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-white/10">
             <StatCard label="Years In Operation" target={15} suffix="+" desc="Established presence in Zambia" delay={0} />
@@ -116,7 +116,7 @@ const VerticalsSection = () => {
 
           {/* CTA bar */}
           <motion.div
-            className="mt-14 bg-primary p-8 md:p-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6"
+            className="mt-14 bg-secondary p-8 md:p-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -132,7 +132,7 @@ const VerticalsSection = () => {
             </div>
             <Link
               to="/quote"
-              className="border border-black text-black text-xs font-heading font-bold uppercase tracking-[0.2em] px-8 py-3 hover:bg-black hover:text-primary transition-all duration-300 shrink-0"
+              className="border border-black text-black text-xs font-heading font-bold uppercase tracking-[0.2em] px-8 py-3 hover:bg-black hover:text-secondary transition-all duration-300 shrink-0"
             >
               Get a Free Quote
             </Link>

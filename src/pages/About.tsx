@@ -50,7 +50,7 @@ const AboutPage = () => {
       <Header />
       <main className="flex-1">
         {/* Page Hero - Reduced Font Size */}
-        <section className="relative h-[60vh] min-h-[400px] bg-black overflow-hidden">
+        <section className="relative h-[60vh] min-h-[400px] bg-section-charcoal overflow-hidden">
           <img
             src={aboutHero}
             alt="About Sure Safety"
@@ -205,16 +205,16 @@ const AboutPage = () => {
         </section>
 
         {/* Primary CTA */}
-        <section className="py-32 bg-primary">
+        <section className="py-32 bg-section-dark">
           <div className="container">
             <SectionObserver className="max-w-3xl">
-              <h2 className="text-4xl md:text-6xl font-heading font-bold text-black uppercase leading-tight mb-8 tracking-tight">
+              <h2 className="text-4xl md:text-6xl font-heading font-bold text-white uppercase leading-tight mb-8 tracking-tight">
                 READY TO WORK WITH US?
               </h2>
-              <p className="text-black/70 text-lg font-body mb-12 max-w-xl leading-relaxed">
+              <p className="text-white/70 text-lg font-body mb-12 max-w-xl leading-relaxed">
                 Experience professionalism, transparency, and results-driven construction and maintenance solutions.
               </p>
-              <Link to="/contact" className="inline-block bg-black text-primary text-xs font-heading font-bold uppercase tracking-[0.2em] px-12 py-5 hover:bg-white hover:text-black transition-all duration-300 shadow-2xl">
+              <Link to="/contact" className="inline-block bg-white text-primary text-xs font-heading font-bold uppercase tracking-[0.2em] px-12 py-5 hover:bg-primary hover:text-white transition-all duration-300 shadow-2xl">
                 Get in Touch
               </Link>
             </SectionObserver>
