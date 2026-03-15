@@ -44,9 +44,15 @@ const SectionObserver = ({ children, className = "", delay = 0 }: { children: Re
   );
 };
 
+import SEO from "@/components/SEO";
+
 const AboutPage = () => {
   return (
     <div className="min-h-screen flex flex-col overflow-x-hidden">
+      <SEO
+        title="About Us"
+        description="Learn about Sure Safety Limited, a leading Zambian contractor with over 15 years of experience in civil construction and facility maintenance."
+      />
       <Header />
       <main className="flex-1">
         {/* Page Hero - Reduced Font Size */}

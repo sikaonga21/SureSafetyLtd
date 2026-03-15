@@ -5,49 +5,21 @@ import { useInView } from "framer-motion";
 import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { Calendar, Buildings, ArrowRight } from "@phosphor-icons/react";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
+import SEO from "@/components/SEO";
 
 // Local assets
 import projectHero from "@/assets/products-banner.jpg";
 
-const projectGroups = [
-    {
-        category: "Large Scale Initiatives",
-        period: "2016–Present",
-        description: "Major engineering and logistics contracts for key institutions across Zambia.",
-        items: [
-            { name: "Various Commercial Buildings", year: "2023–2024", type: "General Building" },
-            { name: "Corporate HQ Fit-Out", year: "2022–2023", type: "Interior Finishing" },
-            { name: "Industrial Warehouse", year: "2023", type: "Civil Construction" },
-            { name: "Government Building Upgrade", year: "2022", type: "Facility Maintenance" },
-            { name: "Road Expansion Projects", year: "2021–2022", type: "Road & Paving" },
-            { name: "Electrical Grid Installation", year: "2020–2021", type: "Electrical" },
-        ],
-    },
-    {
-        category: "Expansion Phase",
-        period: "2015–2020",
-        description: "Infrastructure support and corporate partnerships across Lusaka and Copperbelt.",
-        items: [
-            { name: "Commercial Complex Renovation", year: "2019–2020", type: "General Building" },
-            { name: "Multi-Site Maintenance Contract", year: "2018–2019", type: "Maintenance" },
-            { name: "Office Park Electrical", year: "2017–2018", type: "Electrical" },
-            { name: "Industrial Plumbing Works", year: "2016–2017", type: "Plumbing" },
-            { name: "Road Infrastructure", year: "2015–2016", type: "Road & Paving" },
-        ],
-    },
-    {
-        category: "Early Works",
-        period: "2010–2015",
-        description: "Foundational projects that established our reputation for quality and reliability.",
-        items: [
-            { name: "Residential Complex", year: "2014–2015", type: "General Building" },
-            { name: "Commercial Fit-Out", year: "2013", type: "Interior Finishing" },
-            { name: "Factory Electrical Installation", year: "2012", type: "Electrical" },
-            { name: "Office Renovation", year: "2011–2012", type: "Renovation" },
-            { name: "Initial Paving Contract", year: "2010–2011", type: "Road & Paving" },
-        ],
-    },
-];
+type Project = {
+    id: string;
+    name: string;
+    type: string;
+    year: string;
+    category: string;
+    description: string | null;
+};
 
 const SectionObserver = ({ children, className = "", delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) => {
     const ref = useRef(null);
@@ -66,11 +38,35 @@ const SectionObserver = ({ children, className = "", delay = 0 }: { children: Re
 };
 
 const ProjectsPage = () => {
+    const { data: projects = [], isLoading } = useQuery<Project[]>({
+        queryKey: ["public-projects"],
+        queryFn: async () => {
+            const { data, error } = await supabase
+                .from("projects")
+                .select("*")
+                .order("created_at", { ascending: false });
+            if (error) throw error;
+            return data as Project[];
+        },
+    });
+
+    // Group projects by category
+    const grouped = projects.reduce<Record<string, Project[]>>((acc, p) => {
+        if (!acc[p.category]) acc[p.category] = [];
+        acc[p.category].push(p);
+        return acc;
+    }, {});
+    const groups = Object.entries(grouped);
+
     return (
         <div className="min-h-screen flex flex-col overflow-x-hidden">
+            <SEO
+                title="Our Projects"
+                description="A showcase of our featured construction, electrical, and maintenance projects delivered across Zambia."
+            />
             <Header />
             <main className="flex-1">
-                {/* 60vh Image Hero - Reduced Font Size */}
+                {/* Hero */}
                 <section className="relative h-[60vh] min-h-[400px] bg-section-charcoal overflow-hidden">
                     <img
                         src={projectHero}
@@ -97,10 +93,32 @@ const ProjectsPage = () => {
                     </div>
                 </section>
 
-                {/* Grouped timeline sections */}
-                {projectGroups.map((group, gIndex) => (
+                {/* Loading */}
+                {isLoading && (
+                    <section className="py-24 bg-card">
+                        <div className="container">
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                {[...Array(6)].map((_, i) => (
+                                    <div key={i} className="h-40 bg-muted/20 animate-pulse" />
+                                ))}
+                            </div>
+                        </div>
+                    </section>
+                )}
+
+                {/* No projects */}
+                {!isLoading && groups.length === 0 && (
+                    <section className="py-32 bg-card flex items-center justify-center">
+                        <p className="text-muted-foreground font-heading uppercase tracking-widest text-sm">
+                            Projects coming soon.
+                        </p>
+                    </section>
+                )}
+
+                {/* Grouped sections */}
+                {!isLoading && groups.map(([category, items], gIndex) => (
                     <section
-                        key={group.category}
+                        key={category}
                         className={`py-24 overflow-hidden ${gIndex % 2 === 1 ? "bg-section-alt" : "bg-card"}`}
                     >
                         <div className="container">
@@ -108,19 +126,18 @@ const ProjectsPage = () => {
                                 <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-6 mb-16 pb-8 border-b border-border">
                                     <div className="max-w-xl">
                                         <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground uppercase leading-tight tracking-tight">
-                                            {group.category}
+                                            {category}
                                         </h2>
-                                        <p className="text-muted-foreground mt-4 text-sm font-body leading-relaxed">{group.description}</p>
                                     </div>
                                     <span className="text-2xl font-heading font-bold text-primary whitespace-nowrap shrink-0 tracking-widest uppercase">
-                                        {group.period}
+                                        {items.length} Project{items.length !== 1 ? "s" : ""}
                                     </span>
                                 </div>
                             </SectionObserver>
 
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-border">
-                                {group.items.map((project, pIndex) => (
-                                    <SectionObserver key={pIndex} delay={pIndex * 0.05}>
+                                {items.map((project, pIndex) => (
+                                    <SectionObserver key={project.id} delay={pIndex * 0.05}>
                                         <div className="group p-8 h-full bg-card hover:bg-section-alt transition-all duration-500">
                                             <div className="flex justify-between items-start mb-6">
                                                 <div className="w-10 h-10 bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
@@ -137,6 +154,11 @@ const ProjectsPage = () => {
                                             <h3 className="text-sm font-heading font-bold text-foreground uppercase group-hover:text-primary transition-colors leading-relaxed">
                                                 {project.name}
                                             </h3>
+                                            {project.description && (
+                                                <p className="text-muted-foreground text-xs font-body mt-3 leading-relaxed">
+                                                    {project.description}
+                                                </p>
+                                            )}
                                         </div>
                                     </SectionObserver>
                                 ))}

@@ -21,6 +21,7 @@ import {
     Truck,
 } from "@phosphor-icons/react";
 import { toast } from "sonner";
+import SEO from "@/components/SEO";
 
 const serviceOptions = [
     { id: "building", name: "General Building", icon: Buildings },
@@ -46,6 +47,10 @@ const QuotePage = () => {
 
     return (
         <div className="min-h-screen bg-slate-50">
+            <SEO
+                title="Request a Quote"
+                description="Get a comprehensive quote for your construction, electrical, or maintenance project from Sure Safety Limited."
+            />
             <Header />
 
             <main className="py-20 lg:py-28">

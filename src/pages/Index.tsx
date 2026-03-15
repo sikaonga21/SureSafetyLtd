@@ -67,9 +67,48 @@ const CareerBanner = () => (
   </motion.section>
 );
 
+import SEO from "@/components/SEO";
+
 const Index = () => {
+  const businessSchema = {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "Sure Safety Limited",
+    "image": "https://suresafety.co.zm/favicon.png",
+    "@id": "https://suresafety.co.zm",
+    "url": "https://suresafety.co.zm",
+    "telephone": "+260977224213",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Lusaka",
+      "addressCountry": "ZM"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": -15.3875,
+      "longitude": 28.3228
+    },
+    "openingHoursSpecification": {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday"
+      ],
+      "opens": "08:00",
+      "closes": "17:00"
+    }
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
+      <SEO
+        title="Home"
+        description="Sure Safety Limited is a registered Zambian contractor delivering civil construction, electrical, plumbing, and facility maintenance solutions."
+        schema={businessSchema}
+      />
       <Header />
       <main className="flex-1">
         <HeroSection />

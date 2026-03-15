@@ -8,9 +8,15 @@ import { ArrowRight } from "@phosphor-icons/react";
 // Local assets
 import servicesHero from "@/assets/images/genreral-construction.jpg";
 
+import SEO from "@/components/SEO";
+
 const ServicesPage = () => {
   return (
     <div className="min-h-screen flex flex-col overflow-x-hidden">
+      <SEO
+        title="Our Services"
+        description="Explore our comprehensive range of services including general construction, electrical, mechanical, and facility maintenance in Zambia."
+      />
       <Header />
       <main className="flex-1">
         {/* 60vh Image Hero - Reduced Font Size */}

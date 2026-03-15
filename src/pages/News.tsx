@@ -4,56 +4,23 @@ import { motion } from "framer-motion";
 import { Calendar, ArrowRight, Tag } from "@phosphor-icons/react";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
+import SEO from "@/components/SEO";
 
 // Local assets
 import newsHero from "@/assets/products-banner.jpg";
 
-const posts = [
-  {
-    id: 1,
-    title: "Revolutionizing Sustainable Construction in Zambia",
-    excerpt:
-      "Exploring new eco-friendly materials and building techniques that are setting new standards for the local industry.",
-    date: "May 15, 2024",
-    author: "Eng. Chileshe Banda",
-    category: "Innovation",
-    image:
-      "https://images.unsplash.com/photo-1541888946425-d81bb19480c5?auto=format&fit=crop&q=80&w=800",
-  },
-  {
-    id: 2,
-    title: "Sure Safety Expands Operations to the Copperbelt",
-    excerpt:
-      "We are proud to announce the opening of our new regional office in Kitwe to better serve our industrial clients.",
-    date: "April 28, 2024",
-    author: "Admin",
-    category: "Company News",
-    image:
-      "https://images.unsplash.com/photo-1517646285325-a86206d1598a?auto=format&fit=crop&q=80&w=800",
-  },
-  {
-    id: 3,
-    title: "The Importance of Regular Facility Maintenance",
-    excerpt:
-      "Why preventative maintenance is the key to longevity and safety for commercial and residential properties.",
-    date: "April 10, 2024",
-    author: "Maintenance Team",
-    category: "Technical Tips",
-    image:
-      "https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&q=80&w=800",
-  },
-  {
-    id: 4,
-    title: "Advanced Electrical Safety for Industrial Sites",
-    excerpt:
-      "A deep dive into the latest safety protocols for large-scale electrical installations and high-voltage systems.",
-    date: "March 22, 2024",
-    author: "Technical Dept",
-    category: "Safety",
-    image:
-      "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&q=80&w=800",
-  },
-];
+type NewsPost = {
+  id: string;
+  title: string;
+  excerpt: string;
+  content: string | null;
+  date: string;
+  author: string;
+  category: string;
+  image_url: string | null;
+};
 
 const SectionObserver = ({
   children,
@@ -65,7 +32,7 @@ const SectionObserver = ({
   delay?: number;
 }) => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-60px" });
+  const isInView = useInView(ref, { once: true, margin: "-80px" });
   return (
     <motion.div
       ref={ref}
@@ -79,12 +46,30 @@ const SectionObserver = ({
   );
 };
 
+const DEFAULT_IMAGE = "https://images.unsplash.com/photo-1541888946425-d81bb19480c5?auto=format&fit=crop&q=80&w=800";
+
 const NewsPage = () => {
+  const { data: posts = [], isLoading } = useQuery<NewsPost[]>({
+    queryKey: ["public-news"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("news")
+        .select("*")
+        .order("date", { ascending: false });
+      if (error) throw error;
+      return data as NewsPost[];
+    },
+  });
+
   return (
     <div className="min-h-screen flex flex-col overflow-x-hidden">
+      <SEO
+        title="News & Insights"
+        description="Stay updated with the latest news, industrial insights, and project highlights from Sure Safety Limited in Zambia."
+      />
       <Header />
       <main className="flex-1">
-        {/* 60vh Image Hero - Reduced Font Size */}
+        {/* Hero */}
         <section className="relative h-[60vh] min-h-[400px] bg-section-charcoal overflow-hidden">
           <img
             src={newsHero}
@@ -116,95 +101,119 @@ const NewsPage = () => {
           </div>
         </section>
 
+        {/* Loading */}
+        {isLoading && (
+          <section className="py-24 bg-card">
+            <div className="container grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {[...Array(3)].map((_, i) => (
+                <div key={i} className="h-64 bg-muted/20 animate-pulse" />
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* No posts */}
+        {!isLoading && posts.length === 0 && (
+          <section className="py-32 bg-card flex items-center justify-center">
+            <p className="text-muted-foreground font-heading uppercase tracking-widest text-sm">
+              No news posts yet.
+            </p>
+          </section>
+        )}
+
         {/* Featured Post */}
-        <section className="py-24 bg-card">
-          <div className="container">
-            <SectionObserver>
-              <div className="group border border-border overflow-hidden bg-section-alt transition-all duration-500">
-                <div className="grid lg:grid-cols-2">
-                  <div className="relative h-64 lg:h-[450px] overflow-hidden">
-                    <img
-                      src={posts[0].image}
-                      alt={posts[0].title}
-                      className="w-full h-full object-cover grayscale-[40%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
-                    />
-                    <span className="absolute top-6 left-6 bg-primary text-black text-[10px] font-heading font-bold uppercase tracking-[0.2em] px-5 py-2">
-                      Featured
-                    </span>
-                  </div>
-                  <div className="p-10 lg:p-16 flex flex-col justify-center">
-                    <div className="flex items-center gap-4 text-[10px] font-heading font-bold text-primary uppercase tracking-[0.2em] mb-8">
-                      <span className="flex items-center gap-2">
-                        <Calendar className="w-4 h-4" /> {posts[0].date}
-                      </span>
-                      <span className="w-px h-3 bg-border" />
-                      <span className="flex items-center gap-2">
-                        <Tag className="w-4 h-4" /> {posts[0].category}
+        {!isLoading && posts.length > 0 && (
+          <section className="py-24 bg-card">
+            <div className="container">
+              <SectionObserver>
+                <div className="group border border-border overflow-hidden bg-section-alt transition-all duration-500">
+                  <div className="grid lg:grid-cols-2">
+                    <div className="relative h-64 lg:h-[450px] overflow-hidden">
+                      <img
+                        src={posts[0].image_url || DEFAULT_IMAGE}
+                        alt={posts[0].title}
+                        className="w-full h-full object-cover grayscale-[40%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
+                      />
+                      <span className="absolute top-6 left-6 bg-primary text-black text-[10px] font-heading font-bold uppercase tracking-[0.2em] px-5 py-2">
+                        Featured
                       </span>
                     </div>
-                    <h2 className="text-2xl lg:text-3xl font-heading font-bold text-foreground mb-6 leading-tight group-hover:text-primary transition-colors uppercase tracking-tight">
-                      {posts[0].title}
-                    </h2>
-                    <p className="text-muted-foreground text-sm leading-relaxed mb-10 font-body">
-                      {posts[0].excerpt}
-                    </p>
-                    <div className="flex items-center justify-between mt-auto">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-primary/10 flex items-center justify-center text-primary font-heading font-bold text-xs">
-                          {posts[0].author[0]}
-                        </div>
-                        <span className="text-[10px] font-heading font-bold uppercase tracking-widest text-foreground opacity-60">
-                          {posts[0].author}
+                    <div className="p-10 lg:p-16 flex flex-col justify-center">
+                      <div className="flex items-center gap-4 text-[10px] font-heading font-bold text-primary uppercase tracking-[0.2em] mb-8">
+                        <span className="flex items-center gap-2">
+                          <Calendar className="w-4 h-4" /> {posts[0].date}
+                        </span>
+                        <span className="w-px h-3 bg-border" />
+                        <span className="flex items-center gap-2">
+                          <Tag className="w-4 h-4" /> {posts[0].category}
                         </span>
                       </div>
-                      <button className="flex items-center gap-2 text-primary font-heading font-bold text-[10px] uppercase tracking-[0.2em] group-hover:gap-3 transition-all">
-                        Read Story <ArrowRight className="w-4 h-4" weight="bold" />
-                      </button>
+                      <h2 className="text-2xl lg:text-3xl font-heading font-bold text-foreground mb-6 leading-tight group-hover:text-primary transition-colors uppercase tracking-tight">
+                        {posts[0].title}
+                      </h2>
+                      <p className="text-muted-foreground text-sm leading-relaxed mb-10 font-body">
+                        {posts[0].excerpt}
+                      </p>
+                      <div className="flex items-center justify-between mt-auto">
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 bg-primary/10 flex items-center justify-center text-primary font-heading font-bold text-xs">
+                            {posts[0].author[0]}
+                          </div>
+                          <span className="text-[10px] font-heading font-bold uppercase tracking-widest text-foreground opacity-60">
+                            {posts[0].author}
+                          </span>
+                        </div>
+                        <button className="flex items-center gap-2 text-primary font-heading font-bold text-[10px] uppercase tracking-[0.2em] group-hover:gap-3 transition-all">
+                          Read Story <ArrowRight className="w-4 h-4" weight="bold" />
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </SectionObserver>
-          </div>
-        </section>
+              </SectionObserver>
+            </div>
+          </section>
+        )}
 
         {/* Post Grid */}
-        <section className="pb-32 bg-card">
-          <div className="container">
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-px bg-border">
-              {posts.slice(1).map((post, i) => (
-                <SectionObserver key={post.id} delay={i * 0.08}>
-                  <div className="group bg-card h-full flex flex-col p-8 hover:bg-section-alt transition-all duration-500">
-                    <div className="relative h-56 overflow-hidden mb-8">
-                      <img
-                        src={post.image}
-                        alt={post.title}
-                        className="w-full h-full object-cover grayscale-[40%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
-                      />
-                      <span className="absolute bottom-4 left-4 bg-primary text-black text-[9px] font-heading font-bold uppercase tracking-[0.2em] px-3 py-1">
-                        {post.category}
-                      </span>
-                    </div>
-                    <div className="flex flex-col flex-grow">
-                      <div className="flex items-center gap-3 text-[10px] font-heading font-bold text-muted-foreground uppercase tracking-[0.2em] mb-4">
-                        <Calendar className="w-3.5 h-3.5" /> {post.date}
+        {!isLoading && posts.length > 1 && (
+          <section className="pb-32 bg-card">
+            <div className="container">
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-px bg-border">
+                {posts.slice(1).map((post, i) => (
+                  <SectionObserver key={post.id} delay={i * 0.08}>
+                    <div className="group bg-card h-full flex flex-col p-8 hover:bg-section-alt transition-all duration-500">
+                      <div className="relative h-56 overflow-hidden mb-8">
+                        <img
+                          src={post.image_url || DEFAULT_IMAGE}
+                          alt={post.title}
+                          className="w-full h-full object-cover grayscale-[40%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
+                        />
+                        <span className="absolute bottom-4 left-4 bg-primary text-black text-[9px] font-heading font-bold uppercase tracking-[0.2em] px-3 py-1">
+                          {post.category}
+                        </span>
                       </div>
-                      <h3 className="text-base font-heading font-bold text-foreground mb-4 leading-snug group-hover:text-primary transition-colors uppercase">
-                        {post.title}
-                      </h3>
-                      <p className="text-muted-foreground text-xs leading-relaxed mb-8 line-clamp-3 font-body">
-                        {post.excerpt}
-                      </p>
-                      <button className="flex items-center gap-2 text-primary font-heading font-bold text-[10px] uppercase tracking-[0.2em] mt-auto group-hover:gap-3 transition-all">
-                        Read Story <ArrowRight className="w-3.5 h-3.5" weight="bold" />
-                      </button>
+                      <div className="flex flex-col flex-grow">
+                        <div className="flex items-center gap-3 text-[10px] font-heading font-bold text-muted-foreground uppercase tracking-[0.2em] mb-4">
+                          <Calendar className="w-3.5 h-3.5" /> {post.date}
+                        </div>
+                        <h3 className="text-base font-heading font-bold text-foreground mb-4 leading-snug group-hover:text-primary transition-colors uppercase">
+                          {post.title}
+                        </h3>
+                        <p className="text-muted-foreground text-xs leading-relaxed mb-8 line-clamp-3 font-body">
+                          {post.excerpt}
+                        </p>
+                        <button className="flex items-center gap-2 text-primary font-heading font-bold text-[10px] uppercase tracking-[0.2em] mt-auto group-hover:gap-3 transition-all">
+                          Read Story <ArrowRight className="w-3.5 h-3.5" weight="bold" />
+                        </button>
+                      </div>
                     </div>
-                  </div>
-                </SectionObserver>
-              ))}
+                  </SectionObserver>
+                ))}
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
+        )}
       </main>
       <Footer />
     </div>

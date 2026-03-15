@@ -6,9 +6,15 @@ import { motion } from "framer-motion";
 // Local assets
 import contactHero from "@/assets/images/contact-hero.jpg";
 
+import SEO from "@/components/SEO";
+
 const ContactPage = () => {
   return (
     <div className="min-h-screen flex flex-col overflow-x-hidden">
+      <SEO
+        title="Contact Us"
+        description="Have a question or looking for a professional construction partner? Reach out to Sure Safety Limited today."
+      />
       <Header />
       <main className="flex-1">
         {/* 60vh Image Hero - Reduced Font Size */}
