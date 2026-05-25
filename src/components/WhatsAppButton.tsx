@@ -37,7 +37,7 @@ const WhatsAppButton = () => {
                         <span className="absolute inset-0 rounded-full bg-[#25D366] animate-ping opacity-25 -z-10" />
                     </motion.a>
                 </TooltipTrigger>
-                <TooltipContent side="left" className="bg-black text-white border-none text-[10px] font-heading font-bold uppercase tracking-widest px-4 py-2">
+                <TooltipContent side="left" className="bg-black text-white border-none text-sm font-heading font-bold uppercase tracking-widest px-4 py-2">
                     Chat with us
                 </TooltipContent>
             </Tooltip>

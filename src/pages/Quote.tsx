@@ -60,7 +60,7 @@ const QuotePage = () => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                     >
-                        <p className="text-primary font-heading font-bold text-sm tracking-[0.3em] uppercase mb-4">Request a Quote</p>
+                        <p className="text-primary font-heading font-bold text-base tracking-[0.3em] uppercase mb-4">Request a Quote</p>
                         <h1 className="text-4xl md:text-5xl font-heading font-bold text-slate-900 mb-6 font-heading">
                             Plan Your Next <span className="text-primary">Masterpiece</span>
                         </h1>
@@ -137,22 +137,22 @@ const QuotePage = () => {
                                         </div>
                                         <div className="grid md:grid-cols-2 gap-6">
                                             <div className="space-y-2">
-                                                <label className="text-sm font-bold text-slate-700 uppercase tracking-widest pl-1">Project Location</label>
+                                                <label className="text-base font-bold text-slate-700 uppercase tracking-widest pl-1">Project Location</label>
                                                 <div className="relative">
                                                     <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
-                                                    <Input className="pl-12 h-14 bg-slate-50 border-slate-200 focus:bg-white" placeholder="e.g. Lusaka, Kitwe..." required />
+                                                    <Input className="pl-12 h-14 bg-slate-50 border-slate-200 focus:bg-white" placeholder="e.g. Ndola, Kitwe..." required />
                                                 </div>
                                             </div>
                                             <div className="space-y-2">
-                                                <label className="text-sm font-bold text-slate-700 uppercase tracking-widest pl-1">Estimated Budget (ZMW)</label>
+                                                <label className="text-base font-bold text-slate-700 uppercase tracking-widest pl-1">Estimated Budget (ZMW)</label>
                                                 <div className="relative">
                                                     <Calculator className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
                                                     <Input className="pl-12 h-14 bg-slate-50 border-slate-200 focus:bg-white" placeholder="e.g. 50,000" />
                                                 </div>
                                             </div>
                                             <div className="space-y-2">
-                                                <label className="text-sm font-bold text-slate-700 uppercase tracking-widest pl-1">Project Timeline</label>
-                                                <select className="flex h-14 w-full border border-slate-200 bg-slate-50 px-4 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 appearance-none cursor-pointer">
+                                                <label className="text-base font-bold text-slate-700 uppercase tracking-widest pl-1">Project Timeline</label>
+                                                <select className="flex h-14 w-full border border-slate-200 bg-slate-50 px-4 py-2 text-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 appearance-none cursor-pointer">
                                                     <option value="emergency">Emergency / Immediately</option>
                                                     <option value="1month">Within 1 Month</option>
                                                     <option value="3months">Within 3 Months</option>
@@ -160,7 +160,7 @@ const QuotePage = () => {
                                                 </select>
                                             </div>
                                             <div className="space-y-2">
-                                                <label className="text-sm font-bold text-slate-700 uppercase tracking-widest pl-1">Urgency Level</label>
+                                                <label className="text-base font-bold text-slate-700 uppercase tracking-widest pl-1">Urgency Level</label>
                                                 <div className="flex gap-4">
                                                     {['Low', 'Medium', 'High'].map((level) => (
                                                         <button
@@ -183,7 +183,7 @@ const QuotePage = () => {
                                                 </div>
                                             </div>
                                             <div className="md:col-span-2 space-y-2">
-                                                <label className="text-sm font-bold text-slate-700 uppercase tracking-widest pl-1">Project Description</label>
+                                                <label className="text-base font-bold text-slate-700 uppercase tracking-widest pl-1">Project Description</label>
                                                 <Textarea
                                                     className="min-h-[150px] bg-slate-50 border-slate-200 focus:bg-white p-6"
                                                     placeholder="Describe the project requirements, dimensions, or any specific needs..."
@@ -213,21 +213,21 @@ const QuotePage = () => {
                                         </div>
                                         <div className="grid md:grid-cols-2 gap-6">
                                             <div className="space-y-2">
-                                                <label className="text-sm font-bold text-slate-700 uppercase tracking-widest pl-1">Full Name</label>
+                                                <label className="text-base font-bold text-slate-700 uppercase tracking-widest pl-1">Full Name</label>
                                                 <div className="relative">
                                                     <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
                                                     <Input className="pl-12 h-14 bg-slate-50 border-slate-200" placeholder="John Doe" required />
                                                 </div>
                                             </div>
                                             <div className="space-y-2">
-                                                <label className="text-sm font-bold text-slate-700 uppercase tracking-widest pl-1">Email Address</label>
+                                                <label className="text-base font-bold text-slate-700 uppercase tracking-widest pl-1">Email Address</label>
                                                 <div className="relative">
                                                     <Envelope className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
                                                     <Input type="email" className="pl-12 h-14 bg-slate-50 border-slate-200" placeholder="john@example.com" required />
                                                 </div>
                                             </div>
                                             <div className="md:col-span-2 space-y-2">
-                                                <label className="text-sm font-bold text-slate-700 uppercase tracking-widest pl-1">Phone Number</label>
+                                                <label className="text-base font-bold text-slate-700 uppercase tracking-widest pl-1">Phone Number</label>
                                                 <div className="relative">
                                                     <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
                                                     <Input className="pl-12 h-14 bg-slate-50 border-slate-200" placeholder="+260 9xx xxx xxx" required />

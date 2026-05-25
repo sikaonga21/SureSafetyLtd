@@ -22,6 +22,7 @@ export type Database = {
           year: string
           category: string
           description: string | null
+          image_urls: string[]
           created_at: string
         }
         Insert: {
@@ -31,6 +32,7 @@ export type Database = {
           year: string
           category: string
           description?: string | null
+          image_urls?: string[]
           created_at?: string
         }
         Update: {
@@ -40,6 +42,7 @@ export type Database = {
           year?: string
           category?: string
           description?: string | null
+          image_urls?: string[]
           created_at?: string
         }
         Relationships: []

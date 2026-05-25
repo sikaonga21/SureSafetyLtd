@@ -43,8 +43,8 @@ const ContactSection = () => {
             >
               <div className="space-y-6">
                 {[
-                  { icon: MapPin, label: "Our Office", value: "Lusaka, Zambia" },
-                  { icon: Phone, label: "Phone", value: "+260 211 123 456" },
+                  { icon: MapPin, label: "Our Office", value: "Ndola, Zambia" },
+                  { icon: Phone, label: "Phone", value: "+260 974397448" },
                   { icon: Envelope, label: "Email", value: "info@suresafety.co.zm" },
                 ].map((item) => (
                   <div key={item.label} className="flex items-start gap-4 group">
@@ -52,7 +52,7 @@ const ContactSection = () => {
                       <item.icon className="w-5 h-5 text-primary" weight="fill" />
                     </div>
                     <div>
-                      <p className="font-heading font-bold text-foreground text-xs uppercase tracking-wider">{item.label}</p>
+                      <p className="font-heading font-bold text-foreground text-sm uppercase tracking-wider">{item.label}</p>
                       <p className="text-muted-foreground text-sm mt-1 font-body">{item.value}</p>
                     </div>
                   </div>
@@ -60,11 +60,11 @@ const ContactSection = () => {
               </div>
 
               <div className="p-6 bg-section-alt border border-border">
-                <p className="font-heading font-bold text-foreground mb-3 text-xs uppercase tracking-wider">Business Hours</p>
+                <p className="font-heading font-bold text-foreground mb-3 text-sm uppercase tracking-wider">Business Hours</p>
                 <div className="space-y-1.5 text-sm text-muted-foreground font-body">
                   <div className="flex justify-between"><span>Mon – Fri:</span><span>08:00 – 17:00</span></div>
                   <div className="flex justify-between"><span>Saturday:</span><span>09:00 – 13:00</span></div>
-                  <div className="flex justify-between"><span>Sunday:</span><span className="text-primary font-semibold text-xs">Closed</span></div>
+                  <div className="flex justify-between"><span>Sunday:</span><span className="text-primary font-semibold text-sm">Closed</span></div>
                 </div>
               </div>
             </motion.div>
@@ -79,26 +79,26 @@ const ContactSection = () => {
             >
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="space-y-1">
-                  <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Full Name *</p>
+                  <p className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">Full Name *</p>
                   <Input className="bg-section-alt border-none focus-visible:ring-primary/30 h-12" placeholder="John Doe" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} maxLength={100} />
                 </div>
                 <div className="space-y-1">
-                  <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Email Address *</p>
+                  <p className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">Email Address *</p>
                   <Input type="email" className="bg-section-alt border-none focus-visible:ring-primary/30 h-12" placeholder="john@example.com" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} maxLength={255} />
                 </div>
               </div>
               <div className="space-y-1">
-                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Phone Number</p>
+                <p className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">Phone Number</p>
                 <Input className="bg-section-alt border-none focus-visible:ring-primary/30 h-12" placeholder="+260 9xx xxx xxx" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} maxLength={20} />
               </div>
               <div className="space-y-1">
-                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">How can we help? *</p>
+                <p className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">How can we help? *</p>
                 <Textarea className="bg-section-alt border-none focus-visible:ring-primary/30 resize-none" placeholder="Tell us about your project..." rows={5} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} maxLength={1000} />
               </div>
               <button
                 type="submit"
                 disabled={sending}
-                className="w-full bg-primary text-black font-heading font-bold text-xs uppercase tracking-[0.2em] h-12 hover:bg-primary/90 transition-all flex items-center justify-center gap-2 disabled:opacity-60"
+                className="w-full bg-primary text-black font-heading font-bold text-sm uppercase tracking-[0.2em] h-12 hover:bg-primary/90 transition-all flex items-center justify-center gap-2 disabled:opacity-60"
               >
                 {sending ? "Sending..." : "Send Message"} <PaperPlaneTilt className="w-4 h-4" weight="fill" />
               </button>
@@ -117,7 +117,7 @@ const ContactSection = () => {
             transition={{ duration: 0.6 }}
             className="max-w-3xl"
           >
-            <p className="text-black/60 font-heading text-xs uppercase tracking-[0.3em] mb-5">
+            <p className="text-black/60 font-heading text-sm uppercase tracking-[0.3em] mb-5">
               Get In Touch
             </p>
             <h2 className="text-black font-heading font-bold text-4xl md:text-6xl uppercase leading-tight mb-6">
@@ -128,7 +128,7 @@ const ContactSection = () => {
             </p>
             <a
               href="mailto:info@suresafety.co.zm"
-              className="inline-block border border-black text-black text-xs font-heading font-bold uppercase tracking-[0.2em] px-8 py-3.5 hover:bg-primary hover:border-primary hover:text-white transition-all duration-300"
+              className="inline-block border border-black text-black text-sm font-heading font-bold uppercase tracking-[0.2em] px-8 py-3.5 hover:bg-primary hover:border-primary hover:text-white transition-all duration-300"
             >
               info@suresafety.co.zm
             </a>

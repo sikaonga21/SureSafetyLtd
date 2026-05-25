@@ -34,7 +34,7 @@ const StatCard = ({
       viewport={{ once: true }}
       transition={{ delay, duration: 0.6 }}
     >
-      <p className="text-white/40 font-heading text-xs uppercase tracking-[0.3em] mb-4">
+      <p className="text-white/40 font-heading text-sm uppercase tracking-[0.3em] mb-4">
         {label}
       </p>
       <p
@@ -44,7 +44,7 @@ const StatCard = ({
         {value}
         <span className="text-primary">{suffix}</span>
       </p>
-      <p className="text-white/50 text-sm font-body">{desc}</p>
+      <p className="text-white/50 text-base font-body">{desc}</p>
     </motion.div>
   );
 };
@@ -81,7 +81,7 @@ const VerticalsSection = () => {
             viewport={{ once: true, margin: "-60px" }}
             transition={{ duration: 0.5 }}
           >
-            <p className="text-primary font-heading font-semibold text-xs uppercase tracking-[0.3em] mb-3">
+            <p className="text-primary font-heading font-semibold text-sm uppercase tracking-[0.3em] mb-3">
               The Difference
             </p>
             <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground uppercase leading-tight">
@@ -104,10 +104,10 @@ const VerticalsSection = () => {
                 <div className="w-10 h-10 bg-primary/10 flex items-center justify-center mb-5 group-hover:bg-primary/20 transition-colors">
                   <item.icon className="w-5 h-5 text-primary" weight="fill" />
                 </div>
-                <h3 className="font-heading font-bold text-foreground text-xs uppercase tracking-wider mb-3">
+                <h3 className="font-heading font-bold text-foreground text-sm uppercase tracking-wider mb-3">
                   {item.name}
                 </h3>
-                <p className="text-muted-foreground text-xs leading-relaxed font-body flex-grow">
+                <p className="text-muted-foreground text-base leading-relaxed font-body flex-grow">
                   {item.desc}
                 </p>
               </motion.div>
@@ -126,7 +126,7 @@ const VerticalsSection = () => {
               <h3 className="text-xl md:text-2xl font-heading font-bold text-black uppercase leading-tight">
                 Ready to start your next project?
               </h3>
-              <p className="text-black/60 text-sm mt-1 font-body">
+              <p className="text-black/60 text-base mt-1 font-body">
                 Consult with our experts for building and maintenance solutions.
               </p>
             </div>

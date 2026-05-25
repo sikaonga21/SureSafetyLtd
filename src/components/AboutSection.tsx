@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight, Target, Eye, ShieldCheck, Star } from "@phosphor-icons/react";
 import { useCountUp } from "@/hooks/use-count-up";
-import aboutImg from "@/assets/images/home-section-about.jpg";
+import { portfolioFeatured } from "@/data/portfolioImages";
 
 const pillars = [
   { icon: Target, title: "Our Vision", desc: "To be a leading force, recognized for excellence and innovation across Zambia." },
@@ -60,8 +60,8 @@ const AboutSection = () => {
             >
               <div className="relative overflow-hidden shadow-2xl">
                 <img
-                  src="/assets/images/home-section-about.jpg"
-                  alt="Sure Safety Team"
+                  src={portfolioFeatured.about}
+                  alt="Sure Safety Limited — modern residential construction and finishing in Zambia"
                   className="w-full aspect-[4/3] object-cover"
                   loading="lazy"
                 />
@@ -111,9 +111,9 @@ const AboutSection = () => {
                   >
                     <div className="flex items-center gap-2">
                       <h.icon className="w-3.5 h-3.5 text-primary shrink-0" weight="fill" />
-                      <p className="font-heading font-bold text-foreground text-xs uppercase tracking-wider">{h.title}</p>
+                      <p className="font-heading font-bold text-foreground text-sm uppercase tracking-wider">{h.title}</p>
                     </div>
-                    <p className="text-xs text-muted-foreground leading-relaxed pl-5 font-body">{h.desc}</p>
+                    <p className="text-base text-muted-foreground leading-relaxed pl-5 font-body">{h.desc}</p>
                   </motion.div>
                 ))}
               </div>
@@ -126,7 +126,7 @@ const AboutSection = () => {
 
               <Link
                 to="/contact"
-                className="inline-flex items-center gap-2 text-xs font-heading font-bold uppercase tracking-[0.2em] text-foreground border-b border-foreground pb-0.5 hover:text-primary hover:border-primary transition-colors group mt-2"
+                className="inline-flex items-center gap-2 text-sm font-heading font-bold uppercase tracking-[0.2em] text-foreground border-b border-foreground pb-0.5 hover:text-primary hover:border-primary transition-colors group mt-2"
               >
                 Work With Us <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" weight="bold" />
               </Link>

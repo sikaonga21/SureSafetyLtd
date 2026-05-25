@@ -26,41 +26,46 @@ const AdminLogin = () => {
     };
 
     return (
-        <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center p-4">
+        <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center p-6 lg:p-12 relative overflow-hidden">
+            {/* Background decorative elements */}
+            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#F5A623]/5 blur-[120px] rounded-full -mr-64 -mt-64" />
+            <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-[#F5A623]/5 blur-[120px] rounded-full -ml-64 -mb-64" />
+
             {/* Background grid */}
             <div
-                className="absolute inset-0 opacity-5"
+                className="absolute inset-0 opacity-[0.03]"
                 style={{
                     backgroundImage:
                         "linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)",
-                    backgroundSize: "40px 40px",
+                    backgroundSize: "60px 60px",
                 }}
             />
 
-            <div className="relative w-full max-w-md">
+            <div className="relative w-full max-w-lg">
                 {/* Logo / Brand */}
-                <div className="text-center mb-10">
-                    <div className="inline-flex items-center justify-center w-16 h-16 bg-[#F5A623] mb-6">
-                        <ShieldCheck className="w-8 h-8 text-black" weight="bold" />
+                <div className="text-center mb-12">
+                    <div className="inline-flex items-center justify-center w-20 h-20 bg-[#F5A623] mb-8 shadow-[0_0_40px_rgba(245,166,35,0.2)]">
+                        <ShieldCheck className="w-10 h-10 text-black" weight="bold" />
                     </div>
-                    <h1 className="text-2xl font-bold text-white uppercase tracking-widest font-heading">
+                    <h1 className="text-4xl font-bold text-white uppercase tracking-[0.2em] font-heading leading-tight">
                         Sure Safety
                     </h1>
-                    <p className="text-white/40 text-xs uppercase tracking-[0.3em] mt-2 font-heading">
-                        Admin Portal
+                    <p className="text-[#F5A623] text-sm uppercase tracking-[0.3em] font-heading font-black mb-4">
+                        Admin Central Console
                     </p>
                 </div>
 
                 {/* Card */}
-                <div className="bg-white/5 backdrop-blur border border-white/10 p-10">
-                    <h2 className="text-sm font-bold uppercase tracking-[0.25em] text-white/70 font-heading mb-8">
-                        Sign in to continue
+                <div className="bg-[#0f0f0f] border border-white/5 p-12 lg:p-16 shadow-2xl relative">
+                    <div className="absolute top-0 left-0 w-1 h-full bg-[#F5A623]" />
+                    <h2 className="text-base font-bold uppercase tracking-[0.3em] text-white/70 font-heading mb-12">
+                        Authorization Required
                     </h2>
 
-                    <form onSubmit={handleSubmit} className="space-y-5">
+                    <form onSubmit={handleSubmit} className="space-y-8">
                         <div>
-                            <label className="block text-[10px] font-bold uppercase tracking-[0.25em] text-white/50 mb-2 font-heading">
-                                Email
+                            <label className="block text-xs font-bold uppercase tracking-[0.3em] text-white/40 mb-3 font-heading">
+                                Administrator Email
                             </label>
                             <input
                                 type="email"
@@ -68,14 +73,14 @@ const AdminLogin = () => {
                                 onChange={(e) => setEmail(e.target.value)}
                                 required
                                 autoComplete="email"
-                                placeholder="admin@suresafety.co.zm"
-                                className="w-full bg-white/5 border border-white/10 text-white placeholder:text-white/20 px-4 py-3 text-sm font-body focus:outline-none focus:border-[#F5A623] transition-colors"
+                                placeholder="name@suresafety.co.zm"
+                                className="w-full bg-white/[0.03] border border-white/10 text-white placeholder:text-white/10 px-6 py-5 text-base font-body focus:outline-none focus:border-[#F5A623] transition-all"
                             />
                         </div>
 
                         <div>
-                            <label className="block text-[10px] font-bold uppercase tracking-[0.25em] text-white/50 mb-2 font-heading">
-                                Password
+                            <label className="block text-xs font-bold uppercase tracking-[0.3em] text-white/40 mb-3 font-heading">
+                                System Password
                             </label>
                             <div className="relative">
                                 <input
@@ -84,18 +89,18 @@ const AdminLogin = () => {
                                     onChange={(e) => setPassword(e.target.value)}
                                     required
                                     autoComplete="current-password"
-                                    placeholder="••••••••"
-                                    className="w-full bg-white/5 border border-white/10 text-white placeholder:text-white/20 px-4 py-3 pr-12 text-sm font-body focus:outline-none focus:border-[#F5A623] transition-colors"
+                                    placeholder="••••••••••••"
+                                    className="w-full bg-white/[0.03] border border-white/10 text-white placeholder:text-white/10 px-6 py-5 pr-14 text-base font-body focus:outline-none focus:border-[#F5A623] transition-all"
                                 />
                                 <button
                                     type="button"
                                     onClick={() => setShowPassword(!showPassword)}
-                                    className="absolute right-4 top-1/2 -translate-y-1/2 text-white/30 hover:text-white/70 transition-colors"
+                                    className="absolute right-6 top-1/2 -translate-y-1/2 text-white/20 hover:text-[#F5A623] transition-colors"
                                 >
                                     {showPassword ? (
-                                        <EyeSlash className="w-4 h-4" />
+                                        <EyeSlash className="w-6 h-6" />
                                     ) : (
-                                        <Eye className="w-4 h-4" />
+                                        <Eye className="w-6 h-6" />
                                     )}
                                 </button>
                             </div>
@@ -104,16 +109,21 @@ const AdminLogin = () => {
                         <button
                             type="submit"
                             disabled={loading}
-                            className="w-full bg-[#F5A623] text-black font-heading font-bold text-xs uppercase tracking-[0.25em] py-4 hover:bg-[#e09518] transition-colors mt-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="w-full bg-[#F5A623] text-black font-heading font-bold text-xs uppercase tracking-[0.4em] py-6 hover:bg-white transition-all duration-500 mt-6 disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_0_20px_rgba(245,166,35,0.1)]"
                         >
-                            {loading ? "Signing in..." : "Sign In"}
+                            {loading ? "Authenticating..." : "Establish Session"}
                         </button>
                     </form>
                 </div>
 
-                <p className="text-center text-white/20 text-[10px] uppercase tracking-widest mt-8 font-heading">
-                    Sure Safety Ltd · Admin Only
-                </p>
+                <div className="mt-12 text-center text-white/10 flex flex-col gap-2">
+                    <p className="text-sm uppercase tracking-[0.4em] font-heading font-bold">
+                        Sure Safety Ltd · Infrastructure Security
+                    </p>
+                    <p className="text-xs uppercase tracking-widest font-heading opacity-50">
+                        Proprietary System · Access Restricted
+                    </p>
+                </div>
             </div>
         </div>
     );

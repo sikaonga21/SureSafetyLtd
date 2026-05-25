@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Plus, PencilSimple, Trash, X, Check } from "@phosphor-icons/react";
+import { Plus, PencilSimple, Trash, X, Check, Eye, EyeSlash } from "@phosphor-icons/react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
-type Career = {
+type Job = {
     id: string;
     title: string;
     type: string;
@@ -14,16 +14,9 @@ type Career = {
     created_at: string;
 };
 
-const emptyForm = {
-    title: "",
-    type: "Full-time",
-    location: "Lusaka, Zambia",
-    description: "",
-    is_active: true,
-};
-
-const JOB_TYPES = ["Full-time", "Part-time", "Contract", "Internship", "Temporary"];
-const LOCATIONS = ["Lusaka, Zambia", "Copperbelt, Zambia", "Kitwe, Zambia", "Ndola, Zambia", "Remote", "Other"];
+const emptyForm = { title: "", type: "", location: "", description: "", is_active: true };
+const TYPES = ["Full-time", "Part-time", "Contract", "Internship"];
+const LOCATIONS = ["Ndola, HQ", "Copperbelt Office", "Kitwe Regional", "Remote", "On-site / Field"];
 
 const AdminCareers = () => {
     const qc = useQueryClient();
@@ -32,7 +25,7 @@ const AdminCareers = () => {
     const [form, setForm] = useState(emptyForm);
     const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
 
-    const { data: careers = [], isLoading } = useQuery<Career[]>({
+    const { data: jobs = [], isLoading } = useQuery<Job[]>({
         queryKey: ["admin-careers"],
         queryFn: async () => {
             const { data, error } = await supabase
@@ -40,7 +33,7 @@ const AdminCareers = () => {
                 .select("*")
                 .order("created_at", { ascending: false });
             if (error) throw error;
-            return data as Career[];
+            return data as Job[];
         },
     });
 
@@ -57,10 +50,22 @@ const AdminCareers = () => {
         onSuccess: () => {
             qc.invalidateQueries({ queryKey: ["admin-careers"] });
             qc.invalidateQueries({ queryKey: ["admin-careers-count"] });
-            toast.success(editId ? "Job updated" : "Job created");
+            toast.success(editId ? "Job updated" : "Job posted");
             setShowForm(false);
             setEditId(null);
             setForm(emptyForm);
+        },
+        onError: (e: Error) => toast.error(e.message),
+    });
+
+    const toggleStatusMutation = useMutation({
+        mutationFn: async ({ id, is_active }: { id: string, is_active: boolean }) => {
+            const { error } = await supabase.from("careers").update({ is_active: !is_active }).eq("id", id);
+            if (error) throw error;
+        },
+        onSuccess: () => {
+            qc.invalidateQueries({ queryKey: ["admin-careers"] });
+            toast.success("Visibility updated");
         },
         onError: (e: Error) => toast.error(e.message),
     });
@@ -73,20 +78,8 @@ const AdminCareers = () => {
         onSuccess: () => {
             qc.invalidateQueries({ queryKey: ["admin-careers"] });
             qc.invalidateQueries({ queryKey: ["admin-careers-count"] });
-            toast.success("Job listing deleted");
+            toast.success("Job deleted");
             setDeleteConfirm(null);
-        },
-        onError: (e: Error) => toast.error(e.message),
-    });
-
-    const toggleActiveMutation = useMutation({
-        mutationFn: async ({ id, is_active }: { id: string; is_active: boolean }) => {
-            const { error } = await supabase.from("careers").update({ is_active }).eq("id", id);
-            if (error) throw error;
-        },
-        onSuccess: () => {
-            qc.invalidateQueries({ queryKey: ["admin-careers"] });
-            toast.success("Status updated");
         },
         onError: (e: Error) => toast.error(e.message),
     });
@@ -97,14 +90,14 @@ const AdminCareers = () => {
         setShowForm(true);
     };
 
-    const openEdit = (c: Career) => {
-        setEditId(c.id);
+    const openEdit = (p: Job) => {
+        setEditId(p.id);
         setForm({
-            title: c.title,
-            type: c.type,
-            location: c.location,
-            description: c.description,
-            is_active: c.is_active,
+            title: p.title,
+            type: p.type,
+            location: p.location,
+            description: p.description,
+            is_active: p.is_active,
         });
         setShowForm(true);
     };
@@ -117,210 +110,223 @@ const AdminCareers = () => {
     return (
         <div>
             {/* Header */}
-            <div className="mb-8 pb-8 border-b border-white/5 flex items-center justify-between gap-4">
+            <div className="mb-12 pb-12 border-b border-white/5 flex flex-col md:flex-row md:items-end justify-between gap-6">
                 <div>
-                    <p className="text-[#34D399] text-[10px] uppercase tracking-[0.35em] font-heading font-bold mb-1">
-                        Manage
+                    <p className="text-[#F5A623] text-sm uppercase tracking-[0.4em] font-heading font-black mb-3">
+                        Talent Acquisition
                     </p>
-                    <h1 className="text-3xl font-bold text-white uppercase tracking-tight font-heading">
-                        Careers
+                    <h1 className="text-4xl font-bold text-white uppercase tracking-tighter font-heading">
+                        Job <span className="text-white/20">Listings</span>
                     </h1>
                 </div>
                 <button
                     onClick={openAdd}
-                    className="flex items-center gap-2 bg-[#F5A623] text-black font-heading font-bold text-[10px] uppercase tracking-[0.2em] px-6 py-3 hover:bg-[#e09518] transition-colors"
+                    className="flex items-center gap-3 bg-[#F5A623] text-black font-heading font-bold text-sm uppercase tracking-[0.2em] px-8 py-4 hover:bg-[#e09518] transition-all shadow-xl"
                 >
-                    <Plus className="w-4 h-4" weight="bold" /> Add Job
+                    <Plus className="w-5 h-5" weight="bold" /> Post Job
                 </button>
             </div>
 
             {/* Table */}
             {isLoading ? (
-                <div className="flex justify-center py-16">
-                    <div className="w-8 h-8 border-2 border-[#F5A623] border-t-transparent rounded-full animate-spin" />
+                <div className="flex justify-center py-24">
+                    <div className="w-10 h-10 border-2 border-[#F5A623] border-t-transparent rounded-full animate-spin" />
                 </div>
-            ) : careers.length === 0 ? (
-                <div className="text-center py-20 text-white/30">
-                    <p className="text-sm font-heading uppercase tracking-widest">No job listings yet</p>
+            ) : jobs.length === 0 ? (
+                <div className="text-center py-32 bg-white/[0.02] border border-dashed border-white/5">
+                    <p className="text-base font-heading uppercase tracking-widest text-white/30">No vacancies registered</p>
                     <button
                         onClick={openAdd}
-                        className="mt-4 text-[#F5A623] text-xs font-heading font-bold uppercase tracking-widest hover:underline"
+                        className="mt-6 text-[#F5A623] text-sm font-heading font-bold uppercase tracking-widest hover:underline"
                     >
-                        + Add your first listing
+                        + Create global vacancy
                     </button>
                 </div>
             ) : (
-                <div className="overflow-x-auto">
-                    <table className="w-full text-sm">
-                        <thead>
-                            <tr className="border-b border-white/5">
-                                {["Title", "Type", "Location", "Status", "Actions"].map((h) => (
-                                    <th
-                                        key={h}
-                                        className="text-left text-[10px] font-bold uppercase tracking-[0.2em] text-white/40 font-heading pb-4 pr-6"
-                                    >
-                                        {h}
-                                    </th>
-                                ))}
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {careers.map((c) => (
-                                <tr key={c.id} className="border-b border-white/5 hover:bg-white/2 transition-colors">
-                                    <td className="py-4 pr-6 text-white font-body text-sm">{c.title}</td>
-                                    <td className="py-4 pr-6 text-white/50 font-body text-xs whitespace-nowrap">{c.type}</td>
-                                    <td className="py-4 pr-6 text-white/50 font-body text-xs whitespace-nowrap">{c.location}</td>
-                                    <td className="py-4 pr-6">
-                                        <button
-                                            onClick={() => toggleActiveMutation.mutate({ id: c.id, is_active: !c.is_active })}
-                                            className={`text-[9px] font-bold uppercase tracking-widest font-heading px-3 py-1.5 transition-colors ${c.is_active
-                                                    ? "bg-[#34D399]/15 text-[#34D399] hover:bg-red-500/15 hover:text-red-400"
-                                                    : "bg-white/5 text-white/30 hover:bg-[#34D399]/15 hover:text-[#34D399]"
-                                                }`}
+                <div className="bg-[#0a0a0a] border border-white/5 overflow-hidden">
+                    <div className="overflow-x-auto">
+                        <table className="w-full">
+                            <thead>
+                                <tr className="border-b border-white/5 bg-white/[0.02]">
+                                    {["Position", "Type", "Status", "Management"].map((h) => (
+                                        <th
+                                            key={h}
+                                            className="text-left text-sm font-bold uppercase tracking-[0.25em] text-white/40 font-heading px-8 py-6"
                                         >
-                                            {c.is_active ? "Active" : "Inactive"}
-                                        </button>
-                                    </td>
-                                    <td className="py-4 pr-6">
-                                        <div className="flex items-center gap-2">
-                                            <button
-                                                onClick={() => openEdit(c)}
-                                                className="w-8 h-8 bg-white/5 hover:bg-white/10 flex items-center justify-center text-white/50 hover:text-white transition-all"
-                                            >
-                                                <PencilSimple className="w-3.5 h-3.5" />
-                                            </button>
-                                            {deleteConfirm === c.id ? (
-                                                <div className="flex items-center gap-1">
-                                                    <button
-                                                        onClick={() => deleteMutation.mutate(c.id)}
-                                                        className="w-8 h-8 bg-red-500/20 hover:bg-red-500/30 flex items-center justify-center text-red-400 transition-all"
-                                                    >
-                                                        <Check className="w-3.5 h-3.5" />
-                                                    </button>
-                                                    <button
-                                                        onClick={() => setDeleteConfirm(null)}
-                                                        className="w-8 h-8 bg-white/5 hover:bg-white/10 flex items-center justify-center text-white/50 transition-all"
-                                                    >
-                                                        <X className="w-3.5 h-3.5" />
-                                                    </button>
-                                                </div>
-                                            ) : (
-                                                <button
-                                                    onClick={() => setDeleteConfirm(c.id)}
-                                                    className="w-8 h-8 bg-white/5 hover:bg-red-500/20 flex items-center justify-center text-white/50 hover:text-red-400 transition-all"
-                                                >
-                                                    <Trash className="w-3.5 h-3.5" />
-                                                </button>
-                                            )}
-                                        </div>
-                                    </td>
+                                            {h}
+                                        </th>
+                                    ))}
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody className="divide-y divide-white/5">
+                                {jobs.map((p) => (
+                                    <tr
+                                        key={p.id}
+                                        className="hover:bg-white/[0.03] transition-colors group"
+                                    >
+                                        <td className="px-8 py-6">
+                                            <span className="text-white font-heading font-bold text-base block mb-0.5 tracking-tight">{p.title}</span>
+                                            <span className="text-white/30 text-[11px] uppercase tracking-widest font-heading">{p.location}</span>
+                                        </td>
+                                        <td className="px-8 py-6 text-white/50 font-body text-sm font-medium">{p.type}</td>
+                                        <td className="px-8 py-6">
+                                            <button
+                                                onClick={() => toggleStatusMutation.mutate(p)}
+                                                className={`flex items-center gap-2.5 px-3 py-1.5 rounded-full font-heading font-bold text-[10px] uppercase tracking-widest transition-all ${p.is_active
+                                                    ? "bg-emerald-500/10 text-emerald-500 border border-emerald-500/20"
+                                                    : "bg-red-500/10 text-red-500 border border-red-500/20"
+                                                    }`}
+                                            >
+                                                {p.is_active ? <Eye className="w-4 h-4" /> : <EyeSlash className="w-4 h-4" />}
+                                                {p.is_active ? "Live" : "Draft"}
+                                            </button>
+                                        </td>
+                                        <td className="px-8 py-6">
+                                            <div className="flex items-center gap-3">
+                                                <button
+                                                    onClick={() => openEdit(p)}
+                                                    className="w-10 h-10 bg-white/5 hover:bg-white/10 flex items-center justify-center text-white/40 hover:text-[#F5A623] transition-all border border-white/5"
+                                                >
+                                                    <PencilSimple className="w-5 h-5" />
+                                                </button>
+                                                {deleteConfirm === p.id ? (
+                                                    <div className="flex items-center gap-2">
+                                                        <button
+                                                            onClick={() => deleteMutation.mutate(p.id)}
+                                                            className="px-4 h-10 bg-red-500/10 hover:bg-red-500 text-red-500 hover:text-black font-heading font-bold text-[10px] uppercase tracking-widest transition-all border border-red-500/20"
+                                                        >
+                                                            Confirm
+                                                        </button>
+                                                        <button
+                                                            onClick={() => setDeleteConfirm(null)}
+                                                            className="w-10 h-10 bg-white/5 hover:bg-white/10 flex items-center justify-center text-white/30 hover:text-white transition-all border border-white/5"
+                                                        >
+                                                            <X className="w-5 h-5" />
+                                                        </button>
+                                                    </div>
+                                                ) : (
+                                                    <button
+                                                        onClick={() => setDeleteConfirm(p.id)}
+                                                        className="w-10 h-10 bg-white/5 hover:bg-red-500/10 flex items-center justify-center text-white/40 hover:text-red-400 transition-all border border-white/5"
+                                                    >
+                                                        <Trash className="w-5 h-5" />
+                                                    </button>
+                                                )}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             )}
 
             {/* Form Modal */}
             {showForm && (
-                <div className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4">
-                    <div className="bg-[#0f0f0f] border border-white/10 w-full max-w-lg max-h-[90vh] overflow-y-auto">
-                        <div className="flex items-center justify-between px-8 py-6 border-b border-white/5">
-                            <h2 className="text-sm font-bold uppercase tracking-[0.2em] text-white font-heading">
-                                {editId ? "Edit Job Listing" : "New Job Listing"}
+                <div className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-6 backdrop-blur-sm">
+                    <div className="bg-[#0f0f0f] border border-white/10 w-full max-w-3xl max-h-[90vh] overflow-y-auto shadow-2xl">
+                        <div className="flex items-center justify-between px-10 py-8 border-b border-white/5 bg-white/[0.01]">
+                            <h2 className="text-lg font-bold uppercase tracking-[0.3em] text-white font-heading">
+                                {editId ? "Update Vacancy" : "Establish New Role"}
                             </h2>
                             <button
                                 onClick={() => setShowForm(false)}
-                                className="text-white/30 hover:text-white transition-colors"
+                                className="w-10 h-10 flex items-center justify-center text-white/20 hover:text-white transition-colors"
                             >
-                                <X className="w-5 h-5" />
+                                <X className="w-6 h-6" />
                             </button>
                         </div>
-                        <form onSubmit={handleSubmit} className="p-8 space-y-5">
-                            <div>
-                                <label className="block text-[10px] font-bold uppercase tracking-[0.2em] text-white/50 mb-2 font-heading">
-                                    Job Title
-                                </label>
-                                <input
-                                    type="text"
-                                    value={form.title}
-                                    onChange={(e) => setForm({ ...form, title: e.target.value })}
-                                    required
-                                    placeholder="e.g. Health & Safety Inspector"
-                                    className="w-full bg-white/5 border border-white/10 text-white placeholder:text-white/20 px-4 py-3 text-sm font-body focus:outline-none focus:border-[#F5A623] transition-colors"
-                                />
+                        <form onSubmit={handleSubmit} className="p-10 space-y-8">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                <div>
+                                    <label className="block text-sm font-bold uppercase tracking-[0.25em] text-white/40 mb-3 font-heading">
+                                        Position Title
+                                    </label>
+                                    <input
+                                        type="text"
+                                        value={form.title}
+                                        onChange={(e) => setForm({ ...form, title: e.target.value })}
+                                        required
+                                        placeholder="e.g. Senior Electrical Engineer"
+                                        className="w-full bg-white/[0.03] border border-white/10 text-white placeholder:text-white/10 px-6 py-4 text-base font-body focus:outline-none focus:border-[#F5A623] transition-colors"
+                                    />
+                                </div>
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label className="block text-sm font-bold uppercase tracking-[0.25em] text-white/40 mb-3 font-heading">
+                                            Employment Type
+                                        </label>
+                                        <select
+                                            value={form.type}
+                                            onChange={(e) => setForm({ ...form, type: e.target.value })}
+                                            required
+                                            className="w-full bg-white/[0.03] border border-white/10 text-white px-6 py-4 text-sm font-body focus:outline-none focus:border-[#F5A623] transition-colors cursor-pointer"
+                                        >
+                                            <option value="" className="bg-[#0f0f0f]">Select type...</option>
+                                            {TYPES.map((t) => (
+                                                <option key={t} value={t} className="bg-[#0f0f0f]">{t}</option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-bold uppercase tracking-[0.25em] text-white/40 mb-3 font-heading">
+                                            Placement
+                                        </label>
+                                        <select
+                                            value={form.location}
+                                            onChange={(e) => setForm({ ...form, location: e.target.value })}
+                                            required
+                                            className="w-full bg-white/[0.03] border border-white/10 text-white px-6 py-4 text-sm font-body focus:outline-none focus:border-[#F5A623] transition-colors cursor-pointer"
+                                        >
+                                            <option value="" className="bg-[#0f0f0f]">Select location...</option>
+                                            {LOCATIONS.map((l) => (
+                                                <option key={l} value={l} className="bg-[#0f0f0f]">{l}</option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
+
                             <div>
-                                <label className="block text-[10px] font-bold uppercase tracking-[0.2em] text-white/50 mb-2 font-heading">
-                                    Employment Type
-                                </label>
-                                <select
-                                    value={form.type}
-                                    onChange={(e) => setForm({ ...form, type: e.target.value })}
-                                    required
-                                    className="w-full bg-white/5 border border-white/10 text-white px-4 py-3 text-sm font-body focus:outline-none focus:border-[#F5A623] transition-colors"
-                                >
-                                    {JOB_TYPES.map((t) => (
-                                        <option key={t} value={t} className="bg-[#0f0f0f]">{t}</option>
-                                    ))}
-                                </select>
-                            </div>
-                            <div>
-                                <label className="block text-[10px] font-bold uppercase tracking-[0.2em] text-white/50 mb-2 font-heading">
-                                    Location
-                                </label>
-                                <select
-                                    value={form.location}
-                                    onChange={(e) => setForm({ ...form, location: e.target.value })}
-                                    required
-                                    className="w-full bg-white/5 border border-white/10 text-white px-4 py-3 text-sm font-body focus:outline-none focus:border-[#F5A623] transition-colors"
-                                >
-                                    {LOCATIONS.map((l) => (
-                                        <option key={l} value={l} className="bg-[#0f0f0f]">{l}</option>
-                                    ))}
-                                </select>
-                            </div>
-                            <div>
-                                <label className="block text-[10px] font-bold uppercase tracking-[0.2em] text-white/50 mb-2 font-heading">
-                                    Description
+                                <label className="block text-sm font-bold uppercase tracking-[0.25em] text-white/40 mb-3 font-heading">
+                                    Job Description / Scope of Work
                                 </label>
                                 <textarea
                                     value={form.description}
                                     onChange={(e) => setForm({ ...form, description: e.target.value })}
                                     required
-                                    rows={4}
-                                    placeholder="Describe the role and requirements..."
-                                    className="w-full bg-white/5 border border-white/10 text-white placeholder:text-white/20 px-4 py-3 text-sm font-body focus:outline-none focus:border-[#F5A623] transition-colors resize-none"
+                                    rows={6}
+                                    placeholder="Detailed responsibilities and requirements..."
+                                    className="w-full bg-white/[0.03] border border-white/10 text-white placeholder:text-white/10 px-6 py-4 text-sm font-body focus:outline-none focus:border-[#F5A623] transition-colors resize-none leading-relaxed"
                                 />
                             </div>
-                            <div className="flex items-center gap-3">
-                                <button
-                                    type="button"
-                                    onClick={() => setForm({ ...form, is_active: !form.is_active })}
-                                    className={`w-10 h-6 rounded-full relative transition-colors duration-300 ${form.is_active ? "bg-[#34D399]" : "bg-white/10"
-                                        }`}
-                                >
-                                    <span
-                                        className={`absolute top-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform duration-300 ${form.is_active ? "translate-x-4" : "translate-x-0.5"
-                                            }`}
-                                    />
-                                </button>
-                                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/50 font-heading">
-                                    {form.is_active ? "Active (visible on site)" : "Inactive (hidden)"}
-                                </span>
+
+                            <div className="flex items-center gap-4 py-4 px-6 bg-white/[0.02] border border-white/5">
+                                <input
+                                    type="checkbox"
+                                    checked={form.is_active}
+                                    onChange={(e) => setForm({ ...form, is_active: e.target.checked })}
+                                    id="is_active"
+                                    className="w-5 h-5 bg-white/[0.03] border-white/10 rounded focus:ring-[#F5A623] text-[#F5A623] transition-colors"
+                                />
+                                <label htmlFor="is_active" className="text-sm font-heading font-bold uppercase tracking-[0.2em] text-white/60 cursor-pointer">
+                                    Publish immediately (Live on website)
+                                </label>
                             </div>
-                            <div className="flex gap-3 pt-2">
+
+                            <div className="flex gap-4 pt-10 border-t border-white/5">
                                 <button
                                     type="submit"
                                     disabled={saveMutation.isPending}
-                                    className="flex-1 bg-[#F5A623] text-black font-heading font-bold text-[10px] uppercase tracking-[0.2em] py-4 hover:bg-[#e09518] transition-colors disabled:opacity-50"
+                                    className="flex-1 bg-[#F5A623] text-black font-heading font-bold text-xs uppercase tracking-[0.25em] py-5 hover:bg-white transition-all duration-500 disabled:opacity-50 shadow-xl"
                                 >
-                                    {saveMutation.isPending ? "Saving..." : (editId ? "Update Job" : "Create Job")}
+                                    {saveMutation.isPending ? "Journaling..." : (editId ? "Update Record" : "Post Vacancy")}
                                 </button>
                                 <button
                                     type="button"
                                     onClick={() => setShowForm(false)}
-                                    className="px-6 bg-white/5 text-white/50 font-heading font-bold text-[10px] uppercase tracking-[0.2em] hover:bg-white/10 transition-colors"
+                                    className="px-10 bg-white/5 text-white/50 font-heading font-bold text-xs uppercase tracking-[0.25em] hover:bg-white/10 hover:text-white transition-all border border-white/5"
                                 >
                                     Cancel
                                 </button>

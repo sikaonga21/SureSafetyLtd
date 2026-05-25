@@ -5,10 +5,8 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "@phosphor-icons/react";
 
-// Local assets
-import servicesHero from "@/assets/images/genreral-construction.jpg";
-
 import SEO from "@/components/SEO";
+import { portfolioFeatured } from "@/data/portfolioImages";
 
 const ServicesPage = () => {
   return (
@@ -21,23 +19,26 @@ const ServicesPage = () => {
       <main className="flex-1">
         {/* 60vh Image Hero - Reduced Font Size */}
         <section className="relative h-[50vh] min-h-[400px] bg-section-charcoal overflow-hidden flex items-center">
-          <div className="absolute inset-0 opacity-10">
-            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-black/30 rounded-full blur-[150px] -translate-y-1/2 translate-x-1/2" />
-          </div>
+          <img
+            src={portfolioFeatured.servicesCivil}
+            alt="Sure Safety civil construction and building services in Zambia"
+            className="absolute inset-0 w-full h-full object-cover opacity-40"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/50 to-black/30" />
           <div className="container relative z-10 pt-20">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
             >
-              <p className="text-primary font-heading font-semibold text-xs uppercase tracking-[0.35em] mb-4">
+              <p className="text-primary font-heading font-semibold text-sm uppercase tracking-[0.35em] mb-4">
                 Solutions
               </p>
               <h1 className="text-4xl sm:text-5xl md:text-6xl font-heading font-bold text-white uppercase tracking-tight leading-none mb-4">
                 Our Services
               </h1>
               <div className="w-16 h-0.5 bg-primary mt-6 mb-8" />
-              <p className="text-white/70 text-sm md:text-base font-body max-w-xl leading-relaxed">
+              <p className="text-white/70 text-base md:text-lg font-body max-w-xl leading-relaxed">
                 Comprehensive building, electrical, mechanical, and maintenance solutions for commercial, industrial, and public-sector clients across Zambia.
               </p>
             </motion.div>
@@ -63,7 +64,7 @@ const ServicesPage = () => {
               </p>
               <Link
                 to="/contact"
-                className="inline-block bg-white text-primary text-xs font-heading font-bold uppercase tracking-[0.2em] px-12 py-5 hover:bg-primary hover:text-white transition-all duration-300 shadow-2xl"
+                className="inline-block bg-white text-primary text-sm font-heading font-bold uppercase tracking-[0.2em] px-12 py-5 hover:bg-primary hover:text-white transition-all duration-300 shadow-2xl"
               >
                 Start a Conversation <ArrowRight className="w-4 h-4 inline-block ml-2" weight="bold" />
               </Link>

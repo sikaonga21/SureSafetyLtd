@@ -40,7 +40,7 @@ const TestimonialsSection = () => {
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.5 }}
         >
-          <p className="text-primary font-heading font-semibold text-xs uppercase tracking-[0.3em] mb-4">
+          <p className="text-primary font-heading font-semibold text-sm uppercase tracking-[0.3em] mb-4">
             Our Foundation
           </p>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-heading font-bold text-section-dark-fg uppercase leading-none">
@@ -66,7 +66,7 @@ const TestimonialsSection = () => {
               <h3 className="text-lg font-heading font-bold text-section-dark-fg uppercase tracking-wider mb-4">
                 {v.title}
               </h3>
-              <p className="text-section-dark-fg/60 text-sm leading-relaxed font-body">
+              <p className="text-section-dark-fg/60 text-base leading-relaxed font-body">
                 {v.desc}
               </p>
             </motion.div>

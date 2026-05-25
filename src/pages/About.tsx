@@ -6,9 +6,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Link } from "react-router-dom";
 
-// Local assets
-import aboutHero from "@/assets/about-bg.jpg";
-import teamWork from "@/assets/images/abt-us-const.jpg";
+import { portfolioFeatured } from "@/data/portfolioImages";
 
 const values = [
   { title: "Client Focus", description: "We prioritize our clients and strive to provide them with the best possible solutions and service, tailored to their specific needs." },
@@ -19,13 +17,82 @@ const values = [
   { title: "Collaboration", description: "We foster a culture of teamwork and collaboration, working closely with clients, partners, and colleagues to achieve shared goals." },
 ];
 
+const serviceOfferings = [
+  {
+    title: "Civil & General Building",
+    summary:
+      "Ground-up construction, extensions, and structural refurbishments for homes, offices, and industrial sites across the Copperbelt.",
+    details: [
+      "Site clearance, foundations, and reinforced concrete works",
+      "Roofing, plastering, and exterior finishing",
+      "Project management with clear milestones and safety audits",
+    ],
+    image: portfolioFeatured.servicesCivil,
+  },
+  {
+    title: "Roads & Paving",
+    summary:
+      "Durable roadworks and decorative paving — from sub-base preparation to precision stone cutting and patterned paver installation.",
+    details: [
+      "Road expansion, kerbing, and drainage solutions",
+      "Interlocking driveways, patios, and walkways",
+      "Commercial forecourts and access routes",
+    ],
+    image: portfolioFeatured.servicesPaving,
+  },
+  {
+    title: "Electrical Installation",
+    summary:
+      "Certified power distribution, lighting, and upgrades for residential and commercial properties — tested, documented, and compliant.",
+    details: [
+      "New wiring and distribution board installations",
+      "Lighting design and energy-efficient retrofits",
+      "Fault finding, repairs, and safety certification",
+    ],
+    image: portfolioFeatured.servicesElectrical,
+  },
+  {
+    title: "Mechanical, HVAC & Plumbing",
+    summary:
+      "Comfort and utility systems engineered for reliability — air conditioning, ventilation, water supply, and sanitary installations.",
+    details: [
+      "Split and central HVAC systems for offices and homes",
+      "Plumbing reticulation and hot-water solutions",
+      "Scheduled servicing to extend equipment life",
+    ],
+    image: portfolioFeatured.servicesMechanical,
+  },
+  {
+    title: "Interior Finishing & Painting",
+    summary:
+      "Transform interiors with professional painting, bespoke kitchens, premium flooring, and coordinated fit-out works.",
+    details: [
+      "Surface preparation and high-quality paint finishes",
+      "Kitchen cabinetry, tiling, and decorative finishes",
+      "Full interior refurbishment for corporate and residential clients",
+    ],
+    image: portfolioFeatured.servicesInterior,
+  },
+  {
+    title: "Facility Management",
+    summary:
+      "Planned maintenance contracts that keep your buildings safe, operational, and cost-predictable year after year.",
+    details: [
+      "Preventative electrical, plumbing, and structural checks",
+      "Rapid-response repairs and emergency call-outs",
+      "Tailored SLAs for commercial and public-sector estates",
+    ],
+    image: portfolioFeatured.servicesMaintenance,
+  },
+];
+
 const strengths = [
   { icon: Shield, title: "Quality Assured", desc: "Every project meets international standards with rigorous quality checks at every stage." },
   { icon: Lightning, title: "Innovation", desc: "Modern construction techniques and sustainable building solutions for every challenge." },
   { icon: Trophy, title: "Certified", desc: "Fully compliant with local and international construction safety and quality standards." },
   { icon: Users, title: "Expert Team", desc: "Skilled engineers and technicians with decades of combined experience." },
   { icon: Target, title: "Custom Solutions", desc: "Tailored infrastructure solutions for specific commercial and residential requirements." },
-  { icon: Globe, title: "Total Reach", desc: "Reliably serving clients across Lusaka and the entire Copperbelt region." },
+  { icon: Globe, title: "Total Reach", desc: "Reliably serving clients across Ndola and the entire Copperbelt region." },
 ];
 
 const SectionObserver = ({ children, className = "", delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) => {
@@ -58,15 +125,15 @@ const AboutPage = () => {
         {/* Page Hero - Reduced Font Size */}
         <section className="relative h-[60vh] min-h-[400px] bg-section-charcoal overflow-hidden">
           <img
-            src={aboutHero}
-            alt="About Sure Safety"
+            src={portfolioFeatured.servicesElectrical}
+            alt="Sure Safety technician performing certified electrical installation work"
             className="w-full h-full object-cover opacity-50"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent" />
           <div className="absolute inset-0 flex items-center pt-24">
             <div className="container">
               <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
-                <p className="text-primary font-heading font-semibold text-xs uppercase tracking-[0.35em] mb-4">
+                <p className="text-primary font-heading font-semibold text-sm uppercase tracking-[0.35em] mb-4">
                   The Company
                 </p>
                 <h1 className="text-4xl sm:text-5xl md:text-6xl font-heading font-bold text-white uppercase tracking-tight leading-none mb-4">
@@ -135,14 +202,21 @@ const AboutPage = () => {
           <div className="container">
             <div className="grid lg:grid-cols-2 gap-20 items-center">
               <SectionObserver>
-                <p className="text-primary font-heading font-bold text-xs uppercase tracking-[0.3em] mb-4">Our Approach</p>
+                <p className="text-primary font-heading font-bold text-sm uppercase tracking-[0.3em] mb-4">Our Approach</p>
                 <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground uppercase leading-tight mb-4 tracking-tight">
                   SAFETY & EXCELLENCE AT EVERY STAGE
                 </h2>
                 <div className="w-12 h-0.5 bg-primary mb-8" />
                 <div className="space-y-6 text-muted-foreground leading-relaxed font-body text-sm">
-                  <p>At Sure Safety Limited, our objective is to effectively manage long-term relationships with our clients by providing integrated construction, electrical, and maintenance solutions that add real value to their operations.</p>
-                  <p>We strive to develop lasting partnerships with a focus on safety compliance, quality workmanship, and predictable project delivery — across all scales of engagement.</p>
+                  <p>
+                    At Sure Safety Limited, our objective is to effectively manage long-term relationships with our clients by providing integrated construction, electrical, mechanical, and maintenance solutions that add real value to their operations.
+                  </p>
+                  <p>
+                    From a single-home extension to a full industrial warehouse, we coordinate skilled trades, quality materials, and strict safety protocols so every handover is on time, on budget, and built to last.
+                  </p>
+                  <p>
+                    Based in Ndola and serving clients across the Copperbelt, we are the partner you call when you need one team to handle the full scope — not a patchwork of subcontractors.
+                  </p>
                 </div>
                 <Link to="/services" className="inline-flex items-center gap-2 text-[10px] font-heading font-bold uppercase tracking-[0.2em] text-foreground border-b border-foreground pb-1 hover:text-primary hover:border-primary transition-all group mt-12">
                   Explore Services <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" weight="bold" />
@@ -151,8 +225,8 @@ const AboutPage = () => {
               <SectionObserver>
                 <div className="relative overflow-hidden">
                   <img
-                    src={teamWork}
-                    alt="Team at work"
+                    src={portfolioFeatured.about}
+                    alt="Sure Safety construction and finishing work on a modern residential project"
                     className="w-full h-[600px] object-cover"
                   />
                   <div className="absolute top-0 right-0 w-1/3 h-full bg-primary/10 backdrop-blur-sm -z-10" />
@@ -162,11 +236,68 @@ const AboutPage = () => {
           </div>
         </section>
 
+        {/* Services overview */}
+        <section className="py-24 md:py-32 bg-section-alt">
+          <div className="container">
+            <SectionObserver className="mb-16 max-w-3xl">
+              <p className="text-primary font-heading font-bold text-sm uppercase tracking-[0.3em] mb-4">What We Do</p>
+              <h2 className="text-3xl md:text-5xl font-heading font-bold text-foreground uppercase leading-tight tracking-tight mb-6">
+                Our Services in Detail
+              </h2>
+              <div className="w-12 h-0.5 bg-primary mb-8" />
+              <p className="text-muted-foreground font-body text-sm leading-relaxed">
+                Sure Safety delivers end-to-end building and maintenance solutions. Whether you are planning a new development, upgrading a facility, or need a trusted maintenance partner, our teams bring the right skills to every phase of the job.
+              </p>
+            </SectionObserver>
+
+            <div className="space-y-px bg-border">
+              {serviceOfferings.map((service, i) => (
+                <SectionObserver key={service.title} delay={i * 0.05}>
+                  <div
+                    className={`grid lg:grid-cols-2 gap-0 bg-card overflow-hidden ${i % 2 === 1 ? "lg:[&>div:first-child]:order-2" : ""}`}
+                  >
+                    <div className="h-64 lg:h-auto min-h-[280px] overflow-hidden">
+                      <img
+                        src={service.image}
+                        alt={service.title}
+                        className="w-full h-full object-cover grayscale-[15%] hover:grayscale-0 transition-all duration-700"
+                      />
+                    </div>
+                    <div className="p-10 md:p-14 flex flex-col justify-center">
+                      <h3 className="text-xl md:text-2xl font-heading font-bold text-foreground uppercase tracking-tight mb-4">
+                        {service.title}
+                      </h3>
+                      <p className="text-muted-foreground text-sm font-body leading-relaxed mb-6">{service.summary}</p>
+                      <ul className="space-y-3">
+                        {service.details.map((point) => (
+                          <li key={point} className="flex items-start gap-3 text-sm text-muted-foreground font-body">
+                            <CheckCircle className="w-4 h-4 text-primary shrink-0 mt-0.5" weight="fill" />
+                            <span>{point}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </SectionObserver>
+              ))}
+            </div>
+
+            <SectionObserver className="text-center mt-16">
+              <Link
+                to="/services"
+                className="inline-flex items-center gap-2 text-sm font-heading font-bold uppercase tracking-[0.2em] text-foreground border border-foreground px-10 py-4 hover:bg-primary hover:border-primary hover:text-black transition-all"
+              >
+                View All Services <ArrowRight className="w-4 h-4" weight="bold" />
+              </Link>
+            </SectionObserver>
+          </div>
+        </section>
+
         {/* Our Strengths — Grid */}
-        <section className="py-24 bg-section-alt">
+        <section className="py-24 bg-card">
           <div className="container">
             <SectionObserver className="mb-16 text-center">
-              <p className="text-primary font-heading font-semibold text-xs uppercase tracking-[0.3em] mb-4">Capabilities</p>
+              <p className="text-primary font-heading font-semibold text-sm uppercase tracking-[0.3em] mb-4">Capabilities</p>
               <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground uppercase tracking-tight">What Sets Us Apart</h2>
               <div className="w-12 h-0.5 bg-primary mx-auto mt-6" />
             </SectionObserver>
@@ -177,8 +308,8 @@ const AboutPage = () => {
                     <div className="w-12 h-12 bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors">
                       <s.icon className="w-6 h-6 text-primary" weight="fill" />
                     </div>
-                    <h3 className="font-heading font-bold text-foreground text-xs uppercase tracking-widest mb-4">{s.title}</h3>
-                    <p className="text-muted-foreground text-xs leading-relaxed font-body">{s.desc}</p>
+                    <h3 className="font-heading font-bold text-foreground text-sm uppercase tracking-widest mb-4">{s.title}</h3>
+                    <p className="text-muted-foreground text-sm leading-relaxed font-body">{s.desc}</p>
                   </div>
                 </SectionObserver>
               ))}
@@ -190,7 +321,7 @@ const AboutPage = () => {
         <section className="py-24 md:py-32 bg-section-dark">
           <div className="container">
             <SectionObserver className="mb-20">
-              <p className="text-primary font-heading font-bold text-xs uppercase tracking-[0.3em] mb-4">Foundation</p>
+              <p className="text-primary font-heading font-bold text-sm uppercase tracking-[0.3em] mb-4">Foundation</p>
               <h2 className="text-4xl md:text-6xl font-heading font-bold text-white uppercase leading-none tracking-tight">Our Core Values</h2>
               <div className="w-20 h-0.5 bg-primary mt-8" />
             </SectionObserver>
@@ -220,7 +351,7 @@ const AboutPage = () => {
               <p className="text-white/70 text-lg font-body mb-12 max-w-xl leading-relaxed">
                 Experience professionalism, transparency, and results-driven construction and maintenance solutions.
               </p>
-              <Link to="/contact" className="inline-block bg-white text-primary text-xs font-heading font-bold uppercase tracking-[0.2em] px-12 py-5 hover:bg-primary hover:text-white transition-all duration-300 shadow-2xl">
+              <Link to="/contact" className="inline-block bg-white text-primary text-sm font-heading font-bold uppercase tracking-[0.2em] px-12 py-5 hover:bg-primary hover:text-white transition-all duration-300 shadow-2xl">
                 Get in Touch
               </Link>
             </SectionObserver>

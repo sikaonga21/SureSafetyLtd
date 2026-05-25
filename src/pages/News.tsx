@@ -9,7 +9,7 @@ import { supabase } from "@/integrations/supabase/client";
 import SEO from "@/components/SEO";
 
 // Local assets
-import newsHero from "@/assets/products-banner.jpg";
+import { siteImages } from "@/utils/siteImages";
 
 type NewsPost = {
   id: string;
@@ -46,7 +46,7 @@ const SectionObserver = ({
   );
 };
 
-const DEFAULT_IMAGE = "https://images.unsplash.com/photo-1541888946425-d81bb19480c5?auto=format&fit=crop&q=80&w=800";
+const DEFAULT_IMAGE = siteImages.news.fallback;
 
 const NewsPage = () => {
   const { data: posts = [], isLoading } = useQuery<NewsPost[]>({
@@ -72,7 +72,7 @@ const NewsPage = () => {
         {/* Hero */}
         <section className="relative h-[60vh] min-h-[400px] bg-section-charcoal overflow-hidden">
           <img
-            src={newsHero}
+            src={siteImages.news.hero}
             alt="News & Insights"
             className="w-full h-full object-cover opacity-50 grayscale-[20%]"
           />
@@ -84,7 +84,7 @@ const NewsPage = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
               >
-                <p className="text-primary font-heading font-semibold text-xs uppercase tracking-[0.35em] mb-4">
+                <p className="text-primary font-heading font-semibold text-sm uppercase tracking-[0.35em] mb-4">
                   Insights
                 </p>
                 <h1
@@ -93,7 +93,7 @@ const NewsPage = () => {
                   News
                 </h1>
                 <div className="w-16 h-0.5 bg-primary mt-6 mb-8" />
-                <p className="text-white/70 text-sm md:text-base font-body max-w-xl leading-relaxed">
+                <p className="text-white/70 text-base md:text-lg font-body max-w-xl leading-relaxed">
                   Stay updated with the latest in Zambian construction, electrical safety, and industrial innovation.
                 </p>
               </motion.div>
@@ -115,7 +115,7 @@ const NewsPage = () => {
         {/* No posts */}
         {!isLoading && posts.length === 0 && (
           <section className="py-32 bg-card flex items-center justify-center">
-            <p className="text-muted-foreground font-heading uppercase tracking-widest text-sm">
+            <p className="text-muted-foreground font-heading uppercase tracking-widest text-base">
               No news posts yet.
             </p>
           </section>
@@ -134,12 +134,12 @@ const NewsPage = () => {
                         alt={posts[0].title}
                         className="w-full h-full object-cover grayscale-[40%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
                       />
-                      <span className="absolute top-6 left-6 bg-primary text-black text-[10px] font-heading font-bold uppercase tracking-[0.2em] px-5 py-2">
+                      <span className="absolute top-6 left-6 bg-primary text-black text-xs font-heading font-bold uppercase tracking-[0.2em] px-5 py-2">
                         Featured
                       </span>
                     </div>
                     <div className="p-10 lg:p-16 flex flex-col justify-center">
-                      <div className="flex items-center gap-4 text-[10px] font-heading font-bold text-primary uppercase tracking-[0.2em] mb-8">
+                      <div className="flex items-center gap-4 text-xs font-heading font-bold text-primary uppercase tracking-[0.2em] mb-8">
                         <span className="flex items-center gap-2">
                           <Calendar className="w-4 h-4" /> {posts[0].date}
                         </span>
@@ -151,19 +151,19 @@ const NewsPage = () => {
                       <h2 className="text-2xl lg:text-3xl font-heading font-bold text-foreground mb-6 leading-tight group-hover:text-primary transition-colors uppercase tracking-tight">
                         {posts[0].title}
                       </h2>
-                      <p className="text-muted-foreground text-sm leading-relaxed mb-10 font-body">
+                      <p className="text-muted-foreground text-muted-foreground text-base leading-relaxed mb-10 font-body">
                         {posts[0].excerpt}
                       </p>
                       <div className="flex items-center justify-between mt-auto">
                         <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 bg-primary/10 flex items-center justify-center text-primary font-heading font-bold text-xs">
+                          <div className="w-10 h-10 bg-primary/10 flex items-center justify-center text-primary font-heading font-bold text-sm">
                             {posts[0].author[0]}
                           </div>
-                          <span className="text-[10px] font-heading font-bold uppercase tracking-widest text-foreground opacity-60">
+                          <span className="text-xs font-heading font-bold uppercase tracking-widest text-foreground opacity-60">
                             {posts[0].author}
                           </span>
                         </div>
-                        <button className="flex items-center gap-2 text-primary font-heading font-bold text-[10px] uppercase tracking-[0.2em] group-hover:gap-3 transition-all">
+                        <button className="flex items-center gap-2 text-primary font-heading font-bold text-sm uppercase tracking-[0.2em] group-hover:gap-3 transition-all">
                           Read Story <ArrowRight className="w-4 h-4" weight="bold" />
                         </button>
                       </div>
@@ -194,16 +194,16 @@ const NewsPage = () => {
                         </span>
                       </div>
                       <div className="flex flex-col flex-grow">
-                        <div className="flex items-center gap-3 text-[10px] font-heading font-bold text-muted-foreground uppercase tracking-[0.2em] mb-4">
+                        <div className="flex items-center gap-3 text-xs font-heading font-bold text-muted-foreground uppercase tracking-[0.2em] mb-4">
                           <Calendar className="w-3.5 h-3.5" /> {post.date}
                         </div>
                         <h3 className="text-base font-heading font-bold text-foreground mb-4 leading-snug group-hover:text-primary transition-colors uppercase">
                           {post.title}
                         </h3>
-                        <p className="text-muted-foreground text-xs leading-relaxed mb-8 line-clamp-3 font-body">
+                        <p className="text-muted-foreground text-muted-foreground text-sm leading-relaxed mb-8 line-clamp-3 font-body">
                           {post.excerpt}
                         </p>
-                        <button className="flex items-center gap-2 text-primary font-heading font-bold text-[10px] uppercase tracking-[0.2em] mt-auto group-hover:gap-3 transition-all">
+                        <button className="flex items-center gap-2 text-primary font-heading font-bold text-sm uppercase tracking-[0.2em] mt-auto group-hover:gap-3 transition-all">
                           Read Story <ArrowRight className="w-3.5 h-3.5" weight="bold" />
                         </button>
                       </div>

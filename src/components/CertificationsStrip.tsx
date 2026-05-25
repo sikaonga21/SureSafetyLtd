@@ -33,10 +33,10 @@ const StatTile = ({ s }: { s: typeof stats[0] }) => {
           {value}<span className="text-primary text-base ml-0.5">{s.suffix}</span>
         </p>
       ) : null}
-      <p className="font-heading font-bold text-foreground text-xs uppercase tracking-[0.18em] mb-1">
+      <p className="font-heading font-bold text-sm font-heading font-bold uppercase tracking-[0.2em] text-white/40 mb-3">
         {s.title}
       </p>
-      <p className="text-muted-foreground text-xs leading-relaxed">{s.desc}</p>
+      <p className="text-muted-foreground text-sm leading-relaxed">{s.desc}</p>
     </motion.div>
   );
 };

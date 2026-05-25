@@ -1,30 +1,26 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
-
-// Local assets
-import hero1 from "@/assets/hero-bg.jpg";
-import hero2 from "@/assets/images/electrician1.jpeg";
-import hero3 from "@/assets/images/maintenace.jpg";
+import { portfolioFeatured } from "@/data/portfolioImages";
 
 const heroSlides = [
   {
     label: "Civil & Construction",
     heading: "BUILD",
     headingLine2: "WITH CONFIDENCE",
-    image: hero1,
+    image: portfolioFeatured.heroCivil,
   },
   {
     label: "Electrical & Mechanical",
     heading: "PRECISE",
     headingLine2: "BY DESIGN",
-    image: hero2,
+    image: portfolioFeatured.heroElectrical,
   },
   {
     label: "Facility Maintenance",
     heading: "RELIABLE",
     headingLine2: "EVERY TIME",
-    image: hero3,
+    image: portfolioFeatured.heroMaintenance,
   },
 ];
 
@@ -77,7 +73,7 @@ const HeroSection = () => {
             >
               {/* Category label */}
               <motion.p
-                className="text-primary font-heading font-semibold text-xs uppercase tracking-[0.15em] sm:tracking-[0.35em] mb-3 sm:mb-5"
+                className="text-primary font-heading font-semibold text-sm uppercase tracking-[0.15em] sm:tracking-[0.35em] mb-3 sm:mb-5"
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.25, duration: 0.5 }}
@@ -123,7 +119,7 @@ const HeroSection = () => {
         >
           <Link
             to="/quote"
-            className="inline-block border border-white text-white text-xs font-heading font-bold uppercase tracking-[0.15em] sm:tracking-[0.25em] px-6 sm:px-8 py-3 hover:bg-primary hover:border-primary hover:text-black transition-all duration-300"
+            className="inline-block border border-white text-white text-sm font-heading font-bold uppercase tracking-[0.15em] sm:tracking-[0.25em] px-6 sm:px-8 py-3 hover:bg-primary hover:border-primary hover:text-black transition-all duration-300"
           >
             Request a Quote
           </Link>
@@ -146,7 +142,7 @@ const HeroSection = () => {
       </div>
 
       {/* Counter — bottom right */}
-      <div className="absolute bottom-6 sm:bottom-8 right-5 sm:right-6 md:right-12 lg:right-20 z-20 font-heading text-white/40 text-xs tracking-wider sm:tracking-widest">
+      <div className="absolute bottom-6 sm:bottom-8 right-5 sm:right-6 md:right-12 lg:right-20 z-20 font-heading text-white/40 text-sm tracking-wider sm:tracking-widest">
         0{current + 1} <span className="text-primary">/</span> 0{heroSlides.length}
       </div>
     </section>

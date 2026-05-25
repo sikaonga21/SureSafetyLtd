@@ -3,8 +3,7 @@ import Footer from "@/components/Footer";
 import ContactSection from "@/components/ContactSection";
 import { motion } from "framer-motion";
 
-// Local assets
-import contactHero from "@/assets/images/contact-hero.jpg";
+import { siteImages } from "@/utils/siteImages";
 
 import SEO from "@/components/SEO";
 
@@ -20,7 +19,7 @@ const ContactPage = () => {
         {/* 60vh Image Hero - Reduced Font Size */}
         <section className="relative h-[60vh] min-h-[400px] bg-section-charcoal overflow-hidden">
           <img
-            src={contactHero}
+            src={siteImages.contact.hero}
             alt="Contact Sure Safety"
             className="w-full h-full object-cover opacity-40 grayscale-[20%]"
           />
@@ -32,7 +31,7 @@ const ContactPage = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
               >
-                <p className="text-primary font-heading font-semibold text-xs uppercase tracking-[0.35em] mb-4">
+                <p className="text-primary font-heading font-semibold text-sm uppercase tracking-[0.35em] mb-4">
                   Inquiry
                 </p>
                 <h1
@@ -41,7 +40,7 @@ const ContactPage = () => {
                   Contact Us
                 </h1>
                 <div className="w-16 h-0.5 bg-primary mt-6 mb-8" />
-                <p className="text-white/70 text-sm md:text-base font-body max-w-xl leading-relaxed">
+                <p className="text-white/70 text-base md:text-lg font-body max-w-xl leading-relaxed">
                   Have a question or looking for a professional construction partner? Reach out to us today and let's discuss your project.
                 </p>
               </motion.div>

@@ -4,12 +4,7 @@ import { useInView } from "framer-motion";
 import { useRef } from "react";
 import { ArrowRight } from "@phosphor-icons/react";
 
-// Local assets
-import roadPaving from "@/assets/products-banner.jpg";
-import civilConst from "@/assets/images/genreral-construction.jpg";
-import electrical from "@/assets/images/electrician1.jpeg";
-import mechanical from "@/assets/images/abt-us-const.jpg";
-import maintenance from "@/assets/images/maintenace.jpg";
+import { portfolioFeatured } from "@/data/portfolioImages";
 
 // Layouts: "split-left" | "split-right" | "full-overlay" | "duo"
 const services = [
@@ -18,8 +13,8 @@ const services = [
     title: "CIVIL & CONSTRUCTION",
     subtitle: "GENERAL BUILDING",
     description:
-      "New construction, renovations, and extensions for residential, commercial and industrial properties. We bring expertise in project management, material sourcing, and skilled labour to every project.",
-    image: civilConst,
+      "New builds, extensions, and structural refurbishments for residential, commercial, and industrial clients. We manage the full lifecycle — site preparation, reinforced structures, roofing, plastering, and handover — with rigorous safety oversight and transparent project reporting.",
+    image: portfolioFeatured.servicesCivil,
     link: "/services",
   },
   {
@@ -29,16 +24,16 @@ const services = [
         title: "ROADS & PAVING",
         subtitle: "INFRASTRUCTURE",
         description:
-          "High-quality road construction and interlocking paving solutions — from expansions to drainage systems.",
-        image: roadPaving,
+          "Road construction, kerbing, drainage, and precision interlocking paver installation. Our teams prepare compacted bases, cut stones to fit, and lay durable patterns for driveways, walkways, and commercial forecourts.",
+        image: portfolioFeatured.servicesPaving,
         link: "/services",
       },
       {
         title: "ELECTRICAL",
         subtitle: "INSTALLATION",
         description:
-          "Complete wiring, lighting, and power system installations with a rigorous focus on safety and compliance.",
-        image: electrical,
+          "Certified electricians deliver complete wiring, distribution boards, lighting, and power upgrades for homes and facilities. Every installation is tested, documented, and completed to Zambian safety standards.",
+        image: portfolioFeatured.servicesElectrical,
         link: "/services",
       },
     ],
@@ -48,8 +43,8 @@ const services = [
     title: "MECHANICAL & PLUMBING",
     subtitle: "HVAC & PLUMBING WORKS",
     description:
-      "Advanced air conditioning, ventilation, and plumbing solutions for residential, commercial and industrial facilities — designed for long-term efficiency and comfort.",
-    image: mechanical,
+      "Air conditioning, ventilation, water reticulation, and sanitary installations for offices, warehouses, and residential properties. We design systems for efficiency, reliability, and straightforward long-term maintenance.",
+    image: portfolioFeatured.servicesMechanical,
     link: "/services",
   },
   {
@@ -57,8 +52,8 @@ const services = [
     title: "FACILITY MANAGEMENT",
     subtitle: "PLANNED MAINTENANCE",
     description:
-      "Ongoing, fully planned preventative maintenance to keep your property in peak condition. From reactive repairs to comprehensive maintenance contracts — safe, compliant, and predictable.",
-    image: maintenance,
+      "Scheduled preventative maintenance and rapid-response repairs to keep your buildings operating safely. Tailored contracts cover electrical checks, plumbing, structural inspections, and general upkeep — reducing downtime and unexpected costs.",
+    image: portfolioFeatured.servicesMaintenance,
     link: "/services",
   },
 ];
@@ -88,19 +83,19 @@ const FullOverlay = ({ service }: { service: any }) => {
       <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
       <div className="absolute bottom-0 left-0 right-0 p-10 md:p-16 flex flex-col md:flex-row md:items-end md:justify-between gap-8">
         <div className="max-w-xl">
-          <p className="text-primary font-heading font-bold text-xs uppercase tracking-[0.3em] mb-3">
+          <p className="text-primary font-heading font-bold text-sm uppercase tracking-[0.3em] mb-3">
             {service.title}
           </p>
           <h2 className="text-3xl md:text-5xl font-heading font-bold text-white uppercase leading-tight mb-4">
             {service.subtitle}
           </h2>
-          <p className="text-white/70 text-sm font-body leading-relaxed">
+          <p className="text-white/70 text-base font-body leading-relaxed">
             {service.description}
           </p>
         </div>
         <Link
           to={service.link}
-          className="inline-flex items-center gap-2 text-xs font-heading font-bold uppercase tracking-[0.2em] text-white border border-white px-6 py-3 hover:bg-primary hover:border-primary hover:text-black transition-all duration-300 shrink-0"
+          className="inline-flex items-center gap-2 text-sm font-heading font-bold uppercase tracking-[0.2em] text-white border border-white px-6 py-3 hover:bg-primary hover:border-primary hover:text-black transition-all duration-300 shrink-0"
         >
           Learn More <ArrowRight className="w-3.5 h-3.5" weight="bold" />
         </Link>
@@ -130,19 +125,19 @@ const Duo = ({ items }: { items: any[] }) => {
             />
           </div>
           <div className="p-12">
-            <p className="text-primary font-heading font-bold text-xs uppercase tracking-[0.3em] mb-3">
+            <p className="text-primary font-heading font-bold text-sm uppercase tracking-[0.3em] mb-3">
               {item.title}
             </p>
             <h3 className="text-2xl md:text-3xl font-heading font-bold text-foreground uppercase leading-tight mb-3">
               {item.subtitle}
             </h3>
             <div className="w-10 h-0.5 bg-primary mb-5" />
-            <p className="text-muted-foreground text-sm font-body leading-relaxed mb-6">
+            <p className="text-muted-foreground text-base font-body leading-relaxed mb-6">
               {item.description}
             </p>
             <Link
               to={item.link}
-              className="inline-flex items-center gap-1.5 text-xs font-heading font-bold uppercase tracking-[0.2em] text-foreground border-b border-foreground pb-0.5 hover:text-primary hover:border-primary transition-colors group/link"
+              className="inline-flex items-center gap-1.5 text-sm font-heading font-bold uppercase tracking-[0.2em] text-foreground border-b border-foreground pb-0.5 hover:text-primary hover:border-primary transition-colors group/link"
             >
               Learn More{" "}
               <ArrowRight
@@ -169,19 +164,19 @@ const SplitRight = ({ service }: { service: any }) => {
         animate={isInView ? { opacity: 1, x: 0 } : {}}
         transition={{ duration: 0.7 }}
       >
-        <p className="text-primary font-heading font-bold text-xs uppercase tracking-[0.3em] mb-4">
+        <p className="text-primary font-heading font-bold text-sm uppercase tracking-[0.3em] mb-4">
           {service.title}
         </p>
         <h2 className="text-3xl md:text-4xl font-heading font-bold text-white uppercase leading-tight mb-4 tracking-tight">
           {service.subtitle}
         </h2>
         <div className="w-12 h-0.5 bg-primary mb-6" />
-        <p className="text-white/60 text-sm font-body leading-relaxed mb-8">
+        <p className="text-white/60 text-base font-body leading-relaxed mb-8">
           {service.description}
         </p>
         <Link
           to={service.link}
-          className="inline-flex items-center gap-2 text-xs font-heading font-bold uppercase tracking-[0.2em] text-white border-b border-white pb-0.5 hover:text-primary hover:border-primary transition-colors group self-start"
+          className="inline-flex items-center gap-2 text-sm font-heading font-bold uppercase tracking-[0.2em] text-white border-b border-white pb-0.5 hover:text-primary hover:border-primary transition-colors group self-start"
         >
           Learn More{" "}
           <ArrowRight
@@ -239,19 +234,19 @@ const Spotlight = ({ service }: { service: any }) => {
         animate={isInView ? { opacity: 1, x: 0 } : {}}
         transition={{ duration: 0.7, delay: 0.1 }}
       >
-        <p className="text-primary font-heading font-bold text-xs uppercase tracking-[0.3em] mb-4">
+        <p className="text-primary font-heading font-bold text-sm uppercase tracking-[0.3em] mb-4">
           {service.title}
         </p>
         <h2 className="text-4xl md:text-5xl font-heading font-bold text-foreground uppercase leading-tight mb-4 tracking-tight">
           {service.subtitle}
         </h2>
         <div className="w-14 h-0.5 bg-primary mb-8" />
-        <p className="text-muted-foreground text-sm font-body leading-relaxed mb-10 max-w-md">
+        <p className="text-muted-foreground text-base font-body leading-relaxed mb-10 max-w-md">
           {service.description}
         </p>
         <Link
           to={service.link}
-          className="inline-flex items-center gap-2 text-xs font-heading font-bold uppercase tracking-[0.2em] text-foreground border-b border-foreground pb-0.5 hover:text-primary hover:border-primary transition-colors group self-start"
+          className="inline-flex items-center gap-2 text-sm font-heading font-bold uppercase tracking-[0.2em] text-foreground border-b border-foreground pb-0.5 hover:text-primary hover:border-primary transition-colors group self-start"
         >
           Learn More{" "}
           <ArrowRight

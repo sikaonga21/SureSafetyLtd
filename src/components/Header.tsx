@@ -95,9 +95,9 @@ const Header = () => {
               <div key={link.label} className="relative group">
                 <Link
                   to={link.path}
-                  className={`text-xs font-heading font-semibold uppercase tracking-wider transition-colors ${location.pathname === link.path
-                      ? "text-white"
-                      : "text-white hover:text-black"
+                  className={`text-sm font-heading font-semibold uppercase tracking-wider transition-colors ${location.pathname === link.path
+                    ? "text-white"
+                    : "text-white hover:text-black"
                     }`}
                 >
                   {link.label}
@@ -145,8 +145,8 @@ const Header = () => {
                   <Link
                     to={link.path}
                     className={`block py-3 text-sm font-heading font-medium uppercase tracking-wider border-b border-white/8 last:border-0 transition-colors ${location.pathname === link.path
-                        ? "text-white"
-                        : "text-white/80 hover:text-white"
+                      ? "text-white"
+                      : "text-white/80 hover:text-white"
                       }`}
                     onClick={() => setMobileOpen(false)}
                   >

@@ -1,24 +1,16 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation, Outlet } from "react-router-dom";
 import {
     ShieldCheck,
+    SquaresFour,
     FolderOpen,
     Newspaper,
     Briefcase,
-    SquaresFour,
     SignOut,
     List,
     X,
 } from "@phosphor-icons/react";
 import { useAuth } from "@/hooks/useAuth";
-import { useState } from "react";
-
-const navItems = [
-    { label: "Dashboard", icon: SquaresFour, href: "/admin" },
-    { label: "Projects", icon: FolderOpen, href: "/admin/projects" },
-    { label: "News", icon: Newspaper, href: "/admin/news" },
-    { label: "Careers", icon: Briefcase, href: "/admin/careers" },
-];
 
 const AdminLayout = () => {
     const { session, loading, signOut } = useAuth();
@@ -47,8 +39,15 @@ const AdminLayout = () => {
         navigate("/admin/login");
     };
 
+    const navItems = [
+        { label: "Dashboard", icon: SquaresFour, href: "/admin" },
+        { label: "Projects", icon: FolderOpen, href: "/admin/projects" },
+        { label: "News", icon: Newspaper, href: "/admin/news" },
+        { label: "Careers", icon: Briefcase, href: "/admin/careers" },
+    ];
+
     return (
-        <div className="min-h-screen bg-[#0f0f0f] flex">
+        <div className="min-h-screen bg-[#0f0f0f] flex overflow-hidden">
             {/* Mobile overlay */}
             {sidebarOpen && (
                 <div
@@ -59,32 +58,26 @@ const AdminLayout = () => {
 
             {/* Sidebar */}
             <aside
-                className={`fixed lg:static inset-y-0 left-0 z-30 w-64 bg-[#0a0a0a] border-r border-white/5 flex flex-col transition-transform duration-300 ${sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
+                className={`fixed lg:static inset-y-0 left-0 z-30 w-72 bg-[#0a0a0a] border-r border-white/5 flex flex-col transition-transform duration-300 ${sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
                     }`}
             >
-                {/* Logo */}
-                <div className="flex items-center gap-3 px-6 py-6 border-b border-white/5">
-                    <div className="w-9 h-9 bg-[#F5A623] flex items-center justify-center shrink-0">
-                        <ShieldCheck className="w-5 h-5 text-black" weight="bold" />
+                {/* Brand Logo */}
+                <div className="flex items-center gap-4 px-8 py-8 border-b border-white/5 bg-gradient-to-b from-white/[0.02] to-transparent">
+                    <div className="w-10 h-10 bg-[#F5A623] flex items-center justify-center shrink-0 shadow-[0_0_20px_rgba(245,166,35,0.2)]">
+                        <ShieldCheck className="w-6 h-6 text-black" weight="bold" />
                     </div>
                     <div>
-                        <p className="text-white font-bold text-sm uppercase tracking-widest font-heading leading-none">
+                        <h1 className="text-sm font-heading font-bold uppercase tracking-widest leading-tight">
                             Sure Safety
-                        </p>
-                        <p className="text-white/30 text-[9px] uppercase tracking-[0.25em] font-heading mt-0.5">
-                            Admin Panel
+                        </h1>
+                        <p className="text-white/30 text-sm uppercase tracking-[0.3em] font-heading mt-0.5 font-medium">
+                            Admin Central
                         </p>
                     </div>
-                    <button
-                        className="ml-auto text-white/30 lg:hidden"
-                        onClick={() => setSidebarOpen(false)}
-                    >
-                        <X className="w-5 h-5" />
-                    </button>
                 </div>
 
-                {/* Nav */}
-                <nav className="flex-1 py-6 px-3 space-y-1 overflow-y-auto">
+                {/* Navigation */}
+                <nav className="flex-1 py-8 px-4 space-y-2 overflow-y-auto custom-scrollbar">
                     {navItems.map(({ label, icon: Icon, href }) => {
                         const isActive =
                             href === "/admin"
@@ -95,26 +88,39 @@ const AdminLayout = () => {
                                 key={href}
                                 to={href}
                                 onClick={() => setSidebarOpen(false)}
-                                className={`flex items-center gap-3 px-4 py-3 text-xs font-bold uppercase tracking-[0.2em] font-heading transition-all duration-200 ${isActive
-                                        ? "bg-[#F5A623] text-black"
-                                        : "text-white/50 hover:text-white hover:bg-white/5"
+                                className={`flex items-center gap-4 px-6 py-4 text-[13px] font-bold uppercase tracking-[0.2em] font-heading transition-all duration-300 relative group ${isActive
+                                    ? "text-black bg-[#F5A623]"
+                                    : "text-white/40 hover:text-white hover:bg-white/[0.03]"
                                     }`}
                             >
-                                <Icon className="w-4 h-4 shrink-0" weight={isActive ? "bold" : "regular"} />
+                                <Icon className="w-5 h-5 shrink-0" weight={isActive ? "bold" : "regular"} />
                                 {label}
+                                {isActive && (
+                                    <div className="absolute right-0 top-0 bottom-0 w-1 bg-black/20" />
+                                )}
                             </Link>
                         );
                     })}
                 </nav>
 
-                {/* User / Sign out */}
-                <div className="px-6 py-5 border-t border-white/5">
-                    <p className="text-white/30 text-[9px] uppercase tracking-[0.2em] font-heading mb-1 truncate">
-                        {session.user.email}
-                    </p>
+                {/* User Info / Sign Out */}
+                <div className="p-6 border-t border-white/5 bg-white/[0.01]">
+                    <div className="flex items-center gap-3 mb-4 px-2">
+                        <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-[#F5A623] font-bold text-sm border border-white/5">
+                            {session.user.email?.charAt(0).toUpperCase()}
+                        </div>
+                        <div className="flex flex-col min-w-0">
+                            <span className="text-white/70 text-sm font-bold uppercase tracking-wider font-heading truncate">
+                                {session.user.email}
+                            </span>
+                            <span className="text-white/20 text-sm uppercase tracking-widest font-heading">
+                                Authenticated Admin
+                            </span>
+                        </div>
+                    </div>
                     <button
                         onClick={handleSignOut}
-                        className="flex items-center gap-2 text-white/40 hover:text-red-400 text-[10px] font-bold uppercase tracking-widest font-heading transition-colors mt-2"
+                        className="w-full flex items-center justify-center gap-2 py-3 bg-red-500/5 hover:bg-red-500/10 text-red-400/60 hover:text-red-400 text-sm font-heading font-bold uppercase tracking-[0.25em] text-white/30 px-6 mb-6 transition-all duration-300 border border-white/5"
                     >
                         <SignOut className="w-4 h-4" />
                         Sign Out
@@ -123,22 +129,31 @@ const AdminLayout = () => {
             </aside>
 
             {/* Main content */}
-            <div className="flex-1 flex flex-col min-w-0">
-                {/* Top bar (mobile) */}
-                <div className="lg:hidden flex items-center gap-4 px-4 py-4 border-b border-white/5 bg-[#0a0a0a]">
+            <div className="flex-1 flex flex-col min-w-0 relative h-screen">
+                {/* Mobile Header */}
+                <header className="lg:hidden flex items-center justify-between px-6 py-5 border-b border-white/5 bg-[#0a0a0a] sticky top-0 z-10 w-full">
                     <button
                         onClick={() => setSidebarOpen(true)}
-                        className="text-white/50 hover:text-white"
+                        className="p-2 -ml-2 text-white/50 hover:text-[#F5A623] transition-colors"
                     >
                         <List className="w-6 h-6" />
                     </button>
-                    <p className="text-white font-bold text-sm uppercase tracking-widest font-heading">
-                        Sure Safety Admin
-                    </p>
-                </div>
+                    <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 bg-[#F5A623] flex items-center justify-center">
+                            <ShieldCheck className="w-5 h-5 text-black" weight="bold" />
+                        </div>
+                        <span className="text-white font-bold text-sm uppercase tracking-widest font-heading">
+                            Sure Safety Panel
+                        </span>
+                    </div>
+                    <div className="w-10" /> {/* Spacer */}
+                </header>
 
-                <main className="flex-1 overflow-auto p-6 lg:p-8">
-                    <Outlet />
+                {/* Scrollable Area */}
+                <main className="flex-1 overflow-y-auto p-8 lg:p-12 bg-[#0d0d0d]">
+                    <div className="max-w-7xl mx-auto">
+                        <Outlet />
+                    </div>
                 </main>
             </div>
         </div>
