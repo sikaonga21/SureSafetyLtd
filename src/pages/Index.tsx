@@ -1,6 +1,7 @@
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 import CertificationsStrip from "@/components/CertificationsStrip";
+import ClientLogosCarousel from "@/components/ClientLogosCarousel";
 import AboutSection from "@/components/AboutSection";
 import ServicesSection from "@/components/ServicesSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
@@ -115,6 +116,7 @@ const Index = () => {
         <HeroSection />
         <TwoColIntro />
         <CertificationsStrip />
+        <ClientLogosCarousel />
         <AboutSection />
         <ServicesSection />
         <TestimonialsSection />
