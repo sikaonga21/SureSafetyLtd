@@ -24,20 +24,63 @@ import { toast } from "sonner";
 import SEO from "@/components/SEO";
 
 const serviceOptions = [
-    { id: "building", name: "General Building", icon: Buildings },
-    { id: "electrical", name: "Electrical Installation", icon: Lightning },
-    { id: "plumbing", name: "Plumbing & HVAC", icon: Drop },
-    { id: "finishing", name: "Painting & Finishing", icon: PaintBrush },
-    { id: "infrastructure", name: "Road & Paving", icon: Truck },
+    { id: "building", name: "Building Construction", icon: Buildings },
+    { id: "engineering", name: "Engineering & Infrastructure", icon: Lightning },
+    { id: "design", name: "Design & Building Solutions", icon: PaintBrush },
+    { id: "property", name: "Property & Consultancy", icon: Truck },
+    { id: "support", name: "Project Support & Maintenance", icon: Drop },
 ];
+
+const toEmail = "info@suresafety.co.zm";
+const ccEmail = "f.makwaza@suresafety.co.zm";
+const whatsappNumber = "260974397448";
 
 const QuotePage = () => {
     const [step, setStep] = useState(1);
     const [selectedService, setSelectedService] = useState("");
+    const [urgencyLevel, setUrgencyLevel] = useState("Medium");
     const [isSubmitted, setIsSubmitted] = useState(false);
+    const [formData, setFormData] = useState({
+        projectLocation: "",
+        estimatedBudget: "",
+        timeline: "Within 1 Month",
+        projectDescription: "",
+        fullName: "",
+        emailAddress: "",
+        phoneNumber: "",
+    });
+
+    const handleChange = (field: keyof typeof formData, value: string) => {
+        setFormData((prev) => ({ ...prev, [field]: value }));
+    };
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
+
+        const selectedServiceName = serviceOptions.find((service) => service.id === selectedService)?.name ?? "General Enquiry";
+        const quoteMessage = [
+            `Service Requested: ${selectedServiceName}`,
+            `Project Location: ${formData.projectLocation}`,
+            `Estimated Budget (ZMW): ${formData.estimatedBudget || "Not provided"}`,
+            `Project Timeline: ${formData.timeline}`,
+            `Urgency Level: ${urgencyLevel}`,
+            `Project Description: ${formData.projectDescription}`,
+            `Full Name: ${formData.fullName}`,
+            `Email Address: ${formData.emailAddress}`,
+            `Phone Number: ${formData.phoneNumber}`,
+            "",
+            "Please contact the requester with a quote.",
+        ].join("\n");
+
+        const subject = encodeURIComponent(`Quote Request - ${formData.fullName || "New Enquiry"}`);
+        const body = encodeURIComponent(quoteMessage);
+        const emailLink = `mailto:${toEmail}?cc=${ccEmail}&subject=${subject}&body=${body}`;
+        const whatsappMessage = encodeURIComponent(`Hello Sure Safety, I would like to request a quote.\n\n${quoteMessage}`);
+        const whatsappLink = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
+
+        window.open(whatsappLink, "_blank", "noopener,noreferrer");
+        window.location.href = emailLink;
+
         setIsSubmitted(true);
         toast.success("Quote request sent successfully!");
     };
@@ -95,7 +138,7 @@ const QuotePage = () => {
                                         className="space-y-8"
                                     >
                                         <div className="text-center mb-10">
-                                            <h2 className="text-2xl font-bold text-slate-900 mb-2">Select a Service</h2>
+                                            <h2 className="text-2xl font-bold text-slate-900 mb-2">Step 1 – Select Service</h2>
                                             <p className="text-slate-500">What kind of project are we looking at?</p>
                                         </div>
                                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -140,23 +183,38 @@ const QuotePage = () => {
                                                 <label className="text-base font-bold text-slate-700 uppercase tracking-widest pl-1">Project Location</label>
                                                 <div className="relative">
                                                     <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
-                                                    <Input className="pl-12 h-14 bg-slate-50 border-slate-200 focus:bg-white" placeholder="e.g. Ndola, Kitwe..." required />
+                                                    <Input
+                                                        className="pl-12 h-14 bg-slate-50 border-slate-200 focus:bg-white"
+                                                        placeholder="e.g. Ndola, Kitwe..."
+                                                        value={formData.projectLocation}
+                                                        onChange={(e) => handleChange("projectLocation", e.target.value)}
+                                                        required
+                                                    />
                                                 </div>
                                             </div>
                                             <div className="space-y-2">
                                                 <label className="text-base font-bold text-slate-700 uppercase tracking-widest pl-1">Estimated Budget (ZMW)</label>
                                                 <div className="relative">
                                                     <Calculator className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
-                                                    <Input className="pl-12 h-14 bg-slate-50 border-slate-200 focus:bg-white" placeholder="e.g. 50,000" />
+                                                    <Input
+                                                        className="pl-12 h-14 bg-slate-50 border-slate-200 focus:bg-white"
+                                                        placeholder="e.g. 50,000"
+                                                        value={formData.estimatedBudget}
+                                                        onChange={(e) => handleChange("estimatedBudget", e.target.value)}
+                                                    />
                                                 </div>
                                             </div>
                                             <div className="space-y-2">
                                                 <label className="text-base font-bold text-slate-700 uppercase tracking-widest pl-1">Project Timeline</label>
-                                                <select className="flex h-14 w-full border border-slate-200 bg-slate-50 px-4 py-2 text-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 appearance-none cursor-pointer">
-                                                    <option value="emergency">Emergency / Immediately</option>
-                                                    <option value="1month">Within 1 Month</option>
-                                                    <option value="3months">Within 3 Months</option>
-                                                    <option value="planning">Just Planning / Not Sure</option>
+                                                <select
+                                                    className="flex h-14 w-full border border-slate-200 bg-slate-50 px-4 py-2 text-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 appearance-none cursor-pointer"
+                                                    value={formData.timeline}
+                                                    onChange={(e) => handleChange("timeline", e.target.value)}
+                                                >
+                                                    <option value="Emergency / Immediately">Emergency / Immediately</option>
+                                                    <option value="Within 1 Month">Within 1 Month</option>
+                                                    <option value="Within 3 Months">Within 3 Months</option>
+                                                    <option value="Just Planning / Not Sure">Just Planning / Not Sure</option>
                                                 </select>
                                             </div>
                                             <div className="space-y-2">
@@ -166,16 +224,8 @@ const QuotePage = () => {
                                                         <button
                                                             key={level}
                                                             type="button"
-                                                            className="flex-1 py-3 border-2 border-slate-100 font-bold text-slate-500 hover:border-primary/30 transition-all active:scale-95"
-                                                            onClick={(e) => {
-                                                                const targets = e.currentTarget.parentElement?.querySelectorAll('button');
-                                                                targets?.forEach(t => {
-                                                                    t.classList.remove('border-primary', 'bg-primary/5', 'text-primary');
-                                                                    t.classList.add('border-slate-100', 'text-slate-500');
-                                                                });
-                                                                e.currentTarget.classList.remove('border-slate-100', 'text-slate-500');
-                                                                e.currentTarget.classList.add('border-primary', 'bg-primary/5', 'text-primary');
-                                                            }}
+                                                            className={`flex-1 py-3 border-2 font-bold transition-all active:scale-95 ${urgencyLevel === level ? 'border-primary bg-primary/5 text-primary' : 'border-slate-100 text-slate-500 hover:border-primary/30'}`}
+                                                            onClick={() => setUrgencyLevel(level)}
                                                         >
                                                             {level}
                                                         </button>
@@ -187,6 +237,8 @@ const QuotePage = () => {
                                                 <Textarea
                                                     className="min-h-[150px] bg-slate-50 border-slate-200 focus:bg-white p-6"
                                                     placeholder="Describe the project requirements, dimensions, or any specific needs..."
+                                                    value={formData.projectDescription}
+                                                    onChange={(e) => handleChange("projectDescription", e.target.value)}
                                                     required
                                                 />
                                             </div>
@@ -216,21 +268,40 @@ const QuotePage = () => {
                                                 <label className="text-base font-bold text-slate-700 uppercase tracking-widest pl-1">Full Name</label>
                                                 <div className="relative">
                                                     <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
-                                                    <Input className="pl-12 h-14 bg-slate-50 border-slate-200" placeholder="John Doe" required />
+                                                    <Input
+                                                        className="pl-12 h-14 bg-slate-50 border-slate-200"
+                                                        placeholder="John Doe"
+                                                        value={formData.fullName}
+                                                        onChange={(e) => handleChange("fullName", e.target.value)}
+                                                        required
+                                                    />
                                                 </div>
                                             </div>
                                             <div className="space-y-2">
                                                 <label className="text-base font-bold text-slate-700 uppercase tracking-widest pl-1">Email Address</label>
                                                 <div className="relative">
                                                     <Envelope className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
-                                                    <Input type="email" className="pl-12 h-14 bg-slate-50 border-slate-200" placeholder="john@example.com" required />
+                                                    <Input
+                                                        type="email"
+                                                        className="pl-12 h-14 bg-slate-50 border-slate-200"
+                                                        placeholder="john@example.com"
+                                                        value={formData.emailAddress}
+                                                        onChange={(e) => handleChange("emailAddress", e.target.value)}
+                                                        required
+                                                    />
                                                 </div>
                                             </div>
                                             <div className="md:col-span-2 space-y-2">
                                                 <label className="text-base font-bold text-slate-700 uppercase tracking-widest pl-1">Phone Number</label>
                                                 <div className="relative">
                                                     <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
-                                                    <Input className="pl-12 h-14 bg-slate-50 border-slate-200" placeholder="+260 9xx xxx xxx" required />
+                                                    <Input
+                                                        className="pl-12 h-14 bg-slate-50 border-slate-200"
+                                                        placeholder="+260 9xx xxx xxx"
+                                                        value={formData.phoneNumber}
+                                                        onChange={(e) => handleChange("phoneNumber", e.target.value)}
+                                                        required
+                                                    />
                                                 </div>
                                             </div>
                                         </div>

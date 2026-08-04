@@ -13,7 +13,7 @@ const ServicesPage = () => {
     <div className="min-h-screen flex flex-col overflow-x-hidden">
       <SEO
         title="Our Services"
-        description="Explore our comprehensive range of services including general construction, electrical, mechanical, and facility maintenance in Zambia."
+        description="We provide comprehensive construction, engineering, and real estate solutions for infrastructure and property development across Zambia."
       />
       <Header />
       <main className="flex-1">
@@ -39,7 +39,7 @@ const ServicesPage = () => {
               </h1>
               <div className="w-16 h-0.5 bg-primary mt-6 mb-8" />
               <p className="text-white/70 text-base md:text-lg font-body max-w-xl leading-relaxed">
-                Comprehensive building, electrical, mechanical, and maintenance solutions for commercial, industrial, and public-sector clients across Zambia.
+                We provide comprehensive construction, engineering, and real estate solutions that deliver lasting value. From planning and design to construction, investment, and property management, we combine technical expertise with innovation to deliver projects that exceed expectations.
               </p>
             </motion.div>
           </div>

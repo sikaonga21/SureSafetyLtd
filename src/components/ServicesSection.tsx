@@ -1,151 +1,155 @@
-import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
-import { useRef } from "react";
-import { ArrowRight } from "@phosphor-icons/react";
-
 import { portfolioFeatured } from "@/data/portfolioImages";
 
 const services = [
   {
-    title: "CIVIL & CONSTRUCTION",
-    subtitle: "GENERAL BUILDING",
+    number: "01",
+    title: "Real Estate Development",
     description:
-      "New builds, extensions, and structural refurbishments for residential, commercial, and industrial clients. We manage the full lifecycle — site preparation, reinforced structures, roofing, plastering, and handover — with rigorous safety oversight and transparent project reporting.",
+      "We transform land into thriving residential, commercial, and mixed-use developments. Our team manages every stage—from feasibility studies and planning to construction and project delivery—ensuring sustainable, high-value investments.",
     image: portfolioFeatured.servicesCivil,
-    link: "/services",
   },
   {
-    title: "ROADS & PAVING",
-    subtitle: "INFRASTRUCTURE",
+    number: "02",
+    title: "Project & Construction Management",
     description:
-      "Road construction, kerbing, drainage, and precision interlocking paver installation. Our teams prepare compacted bases, cut stones to fit, and lay durable patterns for driveways, walkways, and commercial forecourts.",
+      "We oversee projects from concept to completion, coordinating planning, budgeting, procurement, scheduling, quality assurance, and site supervision. Our integrated management approach ensures projects are delivered safely, on time, and within budget.",
+    image: portfolioFeatured.servicesRoads,
+  },
+  {
+    number: "03",
+    title: "Architecture & Design",
+    description:
+      "Great projects begin with exceptional design. Our architects and designers create innovative, functional, and sustainable spaces that balance aesthetics, performance, and long-term value.",
+    image: portfolioFeatured.servicesInterior,
+  },
+  {
+    number: "04",
+    title: "Civil Engineering & Infrastructure",
+    description:
+      "We design and construct critical infrastructure including roads, drainage systems, bridges, utilities, water networks, and public works that support sustainable community development.",
     image: portfolioFeatured.servicesPaving,
-    link: "/services",
   },
   {
-    title: "ELECTRICAL",
-    subtitle: "INSTALLATION",
+    number: "05",
+    title: "Residential Construction",
     description:
-      "Certified electricians deliver complete wiring, distribution boards, lighting, and power upgrades for homes and facilities. Every installation is tested, documented, and completed to Zambian safety standards.",
+      "From luxury homes and apartment developments to renovations and custom-built residences, we deliver high-quality residential projects tailored to our clients' vision and lifestyle.",
+    image: portfolioFeatured.servicesCivil,
+  },
+  {
+    number: "06",
+    title: "Commercial & Industrial Construction",
+    description:
+      "We construct office buildings, shopping centres, warehouses, factories, manufacturing plants, and industrial facilities designed for efficiency, durability, and business growth.",
+    image: portfolioFeatured.servicesRoads,
+  },
+  {
+    number: "07",
+    title: "Transmission & Power Infrastructure",
+    description:
+      "We provide engineering, construction, installation, and maintenance services for transmission lines, substations, and electrical infrastructure, delivering reliable power solutions for communities and industries.",
     image: portfolioFeatured.servicesElectrical,
-    link: "/services",
   },
   {
-    title: "MECHANICAL & PLUMBING",
-    subtitle: "HVAC & PLUMBING WORKS",
+    number: "08",
+    title: "Interior Design & Fit-Out",
     description:
-      "Air conditioning, ventilation, water reticulation, and sanitary installations for offices, warehouses, and residential properties. We design systems for efficiency, reliability, and straightforward long-term maintenance.",
-    image: portfolioFeatured.servicesMechanical,
-    link: "/services",
+      "We create beautiful, functional interiors for residential, commercial, and corporate spaces. From concept development to final installation, we transform interiors that inspire and perform.",
+    image: portfolioFeatured.servicesInterior,
   },
   {
-    title: "FACILITY MANAGEMENT",
-    subtitle: "PLANNED MAINTENANCE",
+    number: "09",
+    title: "Aluminium & Building Solutions",
     description:
-      "Scheduled preventative maintenance and rapid-response repairs to keep your buildings operating safely. Tailored contracts cover electrical checks, plumbing, structural inspections, and general upkeep — reducing downtime and unexpected costs.",
+      "We design, fabricate, and install premium aluminium systems including windows, doors, curtain walls, partitions, facades, railings, and custom architectural features built for durability and elegance.",
+    image: portfolioFeatured.servicesCivil,
+  },
+  {
+    number: "10",
+    title: "Property Management",
+    description:
+      "Our professional property management services include tenant relations, maintenance coordination, financial reporting, facility operations, and asset management to maximize long-term property value.",
     image: portfolioFeatured.servicesMaintenance,
-    link: "/services",
+  },
+  {
+    number: "11",
+    title: "Investment & Property Advisory",
+    description:
+      "We help investors and developers identify profitable opportunities through feasibility studies, project evaluation, investment planning, capital advisory, and strategic real estate consulting.",
+    image: portfolioFeatured.servicesCivil,
+  },
+  {
+    number: "12",
+    title: "Quantity Surveying & Cost Consultancy",
+    description:
+      "We provide accurate cost estimation, budgeting, tender documentation, procurement support, contract administration, and financial control to ensure cost-effective project delivery.",
+    image: portfolioFeatured.servicesPaving,
+  },
+  {
+    number: "13",
+    title: "Renovation & Facility Maintenance",
+    description:
+      "We modernize existing residential, commercial, and industrial properties through renovations, remodeling, preventive maintenance, and facility management services that extend asset life and improve performance.",
+    image: portfolioFeatured.servicesMaintenance,
+  },
+  {
+    number: "14",
+    title: "Healthcare Construction",
+    description:
+      "We design and build hospitals, clinics, laboratories, and specialized healthcare facilities that meet modern medical standards, ensuring safe, efficient, and patient-centered environments.",
+    image: portfolioFeatured.servicesElectrical,
+  },
+  {
+    number: "15",
+    title: "Consultancy & Technical Advisory",
+    description:
+      "Our experienced professionals provide expert guidance on construction planning, engineering solutions, regulatory compliance, project feasibility, risk assessment, and development strategies to help clients make informed decisions.",
+    image: portfolioFeatured.servicesRoads,
   },
 ];
 
-const useSection = () => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-60px" });
-  return { ref, isInView };
-};
-
-/**
- * Consistent two-column horizontal split layout for every service.
- * Alternates image side (left/right) for visual rhythm.
- * On even rows: image left, text right.  On odd rows: text left, image right.
- */
-const SplitRow = ({
-  service,
-  reversed,
-  dark,
-}: {
-  service: (typeof services)[0];
-  reversed: boolean;
-  dark: boolean;
-}) => {
-  const { ref, isInView } = useSection();
-
-  const bgClass = dark ? "bg-section-dark" : "bg-card";
-  const textColor = dark ? "text-white" : "text-foreground";
-  const descColor = dark ? "text-white/60" : "text-muted-foreground";
-  const linkStyle = dark
-    ? "text-white border-b border-white hover:text-primary hover:border-primary"
-    : "text-foreground border-b border-foreground hover:text-primary hover:border-primary";
-
-  return (
-    <div
-      ref={ref}
-      className={`grid lg:grid-cols-2 ${bgClass} overflow-hidden`}
-    >
-      {/* Image panel */}
-      <motion.div
-        className={`h-[350px] lg:h-auto min-h-[320px] overflow-hidden ${
-          reversed ? "lg:order-2" : "lg:order-1"
-        }`}
-        initial={{ opacity: 0, scale: 0.97 }}
-        animate={isInView ? { opacity: 1, scale: 1 } : {}}
-        transition={{ duration: 0.8, delay: 0.1 }}
-      >
-        <img
-          src={service.image}
-          alt={service.subtitle}
-          className="w-full h-full object-cover grayscale-[30%] hover:grayscale-0 hover:scale-105 transition-all duration-700"
-        />
-      </motion.div>
-
-      {/* Text panel */}
-      <motion.div
-        className={`flex flex-col justify-center px-10 py-16 md:px-16 lg:px-20 ${
-          reversed ? "lg:order-1" : "lg:order-2"
-        }`}
-        initial={{ opacity: 0, x: reversed ? -40 : 40 }}
-        animate={isInView ? { opacity: 1, x: 0 } : {}}
-        transition={{ duration: 0.7 }}
-      >
-        <p className="text-primary font-heading font-bold text-sm uppercase tracking-[0.3em] mb-4">
-          {service.title}
-        </p>
-        <h2
-          className={`text-3xl md:text-4xl font-heading font-bold ${textColor} uppercase leading-tight mb-4 tracking-tight`}
-        >
-          {service.subtitle}
-        </h2>
-        <div className="w-12 h-0.5 bg-primary mb-6" />
-        <p className={`${descColor} text-base font-body leading-relaxed mb-8 max-w-lg`}>
-          {service.description}
-        </p>
-        <Link
-          to={service.link}
-          className={`inline-flex items-center gap-2 text-sm font-heading font-bold uppercase tracking-[0.2em] ${linkStyle} pb-0.5 transition-colors group self-start`}
-        >
-          Learn More{" "}
-          <ArrowRight
-            className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform"
-            weight="bold"
-          />
-        </Link>
-      </motion.div>
-    </div>
-  );
-};
-
 const ServicesSection = () => {
   return (
-    <section id="services">
-      {services.map((service, i) => (
-        <SplitRow
-          key={service.title}
-          service={service}
-          reversed={i % 2 === 1}
-          dark={i % 2 === 0}
-        />
-      ))}
+    <section id="services" className="bg-card py-16 md:py-20">
+      <div className="container">
+        <div className="mb-10 max-w-4xl">
+          <p className="text-xs font-heading font-semibold uppercase tracking-[0.35em] text-primary">What We Do</p>
+          <h2 className="mt-3 text-3xl font-heading font-bold uppercase leading-tight text-foreground md:text-4xl">
+            We Develop Quality Infrastructure & Real Estate Projects
+          </h2>
+          <p className="mt-4 max-w-3xl text-sm leading-relaxed text-muted-foreground md:text-base">
+            We provide comprehensive construction, engineering, and real estate solutions that deliver lasting value. From planning and design to construction, investment, and property management, we combine technical expertise with innovation to deliver projects that exceed expectations.
+          </p>
+        </div>
+
+        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+          {services.map((service, index) => (
+            <motion.article
+              key={service.title}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.5, delay: index * 0.04 }}
+              className="overflow-hidden rounded-[26px] border border-border bg-white shadow-[0_18px_50px_rgba(15,23,42,0.06)]"
+            >
+              <div className="overflow-hidden">
+                <img
+                  src={service.image}
+                  alt={service.title}
+                  className="h-64 w-full object-cover transition-transform duration-700 hover:scale-105"
+                />
+              </div>
+              <div className="p-6">
+                <p className="text-[11px] font-heading font-bold uppercase tracking-[0.3em] text-primary">{service.number}</p>
+                <h3 className="mt-3 text-2xl font-heading font-bold uppercase leading-tight text-foreground">{service.title}</h3>
+                <div className="mt-4 h-0.5 w-12 bg-primary" />
+                <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{service.description}</p>
+              </div>
+            </motion.article>
+          ))}
+        </div>
+      </div>
     </section>
   );
 };
